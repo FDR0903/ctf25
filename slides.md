@@ -41,41 +41,82 @@ Why Continuous-Time Finance ? <a name="defi"></a></h1>
 
 ---
 
-# Why Continuous-Time Finance ?
+# Continuous-Time Finance
 
-* Events in real world happen in discrete-time
+* Events in the real world happen in discrete-time
 
-* Quickly changing chain of events may be described in term of a continuous mechanism
+* Quickly changing chains of events may be described in term of a continuous mechanism (as in Physics)
 
-* Example: stock prices evolve almost continuously. Think of limit order books
+* **Example**: stock prices evolve almost continuously. 
+  * Think of limit order books where orders are sent at the milisecond frequency.
 
-* Continuous-time models are tractable when it comes to describe the behaviour of complex derivatives
-  * A derivative is a contract whose value is dependent upon one or more underlying assets
 
 ---
 
-# The Derivatives market
+# Why Continuous-Time Finance ?
 
-![derivativessize](./images/derivativessize.png){style="transform: translate(20%, 0%); width: 600px"}
+* **Definition** A derivative is a contract whose value is dependent upon one or more underlying assets
+
+* Continuous-time models are significantly more tractable when it comes to describe the behaviour of risk and returns of complex financial derivatives
+
+* Beyond tractability, continuous-time models models are sometimes essential for understanding the risks of complex financial instruments
+
+
+---
+
+# Why Continuous-Time Finance ?
+
+* Continuous-time models are widely employed by trading desks at investment banks and hedge funds to price, hedge, and manage portfolios, in markets where trillions of dollars in derivatives are traded daily
+
+![derivativessize](./images/derivativessize.png){style="transform: translate(40%, 0%); width: 470px"}
+
+
+---
+
+# Some history
+
+* Mathematical Finance is a (young) science at the frontier between probability theory,
+economics, and computer science (Despite its short history, Quantitative Finance has Nobel Prize laureates (Merton, Scholes))
+* $1900$: The real father of (modern) Quantitative Finance is a French man called Bachelier
+* Mid-$1950$s: Savage (the famous statistician) introduced economists to Bachelier’s work
+  * Samuelson read the PhD thesis of Bachelier. He did research to price warrants (with Sprenkle and Bones)
+* $1970$: Merton was a PhD student of Samuelson in 1970 and he discussed warrants with Black and Scholes at MIT
+  * Merton introduced **replication**
+
+---
+
+# Some history
+
+* 1980s: Cox-Ross-Rubinstein, Vasicek, Cox-Ingersoll-Ross models.
+* 1999: Harrison, Kreps, and Pliska showed the link between the absence of arbitrage opportunity and martingales. 
+* 1990s and 2000s: quantitative finance is ruled by mathematicians and probabilists
+* The $2007-2008$ crisis: credit derivatives cannot be managed as equity derivatives  or fixed income derivatives. The famous *copula model* to price and hedge Collateralized Debt Obligations (CDOs) has have been used so blindly
+  * highlighted the danger of the risk-neutral pricing/hedging models when used in highly incomplete markets
+  * the financial mathematics community has played a  part in the catastrophe
+* After the crisis: risk management, super-hedging, market microstructure, optimal market making, etc..
 
 ---
 
 # Goals of this course
 
-* Introduce continuous-time models
+* Introduce the mathematical tools used in continuous-time models in finance
 
-* Applications for pricing derivatives on Equities and Interest rates
+* Introduce the main models used in the industry
 
+* Applications for pricing derivatives on Equity and Interest rates
+
+---
 
 # How
 
-* (Basic) review of probabilioty theory
-
-* Introduction to stochastic calculus
-
+* Foundations
+  * (Basic) review of probabilioty theory
+  * Introduction to stochastic calculus
+ 
 * Introduction of the main pricing principles
+  * Martingales, Ito processes, Risk-neutral pricing, etc.
 
-* We start by a simple discrete-time model
+* We start with simple models, and we add complexity
 
 ---
 
@@ -167,8 +208,8 @@ layout: intro
 # Risk and Return
 <br /><br /><br />
 
-* Assume that there is a bond in this economy that pays an interest of $r$. How much "above" $r$ would you expect to make on your investment strategy?
-
+* Assume that there is a bond in this economy that pays an interest of $r$. 
+* Risk premium: how much "above" $r$ would you expect to make on your investment strategy?
 
 ![ICandU](./images/ICandU.png){style="transform: translate(10%, -5%); width: 700px"}
 
@@ -185,22 +226,24 @@ Binomial Setup <a name="defi"></a></h1>
 
 * Two dates: $t$ and $t+1$
 
-* Two assets are traded at prices $S_1(t)$ and $S_2(t)$ at time $t$
+* Two assets are traded at prices $S^1(t)$ and $S^2(t)$ at time $t$
 
 * At $t+1$, there are two states of nature that occur with probability $p$ and $1-p$
 
-* Asset $1$ pays $S^1(t+1) = 1$ in state one and $S^1(t+1) = 1$ in state two. We denote the payoff (1, 1). 
-
-* Asset $2$ has payoff $(0, 3)$.
-
 ![S1S2](./images/S1S2.png){style="transform: translate(10%, -0%); width: 700px"}
+
+* Asset $1$ pays $S^1(t+1) = 1$ in state one and $S^1(t+1) = 1$ in state two. 
+  * We denote the payoff (1, 1)
+
+* Asset $2$ has payoff $(0, 3)$
 
 ---
 
 ## First example: a simple economy with three assets
 
-* Assume we know $S_1(t)$ and $S_2(t)$.
-* **Problem**: There is a third asset paying $(2, 3)$. Can calculate its price $S_3$ at time $t$.
+* Assume we know $S^1(t)$ and $S^2(t)$
+* **Problem**: There is a third asset with payoff $(2, 3)$. 
+  * Calculate the price $S^3(t)$ at time $t$
 
 ![S1S2S3](./images/S1S2S3.png){style="transform: translate(0%, 0%); width: 900px"}
 
@@ -208,15 +251,15 @@ Binomial Setup <a name="defi"></a></h1>
 
 ## First example: a simple economy with three assets
 
-* **Solution**: 
+![S1S2S3](./images/S1S2S3.png){style="transform: translate(20%, -5%); width: 600px"}
+
+* **Solution**: replication and no-arbitrage
   * We set a portfolio with value $\Pi(t)$ at time $t$ consisting of $\alpha_1$ units of Asset $1$ and $\alpha_2$ of Asset $2$
   * We set the portfolio weights  $\alpha_1$ and $\alpha_2$ such that the portfolio **replicates** Asset $3$ at time $t+1$
-    $$\Pi(t+1) = \alpha_1\,S^1(t+1)+\alpha_1\,S^2(t+1)$$
-  * By **no-arbitrage**, 
+    $$\Pi(t+1) = \alpha_1\,S^1(t+1)+\alpha_2\,S^2(t+1)$$
+  * By **no-arbitrage**, we should have
   $$\Pi(t) = S_3(t)$$
-  
-
-![S1S2S3](./images/S1S2S3.png){style="transform: translate(20%, -5%); width: 600px"}
+  * Why ?
 
 ---
 
@@ -235,7 +278,7 @@ Binomial Setup <a name="defi"></a></h1>
   $$\alpha_1 = 2 \quad \text{and} \quad \alpha_2 = 1/3$$
   * By **no-abitrage**: 
   $$S_3(t) = 2\,S_1(t)+S_2(t)/3$$
-  
+
 
 ---
 
@@ -248,12 +291,13 @@ Pricing Options in a Binomial Setup <a name="defi"></a></h1>
 
 ## The market
 
+* One stock (say Microsoft)
 * Starting time $t$, ending time $T$
 * Two states of the world with probabilities $p$ and $1 − p$
 * Starting value of the stock price: $S$
 * In the *up state*, with probability $p$, the price becomes $u\,S$ where $u$ is a constant
-* In the *down state*, with probability $1-p$, the price becomes $d\,S$ where $u$ is a constant
-* There is a bond that pays a constant interest rate $r$.
+* In the *down state*, with probability $1-p$, the price becomes $d\,S$ where $d$ is a constant
+* There is a **bond** that pays a constant **interest rate $r$**.
 
 
 ![binomialO1](./images/binomialO1.png){style="transform: translate(10%, 20%); width: 700px"}
@@ -263,20 +307,17 @@ Pricing Options in a Binomial Setup <a name="defi"></a></h1>
 
 ## The call option
 
-* **Definition**: A European Call option with strike price $K$ and maturity $T$ is the right to buy, at time $T$, the underlying stock for the price $K$. 
-
-* What is the payoff of the option as a function of $S$ ?
+* **Definition**: A European Call option with strike price $K$ and maturity $T$ is the **right** to buy, at time $T$, the underlying stock for the price $K$. 
+* What is the mathematical formula for the payoff of the option as a function of $S(T)$ ?
 
 
 ---
 
-
 ## The call option
 
-* **Definition**: A European Call option with strike price $K$ and maturity $T$ is the right to buy, at time $T$, the underlying stock for the price $K$. 
-![binomialO2](./images/binomial02.png){style="transform: translate(10%, 0%); width: 700px"}
-
-* The payoff at time $T$ is $\max\{S(T) - K, 0 \}$. Let $C(t)$ be the price of the option at time $t.$ 
+* **Definition**: A European Call option with strike price $K$ and maturity $T$ is the **right** to buy, at time $T$, the underlying stock for the price $K$. 
+* What is the mathematical formula for the payoff of the option as a function of $S(T)$ ?
+* The payoff at time $T$ is $\max\{S(T) - K, 0 \}$. 
 * In the *up state*, the payoff of the call is 
 $$
 C^u = \max\{u\, S - K, 0\}
@@ -286,11 +327,14 @@ $$
 C^d = \max\{d\, S - K, 0\}
 $$
 
+
 ---
 
 ## The call option
 
-* The payoff of a long position in a call option with strike $K=100$ : 
+* Let $C(t)$ be the price of the option at time $t$ 
+
+* The payoff of a long position in a call option with strike $K=100$ and when $C(t)=10$
 
 ![call](./images/call.png){style="transform: translate(40%, 0%); width: 500px"}
 
@@ -300,8 +344,14 @@ $$
 
 ## The put option
 
-* **Definition**: A European Put option with strike price $K$ and maturity $T$ is the right to sell, at time $T$, the underlying stock for the price $K$
-* The payoff at time $T$ is $\max\{K - S_T\}$
+* **Definition**: A European Put option with strike price $K$ and maturity $T$ is the right to sell, at time $T$, the underlying stock for the price $K$. What is the payoff of a put option at time $T$.
+
+---
+
+## The put option
+
+* **Definition**: A European Put option with strike price $K$ and maturity $T$ is the right to sell, at time $T$, the underlying stock for the price $K$. What is the payoff of a put option ?
+* The payoff at time $T$ is $\max\{K - S_T, 0\}$
 * The payoff of a long position in a put option with strike $K=100$ (when do we buy a put ?)
 
 ![put](./images/put.png){style="transform: translate(40%, 0%); width: 500px"}
@@ -417,30 +467,7 @@ $$
 - \max\{S_T - K\} + (S_T - S_0)
 $$
 ![coveredcall](./images/coveredcall.png){style="transform: translate(55%, 0%); width: 400px"}
-* You are a banker and you want to buy a covered call option from your broker. Assume $S_0=K$ and that all payments are at time $T$, what's the price according to our binomial model ?
-
----
-
-## Example of option strategies: a covered call option
-
-* In the case of covered call, the payoff in the up and down states is
-$$ 
-\begin{cases}
-\tilde C^u = \max\{u\,S-K, 0\} + u\,S - S_0= C^u + u\,S - S_0 \\
-\tilde C^d = \max\{d\,S-K, 0\} + d\,S - S_0= C^d + d\,S - S_0,
-\end{cases}
-$$
-
-* The price is 
-$$
-\begin{split}
-P(t)& =\frac{1}{R}\left[\frac{R-d}{u-d} \tilde C^u+\frac{u-R}{u-d}  \tilde C^d\right]\\
-& =\frac{1}{R}\left[\frac{R-d}{u-d} C^u+\frac{u-R}{u-d}  C^d - \frac{R-d+u-R}{u-d}S_0 + \frac{(R-d)u+(u-R)d}{u-d}S \right]\\
-& = \frac{1}{R}\left[\frac{R-d}{u-d} C^u+\frac{u-R}{u-d}  C^d - S_0 + R\,S \right]\\
-& =  S - S_0/R +  \frac{1}{R}\left[\frac{R-d}{u-d} C^u+\frac{u-R}{u-d}  C^d \right]
-\end{split}
-$$
-* We can price any strategy that combines stocks and call/puts! : Straddle, Call spread, Put spread, Protective Collar ...
+* You are a banker and you want to buy a covered call option from your broker. Assume  that all payments are at time $T$, what's the price according to our binomial model ?
 
 ---
 
@@ -458,29 +485,27 @@ $$
 C(t) =\frac{1}{R}\left[\frac{R-d}{u-d} C^u+\frac{u-R}{u-d} C^d\right] .
 $$
 
-* **Remark:** the price $C(t)$ of the option does not depend on the binomial probability $p.$
+* **Remark:** the price $C(t)$ of the option does not depend on the binomial probability $p.$ 
+
+* Why?
+
 
 ---
 
 ## Risk-Neutral Valuation - Call option
 
 * We found that the call option price is
-$
+$$
 C(t) =\frac{1}{R}\left[\frac{R-d}{u-d} C^u+\frac{u-R}{u-d} C^d\right] .
-$
+$$
 
-* **Remark:** the price $C(t)$ of the option does not depend on the binomial (physical) probability $p.$
-
-* Define a new probability measure $\tilde P$ that assigns a probability 
+* Define a new probability measure $\tilde P$ that assigns $\tilde p$ to the *up state* and $1-\tilde p$ to the *down state*
 $$
 \tilde p = \frac{R-d}{u-d}
 $$
-to the *up state* and $1-\tilde p$ to the *down state*
-
-
 * The price of the option is
 $$
-C(t) =\frac{1}{R}\left[\tilde p C^u+(1-\tilde p) C^d\right] .
+C(t) =\frac{1}{R}\left[\tilde p C^u+(1-\tilde p) C^d\right]
 $$
 
 ![binomialO4](./images/binomialO4.png){style="transform: translate(30%, 0%); width: 500px"}
@@ -499,23 +524,31 @@ $$d < 1 + r < u$$
 * In this case, the price of the option is the **discounted expectation** under the new **risk-adjusted probability measure**
 
 $$
-C(t) =\frac{1}{R}\left[\tilde p C^u+(1-\tilde p) C^d\right] = \frac{1}{1+r}\tilde{\mathbb E}[C(t+1)] 
+C(t) =\frac{1}{R}\left[\tilde p C^u+(1-\tilde p) C^d\right] = \frac{1}{1+r}\tilde{\mathbb E}[C(t+1)]
 $$
 
 ---
 
-## Risk-Neutral Valuation
+## Risk-Neutral Valuation: intuition
 
 * Prices of assets depend on their risk
-* Investors demand more profit for bearing more risk (risk-averse)
-* Today's price of a claim realised in a future date, written on a risky asset, will generally differ from its expected value
-* In a complete market with no arbitrage opportunities there is an alternative way to do this calculation: Instead of first taking the expectation and then adjusting for an investor's risk preference, one can adjust, once and for all, the probabilities of future outcomes such that they incorporate all investors' risk premia, and then take the expectation under this new probability distribution, the risk-neutral measure
-* once the risk-neutral probabilities are found, every asset can be priced by simply taking the present value of its expected payoff. Note that if we used the actual real-world probabilities, every security would require a different adjustment (as they differ in riskiness). 
-* fundamental theorem of asset pricing: the condition of no-arbitrage is equivalent to the existence of a risk-neutral measure
+* Investors demand more profit for bearing more risk (risk-averse): think of utility
+* Today's price of a claim realised in a future date, written on a risky asset, will generally differ from its expected value: investors ask for a premium.
+* Using actual real-world probabilities, every security would require a different adjustment (as they differ in riskiness)
 
 ---
 
-## Risk-Neutral Valuation
+## Risk-Neutral Valuation: intuition
+
+* There is another way to do this adjustment
+  * Instead of calculating expectation and then adjusting for an investor's risk preference
+  * We adjust, once and for all, the probabilities of future outcomes such that they incorporate all investors' risk premia
+  * We take expectation under this new probability distribution, the risk-neutral measure
+* Once the risk-neutral probability is found, assets can be priced by simply taking the present value of expected payoff
+
+---
+
+## Risk-Neutral Valuation: Exercise
 
 * **Exercise 1**: Under the risk-neutral measure, calculate the discounted expected value of the stock price, i.e.,
 $$
@@ -528,7 +561,7 @@ $$
 
 ---
 
-## Risk-Neutral Valuation
+## Risk-Neutral Valuation: Exercise
 
 * Assume now that there are three dates ${0, 1, 2}$ and consider the following binomiam tree (where $u=1/d$)
 
@@ -592,7 +625,7 @@ $\mathcal G_2 =\mathcal P(\Omega)$ (power set), i.e., it is the set of all subse
 $$\mathcal G_0 \subset \mathcal G_1 \subset \mathcal G_2$$
 
 * **Definition : Filtration**
-  * A fitlration is a sequence $(\mathcal G_i)_i$ of sigma algebras over $\Omega$ such that for all $i$
+  * A filtration is a sequence $(\mathcal G_i)_i$ of sigma algebras over $\Omega$ such that for all $i$
   $$
   \mathcal G_i \subset \mathcal G_{i+1}
   $$
@@ -664,6 +697,7 @@ $$
 
 * We can price american options recursively
 
+
 ---
 
 ## American options in the three-dates binomial model
@@ -703,11 +737,3 @@ We work backward:
   * At time $t=0$, the payoff of the American option is the maximum between the exercise value $V(S_0)$, and the discounted expected future payoff (at time $t=1$)
 
 ![americanbinomial3](./images/americanbinomial3.png){style="transform: translate(0%, 0%); width: 800px"}
-
-
----
-layout: end
----
-Thank you !
-
-[faycaldrissi.com](https://www.faycaldrissi.com/)
