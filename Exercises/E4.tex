@@ -1,0 +1,323 @@
+\documentclass[11pt,a4,table]{article}
+
+\renewcommand{\footnotesize}{\fontsize{9pt}{11pt}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Page Dimensions
+\usepackage[top=1.0in, bottom=1.0in, left= 0.80in, right=0.80in]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Caption options
+\usepackage[margin= 16pt , footnotesize ,  sc , labelfont=bf , labelsep=period , format=plain , justification=centerfirst]{caption}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%load minimum set of other required packages
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{bbm}
+\usepackage{booktabs,longtable}
+\usepackage{eurosym}
+\usepackage{floatrow}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{harvard}
+\usepackage[english]{babel}
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+
+\usepackage[utf8]{inputenc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and tikz
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+	\definecolor{cinnabar}{rgb}{0.89, 0.26, 0.2}
+	\definecolor{ceruleanblue}{rgb}{0.16, 0.32, 0.75}
+
+% and optimally spaces tables
+
+\usepackage{tabularx, booktabs}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Roman numerals command thing.
+\makeatletter
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% fake section command
+\newcommand{\fakesection}[1]{%
+  \par\refstepcounter{section}% Increase section counter
+  \sectionmark{#1}% Add section mark (header)
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}% Add section to ToC
+  % Add more content here, if needed.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ------------------------------------------
+%% Journal of Finance conventions
+%% ------------------------------------------
+
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thetable}{\Roman{table}}
+\renewcommand{\abstractname}{\textsc{ABSTRACT}}
+\makeatletter
+\renewcommand{\baselinestretch}{1.10}
+\renewcommand{\topfraction}{0.99}
+\renewcommand{\bottomfraction}{0.99}
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{2}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.9}
+\renewcommand{\dblfloatpagefraction}{0.9}
+\titleformat{\section}{\centering\large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalsize\itshape}{\thesubsection.}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection.}{1em}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% math shocks cuts, theorems, lemmas etc.
+\newcommand{\inner}[2]{\left < #1 \big | #2 \right >}
+\newcommand{\proj}[2]{\mbox{proj} \left ( #1 \big | #2 \right )}
+\newcommand{\cov}[2]{\mbox{cov}\left (#1 ,#2 \right )}
+\newcommand{\var}[1]{\mbox{var}[#1]}
+\newcommand{\Gray}[1]{{\color{gray}#1}}
+\newcommand{\Red}[1]{{\color{red}#1}}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}{Lemma}
+\newtheorem{notation}{Notation}
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{remark}{Remark}
+\newtheorem{solution}{Solution}
+\newtheorem{summary}{Summary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and choose line spacing (comes from setspace)
+
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+%\setstretch{1.5}
+%\setstretch{2}
+
+% make quote right flushed.
+\makeatletter{}
+\g@addto@macro\quote\flushright
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\vspace*{-0.7in}
+
+\begin{center}
+ \textbf{Continuous Time Finance: Problem Set 4} \\
+ \textit{Risk Neutral Pricing and Connection with PDEs } \\
+Ilaria Piatti
+\end{center} 
+
+
+\begin{enumerate}
+    \item \textbf{Heston Model} \\
+    Suppose that under the risk-neutral measure $\Tilde{P}$, a stock price follows:
+    \begin{equation}
+        dS(t) = rS(t) dt + \sqrt{V(t)} S(t) d\Tilde{W}_1(t),
+    \end{equation}
+    where $r$ is constant and the volatility $\sqrt{V(t)}$ is itself a stochastic process:
+    \begin{equation}
+        dV(t) = (a - bV(t)) dt + \sigma \sqrt{V(t)} d\Tilde{W}_2(t),
+    \end{equation}
+    where $a,b$ and $\sigma$ are positive constants, and $\Tilde{W}_1(t)$ and $\Tilde{W}_2(t)$ are correlated Brownian motions under $\Tilde{P}$, with
+    \begin{equation*}
+        d\Tilde{W}_1(t) d\Tilde{W}_2(t) = \rho dt,
+    \end{equation*}
+    for some $\rho\in(-1,1)$. The two-dimensional process $(S(t), V(t))$, governed by the SDEs (1) and (2), is a Markov process.\\
+    The risk-neutral price of a call expiring at time $T>t$ is:
+    \begin{equation*}
+        c(t,S(t), V(t)) = \Tilde{E}\left[e^{-r(T-t)}(S(T)-K)^+|\mathcal{F}_t\right].
+    \end{equation*}
+    This problem shows that the function $c(t,s,v)$ satisfies the PDE:
+    \begin{equation}
+        c_t + rsc_s + (a-bv)c_v + \frac{1}{2}s^2 vc_{ss} + \rho \sigma svc_{sv} + \frac{1}{2}\sigma^2 vc_{vv} = rc,
+    \end{equation}
+    with boundary condition
+    \begin{equation}
+        c(T,s,v) = (s-K)^+ \textit{ for all } s\geq 0, v\geq 0. 
+    \end{equation}
+    
+    \begin{enumerate}
+        \item Show that $e^{-rt}c(t,S(t),V(t))$ is a martingale under $\Tilde{P}$ and use this fact to obtain the PDE (3).
+    
+        \item  Suppose there are functions $f(t,x,v)$ and $g(t,x,v)$ satisfying
+        \begin{align}
+            f_t + \left(r + \frac{1}{2}v\right) f_x + (a - bv + \rho \sigma v) f_v + \frac{1}{2}vf_{xx} + \rho\sigma v f_{xv} + \frac{1}{2}\sigma^2 v f_{vv} &= 0,\\
+            g_t + \left(r - \frac{1}{2}v\right) g_x + (a - bv) g_v + \frac{1}{2}vg_{xx} + \rho \sigma v g_{xv} + \frac{1}{2}\sigma^2 vg_{vv} &=0.
+        \end{align}
+        Show that if we define
+        \begin{equation}
+            c(t,s,v) = sf(t,\log s, v) - e^{-r(T-t)}Kg(t,\log s, v),
+        \end{equation}
+        then $c(t,s,v)$ satisfies the PDE (3).
+        \newpage
+        
+        \item Suppose a pair of processes $(X(t), V(t))$ is governed by the SDEs:
+        \begin{align}
+            dX(t) &= \left(r + \frac{1}{2}V(t) \right) dt + \sqrt{V(t)} dW_1(t),\\
+            dV(t) &= (a - bV(t) + \rho \sigma V(t)) dt + \sigma\sqrt{V(t)} dW_2(t),
+        \end{align}
+        where $W_1(t)$ and $W_2(t)$ are Brownian motions under some probability measure $P$ with \\$dW_1(t)dW_2(t) = \rho dt$. Define
+        \begin{equation*}
+            f(t,x,v)=E^{t,x,v}\left[\mathbbm{1}_{\{X(T)\geq \log K\}}\right].
+        \end{equation*}
+        Show that $f(t,x,v)$ satisfies the PDE (5) and the boundary condition
+        \begin{equation*}
+            f(T,x,v) = \mathbbm{1}_{\{x\geq\log K\}}, \textit{ for all } x\in \mathbb{R} \textit{ and } v\geq 0.
+        \end{equation*}
+        
+        \item Suppose a pair of processes $(X(t), V(t))$ is governed by the SDEs:
+        \begin{align}
+            dX(t) &= \left( r - \frac{1}{2}V(t) \right) dt + \sqrt{V(t)} dW_1(t),\\
+            dV(t) &= (a - bV(t)) dt + \sigma\sqrt{V(t)} dW_2(t),
+        \end{align}
+        where $W_1(t)$ and $W_2(t)$ are Brownian motions under some probability measure $P$ with \\$dW_1(t) dW_2(t) = \rho dt$. Define
+        \begin{equation*}
+            g(t,x,v) = E^{t,x,v}\left[\mathbbm{1}_{\{X(T)\geq\log K\}}\right].
+        \end{equation*}
+        Show that $g(t,x,v)$ satisfies the PDE (6) and the boundary condition
+        \begin{equation*}
+            g(T,x,v) = \mathbbm{1}_{\{x\geq \log K\}}, \textit{ for all } x\in\mathbb{R} \textit{ and } v\geq 0.
+        \end{equation*}
+        
+        \item Show that with $f(t,x,v)$ and $g(t,x,v)$ as in (c) and (d), the function $c(t,x,v)$ of (7) satisfies the boundary condition (4).
+    \end{enumerate}
+    
+    
+    \item \textbf{Option to exchange an asset for another}\\
+    We consider a financial market in which there are two risky assets with prices $S_t^1$ and $S_t^2$ at time $t$ and a riskless asset $S_t^0=e^{rt}$. The stock prices follow the SDEs:
+    \begin{align*}
+        dS_t^1 &= S_t^1(\mu_1 dt + \sigma_1 dB_t^1),\\
+        dS_t^2 &= S_t^2(\mu_2 dt + \sigma_2 dB_t^2),
+    \end{align*}
+    where $B_t^1$ and $B_t^2$ are two independent Brownian motions defined on a probability space $(\Omega,\mathcal{G},P)$, and denote by $\mathcal{G}_t$ the sigma algebra generated by the Brownian motions up to time $t$.\\
+    We study the pricing and hedging of an option giving the right to exchange one of the risky assets for the other at time $T$.
+    
+    \begin{enumerate}
+        \item We set
+        \begin{equation*}
+            \theta_1=\frac{\mu_1 - r}{\sigma_1} \textit{ and } \theta_2=\frac{\mu_2 - r}{\sigma_2}.
+        \end{equation*}
+        Show that the process defined by
+        \begin{equation*}
+            M_t=e^{-\theta_1 B_t^1 -\theta_2 B_t^2 -\frac{1}{2}(\theta_1^2+\theta_2^2)t},
+        \end{equation*}
+        is a martingale with respect to the filtration $(\mathcal{G}_t)_{t\in[0, T]}$.
+        
+        \item Let $\Tilde{P}$ be the probability with Radon-Nikodym derivative $M_t$ with respect to $P$, i.e.
+        \begin{equation*}
+            \frac{d\Tilde{P}}{dP} = M_t
+        \end{equation*}
+        We introduce the processes
+        \begin{equation*}
+            W_t^1 = B_t^1 + \theta_1 t \textit{ and } W_t^2 = B_t^2 + \theta_2 t.
+        \end{equation*}
+        Derive, under the probability $\Tilde{P}$, the joint moment generating function of $W_t=(W_t^1, W_t^2)$:
+        \begin{equation*}
+            \Tilde{E}\left[e^{uW_t}\right].
+        \end{equation*}
+        Then deduce that, for any $t\in[0,T]$, the random variables $W_t^1$ and $W_t^2$ are independent normal variables with mean zero and variance $t$ under $\Tilde{P}$.
+        
+        \item Show that, under $\Tilde{P}$, the discounted prices
+        \begin{equation*}
+            \Tilde{S}_t^1=e^{-rt}S_t^1 \textit{ and } \Tilde{S}_t^2 = e^{-rt} S_t^2
+        \end{equation*}
+        are martingales.
+    \end{enumerate}
+    
+    We want to price and hedge a European option, with maturity $T$, giving to the holder the right to exchange one unit of the asset 2 for one unit of the asset 1. From his initial wealth, the premium, the writer of the option builds a strategy, defining at any time $t$ a portfolio made of $H_t^0$ units of the riskless asset and $H_t^1$ and $H_t^2$ units of the assets 1 and 2, respectively, in order to generate, at time $T$, a wealth equal to $(S_T^1-S_T^2)^+$. A trading strategy will be defined by the three adapted processes $H^0, H^1$ and $H^2$.
+    \begin{enumerate}
+        \setcounter{enumii}{3}
+        
+        \item Define precisely the self-financing strategy and prove that, if
+        \begin{equation*}
+            \Tilde{V}_t = e^{-rt} V_t
+        \end{equation*}
+        is the discounted value of the strategy, we have:
+        \begin{equation*}
+            d\Tilde{V}_t = H_t^1 e^{-rt} S_t^1\sigma_1 dW_t^1 + H_t^2 e^{-rt} S_t^2 \sigma_2 dW_t^2.
+        \end{equation*}
+        
+        \item Prove that if a self-financing strategy has terminal value equal to $V_T=(S_T^1-S_T^2)^+$, then its value at any time $t<T$ is given by $V_t=F(t,S_t^1,S_t^2)$, where the function $F$ is defined by:
+        \begin{equation}
+            F(t,x_1,x_2) = \Tilde{E}\left(x_1e^{\sigma_1(W_T^1-W_t^1)-\frac{\sigma_1^2}{2}(T-t)}-x_2e^{\sigma_2(W_T^2W_t^2)-\frac{\sigma_2^2}{2}(T-t)}\right)^+.
+        \end{equation}
+        
+        \item Find a parity relationship between the value of the option with payoff $(S_T^1-S_T^2)^+$ and the symmetrical option $(S_T^2-S_T^1)^+$, similar to the put-call parity relationship and give an example of arbitrage opportunity when this relation does not hold.
+        
+        \item We set $\Tilde{C}_t = e^{-rt}F(t,S_t^1, S_t^2)$. Apply Itô's formula to $\Tilde{C}_t$ and then exploit the fact that $\Tilde{C}_t$ is a martingale to derive a PDE for the function $F$.
+        
+        \item Comparing the dynamics of the discounted option price with the discounted value of the self-financing strategy, derive the positions in the two stocks, $H_t^1$ and $H_t^2$, in the hedging portfolio.
+    \end{enumerate}
+    
+    
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+
+

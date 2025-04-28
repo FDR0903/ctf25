@@ -1,0 +1,347 @@
+\documentclass[11pt,a4,table]{article}
+
+\renewcommand{\footnotesize}{\fontsize{9pt}{11pt}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Page Dimensions
+\usepackage[top=1.0in, bottom=1.0in, left= 0.80in, right=0.80in]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Caption options
+\usepackage[margin= 16pt , footnotesize ,  sc , labelfont=bf , labelsep=period , format=plain , justification=centerfirst]{caption}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%load minimum set of other required packages
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{bbm}
+\usepackage{booktabs,longtable}
+\usepackage{eurosym}
+\usepackage{floatrow}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{harvard}
+\usepackage[english]{babel}
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+
+\usepackage[utf8]{inputenc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and tikz
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+	\definecolor{cinnabar}{rgb}{0.89, 0.26, 0.2}
+	\definecolor{ceruleanblue}{rgb}{0.16, 0.32, 0.75}
+
+\usetikzlibrary{patterns}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows,backgrounds,decorations}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+% and optimally spaces tables
+
+\usepackage{tabularx, booktabs}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Roman numerals command thing.
+\makeatletter
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% fake section command
+\newcommand{\fakesection}[1]{%
+  \par\refstepcounter{section}% Increase section counter
+  \sectionmark{#1}% Add section mark (header)
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}% Add section to ToC
+  % Add more content here, if needed.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ------------------------------------------
+%% Journal of Finance conventions
+%% ------------------------------------------
+
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thetable}{\Roman{table}}
+\renewcommand{\abstractname}{\textsc{ABSTRACT}}
+\makeatletter
+\renewcommand{\baselinestretch}{1.10}
+\renewcommand{\topfraction}{0.99}
+\renewcommand{\bottomfraction}{0.99}
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{2}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.9}
+\renewcommand{\dblfloatpagefraction}{0.9}
+\titleformat{\section}{\centering\large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalsize\itshape}{\thesubsection.}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection.}{1em}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% math shocks cuts, theorems, lemmas etc.
+\newcommand{\inner}[2]{\left < #1 \big | #2 \right >}
+\newcommand{\proj}[2]{\mbox{proj} \left ( #1 \big | #2 \right )}
+\newcommand{\cov}[2]{\mbox{cov}\left (#1 ,#2 \right )}
+\newcommand{\var}[1]{\mbox{var}[#1]}
+\newcommand{\Gray}[1]{{\color{gray}#1}}
+\newcommand{\Red}[1]{{\color{red}#1}}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}{Lemma}
+\newtheorem{notation}{Notation}
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{remark}{Remark}
+\newtheorem{solution}{Solution}
+\newtheorem{summary}{Summary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and choose line spacing (comes from setspace)
+
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+%\setstretch{1.5}
+%\setstretch{2}
+
+% make quote right flushed.
+\makeatletter{}
+\g@addto@macro\quote\flushright
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\vspace*{-0.7in}
+
+\begin{center}
+ \textbf{Continuous Time Finance: Solution Problem Set 1} \\
+Ilaria Piatti
+\end{center} 
+
+
+\begin{enumerate}
+    \item Let $\Omega$ be the sample space generated by a three-point binomial model, i.e. $I=\{0,1,2,3\}$.
+    
+    \begin{enumerate}
+        \item The sample space is given by $\Omega=\{HHH,HHT,HTH,THH,HTT, THT, TTH,TTT\}$.
+        
+        \item Describe in words the following events:
+        \begin{itemize}
+            \item $A_1=\{TTT,HHH\}$: the price goes up three times or goes down three times.
+            \item $A_2=\{TTT,HHH\}^c$: the price does not go up three times and does not go down three times.
+            \item $A_3=\{THH,HHH,HTH,HHT\}^c$: the price goes up at most once.
+        \end{itemize}
+        
+        \item Verify which of the following couples $(\Omega,\mathcal{G}_i), i=1,...,4$ define a measurable space:
+        \begin{itemize}
+            \item $\mathcal{G}_0=\{\emptyset,\Omega\}$ is a sigma algebra (the smallest), thus $(\Omega, \mathcal{G}_0)$ is a measurable space.
+            \item $\mathcal{G}_1$ is not a sigma algebra, since e.g. $\{TTT, HHH\}^c\notin \mathcal{G}_1$.
+            \item $\mathcal{G}_2$ is not a sigma algebra, since e.g. $\{TTT\}^c\notin \mathcal{G}_2$.
+            \item $\mathcal{G}_3$ is a sigma algebra, thus $(\Omega,\mathcal{G}_3)$ is a measurable space.
+            \item $\mathcal{G}_4$ is not a sigma algebra, since e.g. $\{TTT,HHH\}\cup\{THT,HTHT\}\notin \mathcal{G}_4$.
+        \end{itemize}
+    \end{enumerate}
+    
+    Let us now assume $r=0,u=1/d=2$ and $S_0=4$.
+    \begin{enumerate}
+        \setcounter{enumii}{3}
+    
+        \item The possible stock prices at the end of period 3 are: 32, 8, 2 and 0.5.
+        \begin{figure}[hp]
+        \begin{tikzpicture}[>=stealth , sloped , scale = 0.6] 
+            \matrix (tree) [%
+              matrix of nodes,
+              minimum size=0.6cm,
+              column sep=3.00cm,
+              row sep=1cm,
+              ampersand replacement=\&
+            ]
+                  {
+                  	\&      \&      \& $32$  \textcolor{red}{$V_3 = 28$} \\
+                  	\&   	\& $16$                                      \\
+                  	\& $8$ 	\&      \& $8$   \textcolor{red}{$V_3 = 4$}  \\
+              $4$ 	\&   	\& $4$                                       \\
+                  	\& $2$ 	\&      \& $2$   \textcolor{red}{$V_3 = 0$}  \\
+                  	\&   	\& $1$                                       \\
+                  	\&   	\&      \& $0.5$ \textcolor{red}{$V_3 = 0$}  \\
+            };
+            \draw[->] (tree-4-1) -- (tree-3-2) node [midway,above]{} ;
+            \draw[->] (tree-4-1) -- (tree-5-2) node [midway,below]{} ;
+            \draw[->] (tree-3-2) -- (tree-2-3) node [midway,above]{} ;
+            \draw[->] (tree-3-2) -- (tree-4-3) node [midway,below]{} ;
+            \draw[->] (tree-5-2) -- (tree-4-3) node [midway,above]{} ;
+            \draw[->] (tree-5-2) -- (tree-6-3) node [midway,below]{} ;
+            \draw[->] (tree-2-3) -- (tree-1-4) node [midway,below]{} ;
+            \draw[->] (tree-2-3) -- (tree-3-4) node [midway,below]{} ;
+            \draw[->] (tree-4-3) -- (tree-3-4) node [midway,below]{} ;
+            \draw[->] (tree-4-3) -- (tree-5-4) node [midway,below]{} ;
+            \draw[->] (tree-6-3) -- (tree-5-4) node [midway,below]{} ;
+            \draw[->] (tree-6-3) -- (tree-7-4) node [midway,below]{} ;
+        \end{tikzpicture}
+        \end{figure}
+        
+        \item At maturity $T=3$, the payoff of a call option with exercise price $K=4$ is $V_3=(S_3-4)^+$. The possible values are thus 28, 4 and 0 (see values in red in the binomial tree drawn above).
+    \end{enumerate}
+
+    
+    \item In a two periods binomial model with $r=0, u=1/d=2$ and $S_0 = 4$:
+    
+    \begin{enumerate}
+        \item Compute the price of a European call option with strike price $K=4$ and maturity $T=1$.
+        \begin{figure}[hp]
+        \begin{tikzpicture}[>=stealth , sloped , scale = 0.6] 
+            \matrix (tree) [%
+              matrix of nodes,
+              minimum size=0.6cm,
+              column sep=3.00cm,
+              row sep=1cm,
+              ampersand replacement=\&
+            ]
+                  {
+                  	\& $8$ \textcolor{red}{$V_1 = 4$}  \\
+              $4$ 	\&                                 \\
+                  	\& $2$ \textcolor{red}{$V_1 = 0$}  \\
+            };
+            \draw[->] (tree-2-1) -- (tree-1-2) node [midway,above]{$\Tilde{p}$} ;
+            \draw[->] (tree-2-1) -- (tree-3-2) node [midway,above]{$1-\Tilde{p}$} ;
+        \end{tikzpicture}
+        \end{figure}
+        The risk neutral probability $\Tilde{p}$ is given by
+        \begin{equation*}
+            \Tilde{p}=\frac{1+r-d}{u-d}=\frac{1+0-1/2}{2-1/2}=\frac{1}{3}.
+        \end{equation*}
+        Therefore, using the risk neutral valuation formula,
+        \begin{equation*}
+            V_0 = \frac{\Tilde{E}(V_1)}{1+r}=4\frac{1}{3}+0\frac{2}{3}=\frac{4}{3}.
+        \end{equation*}
+        
+        \item Consider a European call option with strike price $K=4$ and maturity $T=2$.
+        \begin{figure}[hp]
+        \begin{tikzpicture}[>=stealth , sloped , scale = 0.6] 
+            \matrix (tree) [%
+              matrix of nodes,
+              minimum size=0.6cm,
+              column sep=3.00cm,
+              row sep=1cm,
+              ampersand replacement=\&
+            ]
+                  {
+                  	\&   	\& $16$    \textcolor{red}{$V_2 = 12$} \\
+                  	\& $8$ 	\&                                    \\
+              $4$ 	\&   	\& $4$     \textcolor{red}{$V_2 = 0$} \\
+                  	\& $2$ 	\&                                    \\
+                  	\&   	\& $1$     \textcolor{red}{$V_2 = 0$} \\
+            };
+            \draw[->] (tree-3-1) -- (tree-2-2) node [midway,above]{} ;
+            \draw[->] (tree-3-1) -- (tree-4-2) node [midway,below]{} ;
+            \draw[->] (tree-2-2) -- (tree-1-3) node [midway,above]{} ;
+            \draw[->] (tree-2-2) -- (tree-3-3) node [midway,below]{} ;
+            \draw[->] (tree-4-2) -- (tree-3-3) node [midway,above]{} ;
+            \draw[->] (tree-4-2) -- (tree-5-3) node [midway,below]{} ;
+        \end{tikzpicture}
+        \end{figure}
+    \end{enumerate}
+    
+    The deltas of the hedging portfolio at time $t=1$ are:
+    \begin{align*}
+        \Delta_1(H)&=\frac{V_2(HH)-V_2(HT)}{S_2(HH)-S_2(HT)}=\frac{12-0}{16-4}=1\\
+        \Delta_1(T)&=\frac{V_2(TH)-V_2(TT)}{S_2(TH)-S_2(TT)}=\frac{0-0}{4-1}=0
+    \end{align*}
+    
+    The price of the call at time $t=1$, using the risk neutral valuation formula are:
+    \begin{align*}
+        V_1(H) &= \frac{1}{1+0}\left[\frac{1}{3}12+\frac{2}{3}0\right] = 4\\
+        V_1(T) &= \frac{1}{1+0}\left[\frac{1}{3}0+\frac{2}{3}0\right] = 0
+    \end{align*}
+    
+    At time $t=0$, the delta of the hedging portfolio is
+    \begin{equation*}
+        \Delta_0 = \frac{V_1(H)-V_1(T)}{S_1(H)-S_1(T)}=\frac{4-0}{8-2}=\frac{2}{3}.
+    \end{equation*}
+    
+    The $t=0$ value of the call is
+    \begin{equation*}
+        V_0 = \frac{1}{1+r}[\Tilde{p}V_1(H)+(1-\Tilde{p})V_1(T)] = \frac{1}{1+0} \left[\frac{1}{3}4+\frac{2}{3}0\right] = \frac{4}{3}.
+    \end{equation*}
+    
+    
+    \item Let $(\Omega,\mathcal{G})$ be a measurable space on $\Omega=\{1,2,3,4,5\}$ with
+    \begin{equation*}
+        \mathcal{G}=\{\emptyset, \Omega, \{1\},\{2\},\{1,2\},\{2,3,4,5\},\{1,3,4,5\},\{3,4,5\}\}.
+    \end{equation*}
+    Let's define the three following sigma algebras:
+    \begin{itemize}
+        \item $\mathcal{G}_1=\{\emptyset,\Omega\}$
+        
+        \item $\mathcal{G}_2=\{\emptyset,\Omega,\{1\},\{2,3,4,5\}\}$
+        
+        \item $\mathcal{G}_3=\{\emptyset,\Omega,\{1\},\{2\},\{1,2\},\{2,3,4,5\},\{1,3,4,5\},\{3,4,5\}\}=\mathcal{G}$
+    \end{itemize}
+    The sequence $(\mathcal{G}_i)_{i=1,2,3}$ is a filtration since $\mathcal{G}_1\subset \mathcal{G}_2\subset \mathcal{G}_3$.
+    
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+
+

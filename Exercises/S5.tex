@@ -1,0 +1,421 @@
+\documentclass[11pt,a4,table]{article}
+
+\renewcommand{\footnotesize}{\fontsize{9pt}{11pt}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Page Dimensions
+\usepackage[top=1.0in, bottom=1.0in, left= 0.80in, right=0.80in]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Caption options
+\usepackage[margin= 16pt , footnotesize ,  sc , labelfont=bf , labelsep=period , format=plain , justification=centerfirst]{caption}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%load minimum set of other required packages
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{bbm}
+\usepackage{booktabs,longtable}
+\usepackage{eurosym}
+\usepackage{floatrow}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{harvard}
+\usepackage[english]{babel}
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+
+\usepackage[utf8]{inputenc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and tikz
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+	\definecolor{cinnabar}{rgb}{0.89, 0.26, 0.2}
+	\definecolor{ceruleanblue}{rgb}{0.16, 0.32, 0.75}
+
+% and optimally spaces tables
+
+\usepackage{tabularx, booktabs}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Roman numerals command thing.
+\makeatletter
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% fake section command
+\newcommand{\fakesection}[1]{%
+  \par\refstepcounter{section}% Increase section counter
+  \sectionmark{#1}% Add section mark (header)
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}% Add section to ToC
+  % Add more content here, if needed.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ------------------------------------------
+%% Journal of Finance conventions
+%% ------------------------------------------
+
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thetable}{\Roman{table}}
+\renewcommand{\abstractname}{\textsc{ABSTRACT}}
+\makeatletter
+\renewcommand{\baselinestretch}{1.10}
+\renewcommand{\topfraction}{0.99}
+\renewcommand{\bottomfraction}{0.99}
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{2}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.9}
+\renewcommand{\dblfloatpagefraction}{0.9}
+\titleformat{\section}{\centering\large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalsize\itshape}{\thesubsection.}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection.}{1em}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% math shocks cuts, theorems, lemmas etc.
+\newcommand{\inner}[2]{\left < #1 \big | #2 \right >}
+\newcommand{\proj}[2]{\mbox{proj} \left ( #1 \big | #2 \right )}
+\newcommand{\cov}[2]{\mbox{cov}\left (#1 ,#2 \right )}
+\newcommand{\var}[1]{\mbox{var}[#1]}
+\newcommand{\Gray}[1]{{\color{gray}#1}}
+\newcommand{\Red}[1]{{\color{red}#1}}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}{Lemma}
+\newtheorem{notation}{Notation}
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{remark}{Remark}
+\newtheorem{solution}{Solution}
+\newtheorem{summary}{Summary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and choose line spacing (comes from setspace)
+
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+%\setstretch{1.5}
+%\setstretch{2}
+
+% make quote right flushed.
+\makeatletter{}
+\g@addto@macro\quote\flushright
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\vspace*{-0.7in}
+
+\begin{center}
+ \textbf{Continuous Time Finance: Solution Problem Set 5} \\
+Ilaria Piatti 
+\end{center} 
+
+
+\begin{enumerate}
+    \item \textbf{Foreign and Domestic Risk-Neutral Measures}\\
+    Suppose we have a market with two currencies, which we call foreign and domestic.\\
+    The model is driven by a two-dimensional Brownian motion
+    \begin{equation*}
+        W(t) = (W_1(t), W_2(t))
+    \end{equation*}
+    and we assume that $W_1$ and $W_2$ are independent under $P$.\\
+    We begin with a stock whose price $S(t)$ in domestic currency satisfies
+    \begin{equation}
+        dS(t) = \alpha(t) S(t) dt + \sigma_1(t) S(t) dW_1(t).
+    \end{equation}
+    The domestic interest rate is $R(t)$, so that the domestic money market account price and domestic discount process are:
+    \begin{equation*}
+        M(t) = e^{\int_0^t R(u) du}, \textit{ and } D(t) = e^{-\int_0^t R(u) du}.
+    \end{equation*}
+    There is also a foreign interest rate $R^f(t)$, which leads to the foreign money market account price and foreign discount process
+    \begin{equation*}
+        M^f(t)=e^{\int_0^t R^f(u) du}, \textit{ and } D^f(t) = e^{-\int_0^t R^f(u) du}.
+    \end{equation*}
+    Finally, there is an exchagne rate $Q(t)$, which gives units of domestic currency per unit of foreign currency. We assume it satisfies
+    \begin{equation}
+        dQ(t) = \gamma(t)Q(t) dt + \sigma_2(t) Q(t) dW_3(t),
+    \end{equation}
+    where $dW_3(t) = \rho(t) dW_1(t) + \sqrt{1-\rho^2(t)} dW_2(t)$. i.e. $W_3$ is a Brownian motion correlated with $W_1$ and $W_2$.
+    
+    \begin{enumerate}
+        \item Compute the differential of the stock price in units of the domestic money market account, i.e. $d(D(t)S(t))$.\\\\
+        We can use the dynamics of the stock price (1) and of the discount factor, $dD(t) = - R(t)D(t) dt$, to compute the differential of the stock price in units of the domestic money market account, $d(D(t)S(t))$, by applying Itô's formula:
+        \begin{align}
+            d(D(t)S(t)) &= S(t)dD(t) + D(t)dS(t) + dD(t)dS(t) \nonumber\\
+            &= -S(t)R(t)D(t) dt + D(t)[\alpha(t)S(t) dt + \sigma_1(t)S(t)) dW_1(t)] \nonumber\\
+            &= D(t)S(t)[(\alpha(t) - R(t)) dt + \sigma_1(t) dW_1(t)].
+        \end{align}
+        
+        \item Find the process $\Theta_1(t)$ such that
+        \begin{equation*}
+            d(D(t)S(t)) = \sigma_1(t)D(t)S(t) d\Tilde{W}_1(t),
+        \end{equation*}
+        by defining $\Tilde{W}_1(t)=\int_0^t\Theta_1(u) du + W_1(t)$.\\\\
+        We would like to construct a process
+        \begin{equation*}
+            \Tilde{W}_1(t) = \int_0^t \Theta_1(u) du + W_1(t)
+        \end{equation*}
+        that allows us to write (3) as
+        \begin{equation}
+            d(D(t)S(t)) = \sigma_1(t)D(t)S(t) d\Tilde{W}_1(t).
+        \end{equation}
+        Equating the right-hand sides of (3) and (4), we see that $\Theta_1(t)$ must be chosen to satisfy the first \textit{market price of risk equation}:
+        \begin{equation}
+            \sigma_1(t)\Theta_1(t) = \alpha(t) - R(t).
+        \end{equation}
+        The solution is $\Theta_1(t) = \frac{\alpha(t) - R(t)}{\sigma_1(t)}$.
+        
+        \item The value of the foreign money market account in domestic currency is $M^f(t)Q(t)$, and its discounted value is $D(t)M^f(t)Q(t)$. Find the differential of this price.\\
+        Hint: Use the fact that $dM^f(t) = R^f(t) M^f(t) dt$, then compute $d(M^f(t)Q(t))$, and finally $d\left(D(t)M^f(t)Q(t)\right)$.\\\\
+        We first compute $d(M^f(t)Q(t))$:
+        \begin{align}
+            d(M^f(t)Q(t)) &= Q(t) dM^f(t) + M^f(t) dQ(t) + dM^f(t)dQ(t) \nonumber\\
+            &= R^f(t)M^f(t)Q(t) dt + M^f(t)[\gamma(t)Q(t) dt + \sigma_2(t)Q(t) dW_3(t)] \nonumber\\
+            &= M^f(t)Q(t)\left[\left(\gamma(t) + R^f(t)\right) dt + \sigma_2(t) dW_3(t)\right].
+        \end{align}
+        Then we compute $d(D(t)M^f(t)Q(t))$:
+        \begin{align}
+            d\left(D(t)M^f(t)Q(t)\right) = &M^f(t)Q(t) dD(t) + D(t) d \left(M^f(t)Q(t)\right) + dD(t) d\left(M^f(t)Q(t)\right) \nonumber\\
+            = &-M^f(t)Q(t)R(t)D(t) dt + D(t)M^f(t)Q(t) \left[\left(\gamma(t) - R^f(t)\right) dt + \sigma_2(t) dW_3(t) \right] \nonumber\\
+            = &D(t)M^f(t)Q(t) \left[\left(\gamma(t) + R^f(t) - R(t)\right) dt + \sigma_2(t) dW_3(t)\right] \nonumber\\
+            = &D(t)M^f(t)Q(t) \Big[\left(\gamma(t) + R^f(t) - R(t)\right) dt + \sigma_2(t)\rho(t) dW_1(t) \nonumber\\
+            &+ \sigma_2(t)\sqrt{1-\rho^2(t)} dW_2(t) \Big]. 
+        \end{align}
+        
+        \item Find the processes $\Theta_2(t)$ such that
+        \begin{equation*}
+            d\left(D(t)M^f(t)Q(t)\right) = D(t)M^f(t)Q(t) \left[\sigma_2(t)\rho(t) d\Tilde{W}_1(t) + \sigma_2(t)\sqrt{1-\rho^2(t)} d\Tilde{W}_2(t)\right],
+        \end{equation*}
+        by defining $\Tilde{W}_2(t) = \int_0^t \Theta_2(u) du + W_2(t)$.\\\\
+        In addition to the process $\Tilde{W}_1(t)$, we would like to construct a process
+        \begin{equation*}
+            \Tilde{W}_2(t) = \int_0^t \Theta_2(u) du + W_2(t)
+        \end{equation*}
+        so that (7) can be written as
+        \begin{equation}
+            d(D(t)M^f(t)Q(t)) = D(t)M^f(t)Q(t)\left[\sigma_2(t)\rho(t) d\Tilde{W}_1(t) + \sigma_2(t)\sqrt{1-\rho^2(t)} d\Tilde{W}_2(t)\right].
+        \end{equation}
+        Equating the right-hand sides of (7) and (8), we see that $\Theta_2(t)$ must be chosen to satisfy the second \textit{market price of risk equation}:
+        \begin{equation}
+            \sigma_2(t)\rho(t)\Theta_1(t) + \sigma_2(t)\sqrt{1-\rho^2(t)}\Theta_2(t) = \gamma(t) + R^f(t) - R(t).
+        \end{equation}
+        We can solve explicitly for $\Theta_2(t)$ by substituting the solution for $\Theta_1(t)$ in (9) and then solving for $\Theta_2(t)$.
+    \end{enumerate}
+    
+    
+    Since there is only one possible solution for $\Theta_1(t)$ and $\Theta_2(t)$, there is a unique risk-neutral measure $\Tilde{P}$. Under this measure, $\Tilde{W}(t)=\left(\Tilde{W}_1(t),\Tilde{W}_2(t)\right)$ is a two-dimensional Brownian motion and all the assets in units of the domestic money market account are martingales. Let us also define
+    \begin{equation*}
+        d\Tilde{W}_3(t)=\rho(t) d\Tilde{W}_1(t) + \sqrt{1-\rho^2(t)} d\Tilde{W}_2(t)
+    \end{equation*}
+    
+    \begin{enumerate}
+        \setcounter{enumii}{4}
+    
+        \item We can write the processes $D(t)S(t)$ and $D(t)M^f(t)Q(t)$ in undiscounted form by multiplying them by $M(t)=1/D(t)$ and using the formula $dM(t) = R(t)M(t) dt$ and Itô product rule. This leads to the formulas:
+        \begin{align}
+            dS(t) &= S(t)\left[R(t) dt + \sigma_1(t) d\Tilde{W}_1(t)\right],\\
+            d\left(M^f(t)Q(t)\right) &= M^f(t)Q(t) \left[R(t) dt + \sigma_2(t)\rho(t) d\Tilde{W}_1(t) + \sigma_2(t) \sqrt{1-\rho^2(t)} d\Tilde{W}_2(t)\right] \nonumber\\
+            &= M^f(t)Q(t)\left[R(t) dt + \sigma_2(t) d\Tilde{W}_3(t)\right].
+        \end{align}
+        Both the stock price and the foreign money market account in units of the domestic currency have instantaneous return $R(t)$ under the domestic risk-neutral measure. The volatility vector of the foreign money market account in units of the domestic currency is
+        \begin{equation*}
+            (\nu_1(t),\nu_2(t)) = \left(\sigma_2(t)\rho(t),\sigma_2(t)\sqrt{1-\rho^2(t)}\right).
+        \end{equation*}
+    \end{enumerate} 
+    
+    
+    Now, to find the foreign risk-neutral measure, we take the foreign money market account as numéraire. Its value denominated in units of the domestic currency is $M^f(t)Q(t)$.
+    \begin{enumerate}
+        \setcounter{enumii}{5}
+        
+        \item Define the risk-neutral measure under this new numéraire, $\Tilde{P}^f$, and show that the stock and the domestic money market account, both in units of the new numéraire, are martingales under $\Tilde{P}^f$.\\\\
+        The risk-neutral measure with the numéraire $M^f(t)Q(t)$ is given by:
+        \begin{equation}
+            \Tilde{P}^f(A)=\frac{1}{Q(0)}\int_A D(T)M^f(T)Q(T) d\Tilde{P},
+        \end{equation}
+        where we used the fact that $D(0)=M^f(0)=1$. Furthermore, the process $\Tilde{W}^f(t) = \left(\Tilde{W}_1^f(t),\Tilde{W}_2^f(t)\right)$ given by
+        \begin{align*}
+            \Tilde{W}_1^f(t) &= -\int_0^t \sigma_2(u)\rho(u) du + \Tilde{W}_1(t),\\
+            \Tilde{W}_2^f(t) &= -\int_0^t \sigma_2(u)\sqrt{1-\rho^2(u)} du + \Tilde{W}_2(t),
+        \end{align*}
+        is a two-dimensional Brownian motion under $\Tilde{P}^f$. We call $\Tilde{P}^f$ the \textit{foreign risk-neutral measure}. As above, we can define also the third Brownian motion
+        \begin{equation*}
+            d\Tilde{W}_3^f(t) = \rho(t) d\Tilde{W}_1^f(t) + \sqrt{1-\rho^2(t)} d\Tilde{W}_2^f(t).
+        \end{equation*}
+        By definition, the stock and the domestic money market account in units of the new numéraire are martingales under $\Tilde{P}^f$. We can verify it directly using Itô calculus:
+        \begin{align*}
+            d\left(\frac{M(t)D^f(t)}{Q(t)}\right) &= -\frac{M(t)D^f(t)}{Q(t)}\sigma_2(t) d\Tilde{W}_3^f(t), \\
+            d\left(\frac{S(t)D^f(t)}{Q(t)}\right) &= \frac{S(t)D^f(t)}{Q(t)} \left[\sigma_1(t) d\Tilde{W}_1^f(t) - \sigma_2(t) d\Tilde{W}_3^f(t)\right].
+        \end{align*}
+        These processes have no drift, so they are martingales under $\Tilde{P}^f$.
+    \end{enumerate}
+    
+    
+    \item \textbf{Proof of Theorem 4}\\
+    \\
+    The goal of this exercise is to prove Theorem 4 in Lecture 7, which basically gives the equivalent of Black-Scholes call price formula but for the case of random interest rate. We prove it for $t=0$ but it is not difficult to modify the proof to account for general $t$.\\
+    The formula is the following:
+    \begin{equation}
+        V(0) = S(0)\mathcal{N}(d_1) - K B (0,T) \mathcal{N}(d_2),
+    \end{equation}
+    with
+    \begin{equation*}
+        d_1=\frac{\ln \frac{For_S(0,T)}{K}+\frac{\sigma^2}{2}T}{\sigma\sqrt{T}}, d_2 = d_1 - \sigma\sqrt{T}.
+    \end{equation*}
+    
+    \begin{enumerate}
+        \item The formulah olds if the forward price of the underlying follows
+        \begin{equation}
+            dFor_S(t,T) = \sigma For_S(t,T) d\Tilde{W}^T(t),
+        \end{equation}
+        for a positive constant $\sigma$.\\\\
+        Equation (15) is a geometric Brownian motion with zero mean, therefore its solution is:
+        \begin{equation*}
+            For_S(t,T) = For_S(0,T)e^{\sigma\Tilde{W}^T(t) - \frac{1}{2}\sigma^2t}.
+        \end{equation*}
+        Moreover, we know that $For_S(0,T) = \frac{S(0)}{B(0,T)}$. Therefore,
+        \begin{equation}
+            For_S(t,T) = \frac{S(0)}{B(0,T)}e^{\sigma\Tilde{W}^T(t) - \frac{1}{2}\sigma^2t}.
+        \end{equation}
+        
+        
+        \item What is the distribution of the log forward price?\\\\
+        For each $t$, the forward price $For_S(t,T)$ in equation (15) has a log-normal distribution under $\Tilde{P}^f$. Therefore, the log forward price is normally distributed.
+        
+        \item We will need one more change of measure. Suppose we take the asset price $S(t)$ to be the numéraire. Define the risk-neutral measure for this numéraire.\\\\
+        The risk-neutral for this numéraire is:
+        \begin{equation}
+            \Tilde{P}^S(A) = \frac{1}{S(0)}\int_A D(T)S(T) d\Tilde{P}.
+        \end{equation}
+        
+        \item Denominated in units of $S(t)$, the zero-coupon bond is
+        \begin{equation*}
+            \frac{B(t,T)}{S(t)}=\frac{1}{For_S(t,T)}, 0\leq t \leq T.
+        \end{equation*}
+        Compute the differential of $\frac{1}{For_S(t,T)}$ and show that it is a martingale under $\Tilde{P}^S$.\\\\
+        We can compute its differential using Itô's formula and the function $f(x)=1/x$:
+        \begin{align}
+            d\left(\frac{1}{For_S(t,T)}\right) &= df(For_S(t,T)) \nonumber\\
+            &= f'(For_S(t,T)) dFor_S(t,T) + \frac{1}{2}f''(For_S(t,T)) dFor_S(t,T) dFor_S(t,T) \nonumber\\
+            &= -\frac{\sigma}{For_S(t,T)} d\Tilde{W}^T(t) + \frac{\sigma^2}{For_S(t,T)} dt \nonumber\\
+            &= -\frac{\sigma}{For_S(t,T)}\left(-\sigma + d\Tilde{W}^T(t)\right). \nonumber\\
+            &= -\frac{\sigma}{For_S(t,T)} d\Tilde{W}^S(t),
+        \end{align}
+        where $\Tilde{W}^S(t) = -\sigma t + \Tilde{W}^T(t)$ is a Brownian motion under $\Tilde{P}^S$.\\
+        $\frac{1}{For_S(t,T)}$ is a martingale under $\Tilde{P}^S$.
+        
+        \item Show that the solution of the differential in point (d) is
+        \begin{equation*}
+            \frac{1}{For_S(t,T)} = \frac{B(0,T)}{S(0)}e^{-\sigma\Tilde{W}^S(t)-\frac{1}{2}\sigma^2t},
+        \end{equation*}
+        which has a log-normal distribution under $\Tilde{P}^S$, the measure under which $\Tilde{W}^S(t)$ is a Brownian motion.\\\\
+        Similarly to point (a), the solution to (17) is:
+        \begin{align}
+            \frac{1}{For_S(t,T)} &= \frac{1}{For_S(0,T)}e^{-\sigma\Tilde{W}^S(t)-\frac{1}{2}\sigma^2t} \nonumber\\ &=\frac{B(0,T)}{S(0)}e^{-\sigma\Tilde{W}^S(t)-\frac{1}{2}\sigma^2t},
+        \end{align}
+        which has a log-normal distribution under $\Tilde{P}^S$.
+    \end{enumerate}
+    
+    At time zero, the value of a European call expiring at time $T$, according to the risk-neutral pricing formula is
+    \begin{align}
+        V(0) &= \Tilde{E}[D(T)(S(T)-K)^+] \nonumber \\
+        &= \Tilde{E}[D(T)S(T)\mathbbm{1}_{\{S(T)>K\}}] - K\Tilde{E}[D(T)\mathbbm{1}_{\{S(T)>K\}}] \nonumber \\
+        &= S(0)\Tilde{E}\left[\frac{D(T)S(T)}{S(0)}\mathbbm{1}_{\{S(T)>K\}}\right] - KB(0,T)\Tilde{E}\left[\frac{D(T)}{B(0,T)}\mathbbm{1}_{\{S(T)>K\}}\right] \nonumber \\
+        &= S(0)\Tilde{P}^S\{S(T)>K\} - KB(0,T)\Tilde{P}^T\{S(T)>K\} \nonumber \\
+        &= S(0)\Tilde{P}^S\{For_S(T,T)>K\} - KB(0,T)\Tilde{P}^T\{For_S(T,T)>K\} \nonumber \\
+        &= S(0)\Tilde{P}^S\left\{\frac{1}{For_S(T,T)}<\frac{1}{K}\right\} - KB(0,T)\Tilde{P}^T\{For_S(T,T)>K\}.
+    \end{align}
+    \begin{enumerate}
+        \setcounter{enumii}{5}
+        
+        \item Use the fact that $\Tilde{W}^S(t)$ is normal to show that
+        \begin{equation*}
+            \Tilde{P}^S\left\{\frac{1}{For_S(T,T)} < \frac{1}{K}\right\} = \mathcal{N}(d_1).
+        \end{equation*}\\
+        Using the fact that $\Tilde{W}^S(t)$ is normal with mean zero and variance $T$ under $\Tilde{P}^S$, we compute:
+        \begin{align*}
+            \Tilde{P}^S\left\{\frac{1}{For_S(T,T)}<\frac{1}{K}\right\} &= \Tilde{P}^S \left\{-\sigma\Tilde{W}^S(T) - \frac{1}{2}\sigma^2T < \log\frac{S(0)}{KB(0,T)}\right\} \\
+            &= \Tilde{P}^S\left\{\frac{-\Tilde{W}^S(T)}{\sqrt{T}} < \frac{1}{\sigma\sqrt{T}}\left[\log\frac{S(0)}{KB(0,T)} + \frac{1}{2}\sigma^2 T\right]\right\} \\
+            &= \mathcal{N}(d_1).
+        \end{align*}
+        
+        \item Use the fact that $\Tilde{W}^T(t)$ is normal to show that
+        \begin{equation*}
+            \Tilde{P}^T\{For_S(T,T)>K\} = \mathcal{N}(d_2).
+        \end{equation*}\\
+        Using the fact that $\Tilde{W}^T(t)$ is normal with mean zero and variance $T$ under $\Tilde{P}^T$, we compute:
+        \begin{align*}
+            \Tilde{P}^T\left\{For_S(T,T)<K\right\} &= \Tilde{P}^T \left\{\sigma\Tilde{W}^T(T) - \frac{1}{2}\sigma^2T > \log\frac{KB(0,T)}{S(0)}\right\} \\
+            &= \Tilde{P}^T\left\{\frac{-\Tilde{W}^T(T)}{\sqrt{T}} > \frac{1}{\sigma\sqrt{T}}\left[\log\frac{KB(0,T)}{S(0)} + \frac{1}{2}\sigma^2 T\right]\right\} \\
+            &= \Tilde{P}^T\left\{\frac{-\Tilde{W}^T(T)}{\sqrt{T}} > \frac{1}{\sigma\sqrt{T}} \left[\log\frac{S(0)}{KB(0,T)} - \frac{1}{2}\sigma^2T\right]\right\} \\
+            &= \mathcal{N}(d_2).
+        \end{align*}        
+    \end{enumerate}
+    
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+
+

@@ -1,0 +1,324 @@
+\documentclass[11pt,a4,table]{article}
+
+\renewcommand{\footnotesize}{\fontsize{9pt}{11pt}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Page Dimensions
+\usepackage[top=1.0in, bottom=1.0in, left= 0.80in, right=0.80in]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Caption options
+\usepackage[margin= 16pt , footnotesize ,  sc , labelfont=bf , labelsep=period , format=plain , justification=centerfirst]{caption}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%load minimum set of other required packages
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{bbm}
+\usepackage{booktabs,longtable}
+\usepackage{eurosym}
+\usepackage{floatrow}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{harvard}
+\usepackage[english]{babel}
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+
+\usepackage[utf8]{inputenc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and tikz
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+	\definecolor{cinnabar}{rgb}{0.89, 0.26, 0.2}
+	\definecolor{ceruleanblue}{rgb}{0.16, 0.32, 0.75}
+
+% and optimally spaces tables
+
+\usepackage{tabularx, booktabs}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Roman numerals command thing.
+\makeatletter
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% fake section command
+\newcommand{\fakesection}[1]{%
+  \par\refstepcounter{section}% Increase section counter
+  \sectionmark{#1}% Add section mark (header)
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}% Add section to ToC
+  % Add more content here, if needed.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ------------------------------------------
+%% Journal of Finance conventions
+%% ------------------------------------------
+
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thetable}{\Roman{table}}
+\renewcommand{\abstractname}{\textsc{ABSTRACT}}
+\makeatletter
+\renewcommand{\baselinestretch}{1.10}
+\renewcommand{\topfraction}{0.99}
+\renewcommand{\bottomfraction}{0.99}
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{2}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.9}
+\renewcommand{\dblfloatpagefraction}{0.9}
+\titleformat{\section}{\centering\large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalsize\itshape}{\thesubsection.}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection.}{1em}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% math shocks cuts, theorems, lemmas etc.
+\newcommand{\inner}[2]{\left < #1 \big | #2 \right >}
+\newcommand{\proj}[2]{\mbox{proj} \left ( #1 \big | #2 \right )}
+\newcommand{\cov}[2]{\mbox{cov}\left (#1 ,#2 \right )}
+\newcommand{\var}[1]{\mbox{var}[#1]}
+\newcommand{\Gray}[1]{{\color{gray}#1}}
+\newcommand{\Red}[1]{{\color{red}#1}}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}{Lemma}
+\newtheorem{notation}{Notation}
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{remark}{Remark}
+\newtheorem{solution}{Solution}
+\newtheorem{summary}{Summary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and choose line spacing (comes from setspace)
+
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+%\setstretch{1.5}
+%\setstretch{2}
+
+% make quote right flushed.
+\makeatletter{}
+\g@addto@macro\quote\flushright
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\vspace*{-0.7in}
+
+\begin{center}
+ \textbf{Continuous Time Finance: Problem Set 3} \\
+ \textit{Introduction to Stochastic Processes and Stochastic Calculus} \\
+Ilaria Piatti 
+\end{center} 
+
+
+\begin{enumerate}
+    \item Let $S_t=S_0\exp\{\sigma W_t+(\alpha - \frac{1}{2}\sigma^2)t\}$ be a geometric Brownian motion and let $p$ be a positive constant. Compute $d(S_t^p)$, the differential of $S_t$ raised to the power of $p$.
+    
+    
+    \item Let $W_t$ be a Brownian motion.
+    
+    \begin{enumerate}
+        \item Compute $dW_t^4$ and then write $W_t^4$ as the sum of an ordinary (Lebesque) integral with respect to time and a stochastic integral.
+        
+        \item Take expectations on both sides of the formula you obtained in (a), use the fact that $E(W_t^2)=t$, and derive the formula $E(W_T^4)=3T^2$.
+        
+        \item Use the method of (a) and (b) to derive a formula for $E(W_T^6)$.
+    \end{enumerate}
+    
+    
+    \item Let $(W_t)_{t\geq 0}$ be a Brownian motion and let $(\mathcal{G})_{t\geq 0}$ be an associated filtration, and let $\alpha_t$ and $\sigma_t$ be adapted processes. Define the Itô process
+    \begin{equation}
+        X_t = \int_0^t \sigma_s dW_s + \int_0^t \left(\alpha_s -\frac{1}{2}\sigma_s^2 \right) ds.
+    \end{equation}
+    
+    \begin{enumerate}
+        \item Write (1) in differential form.
+    \end{enumerate}
+    
+    Consider an asset price process given by:
+    \begin{equation}
+        S_t=S_0e^{X_t},
+    \end{equation}
+    where $S_0$ is nonrandom and positive.
+    \begin{enumerate}
+        \setcounter{enumii}{1}
+    
+        \item Compute the differential of the stock price, $dS_t$, using Itô's formula.
+    
+        \item What are the instantaneous mean rate of return and volatility of the stock price?
+        
+        \item If $\alpha$ and $\sigma$ are constant, what is the distribution of the stock price and how do we call the process $dS_t$?
+    \end{enumerate}
+
+    
+    \item Let $(W_t)_{t\geq 0}$ be a Brownian motion. The \textit{Vasicek model} for the interest rate process $R_t$ is:
+    \begin{equation}
+        dR_t=(\alpha-\beta R_t) dt + \sigma dW_t,
+    \end{equation}
+    where $\alpha, \beta$ and $\sigma$ are positive constants. The solution to the stochastic differential equation (3) can be determined in closed form and is:
+    \begin{equation}
+        R_t=e^{-\beta t} R_0 +\frac{\alpha}{\beta}(1-e^{-\beta t}) + \sigma e^{-\beta t} \int_0^t e^{\beta s} dW_s.
+    \end{equation}
+    
+    \begin{enumerate}
+        \item Verify that (4) is indeed a solution of the SDE (3).\\
+              Hint: compute the differential of the RHS of (4).
+        
+        \item Use expression (4) to determine the distribution of the interest rate in the Vasicek model, and give explicitly its expectation and variance.
+        
+        \item Do you think the distribution of $R_t$ in the Vasicek model is appropriate for interest rates?
+        
+        \item The Vasicek model has the desirable property that the interest rate is \textit{mean-reverting}. Intuitively, what does this mean?
+    \end{enumerate}
+    
+    
+    \item The time $t$ value of a European call option with maturity $T$ and strike price $K$ in the Black-Scholes model is given by:
+    \begin{equation}
+        c(t,S_t) = S_t \mathcal{N}(d_1) - K \exp(-r(T-t))\mathcal{N}(d_2),
+    \end{equation}
+    where
+    \begin{equation*}
+        d_1=\frac{\ln \frac{S_t}{K} + \left(r+\frac{\sigma^2}{2}\right)(T-t)}{\sigma\sqrt{T-t}},~~~~ d_2=d_1 - \sigma \sqrt{T-t}.
+    \end{equation*}
+    The derivatives of the function $c(t,S_t)$ with respect to various variables are called the \textit{Greeks}.
+    \begin{enumerate}
+        \item Compute the \textit{delta} of the option, i.e. the derivative of $c(t,S_t)$ with respect to the underlying stock price $S_t$. What happens to the price of the call option when the stock option decreases?\\
+        Hint: Be careful, remember that $d_1$ and $d_2$ are also functions of $S_t$!
+        
+        \item Show that
+        \begin{equation}
+            c_t(t,S_t) = -rKe^{-r(T-t)}N(d_2) - \frac{\sigma S_t}{2\sqrt{T-t}}N'(d_1).
+        \end{equation}
+        This is the \textit{theta} of the option. What is the effect of the passage of time on the value of the call option?
+        
+        \item Compute the \textit{gamma} of the option, i.e. the second derivative of $c(t,S_t)$ with respect to the underlying stock price $S_t$. How do you interpret a positive gamma?
+        
+        \item How could you hedge a long position in the option against movements in the underlying stock price? What are the other variables that drive the value of an option?
+    \end{enumerate}
+    
+    A \textit{forward contract} with delivery price $K$ obligates its holder to buy one share of the stock at expiration time $T$ in exchange for payment $K$. The terminal payoff of the forward contract is thus $S_T - K$. The \textit{forward price} of a stock is the value of $K$ that makes the value of the forward contract zero at time $t$. We can show by a simple replicating argument that with a constant interest rate $r$, the forward price at time $t$ is $F_t=e^{r(T-t)}S_t$.
+    \begin{enumerate}
+        \setcounter{enumii}{4}
+    
+        \item Explain how you could replicate the payoff of a \textit{put option} using a forward contract and a call option, and then use this observation to derive the formula for the price of a put option in the Black-Scholes model.
+    \end{enumerate}
+    
+    \item This exercise shows how to create two correlated stock prices starting from independent Brownian motions.\\
+    Suppose
+    \begin{align}
+        \frac{dS_1(t)}{S_1(t)} &= \alpha_1 dt + \sigma_1 dW_1(t)\\
+        \frac{dS_2(t)}{S_2(t)} &= \alpha_2 dt + \sigma_2 \left[ \rho dW_1(t) + \sqrt{1-\rho^2} dW_2(t)\right],
+    \end{align}
+    where $W_1(t)$ and $W_2(t)$ are \textit{independent} Brownian motions and $\sigma_1>0,\sigma_2>0$ and $-1\leq \rho \leq 1$ are constant. To analyze the second stock price process, we define
+    \begin{equation*}
+        dW_3(t) = \rho dW_1(t) + \sqrt{1-\rho^2} dW_2(t).
+    \end{equation*}
+    
+    \begin{enumerate}
+        \item Show that $W_3(t)$ is a continuous martingale with $W_3(0)=0$ and $dW_3(t) dW_3(t) = dt$. This implies that $W_3(t)$ is also a Brownian motion.
+        
+        \item Compute the differential of $W_1(t) W_3(t)$, then write it in integral form and compute the expectation $E(W_1(t)W_3(t)$. What is the correlation between $W_1(t)$ and $W_3(t)$?
+    \end{enumerate}
+    
+    
+    \item Let a stock price be a geometric Brownian motion
+    \begin{equation*}
+        dS_t= \alpha S_t dt + \sigma S_t dW_t,
+    \end{equation*}
+    and let $r$ denote the interest rate. We define the \textit{market price of risk} to be
+    \begin{equation*}
+        \theta = \frac{\alpha -r}{\sigma},
+    \end{equation*}
+    and the \textit{state price density process} to be
+    \begin{equation*}
+        \zeta_t = \exp\left\{-\theta W_t -\left(r + \frac{1}{2}\theta^2\right) t\right\}.
+    \end{equation*}
+    
+    \begin{enumerate}
+        \item Show that
+        \begin{equation*}
+            d\zeta_t = -\theta \zeta_t dW_t - r\zeta_t dt.
+        \end{equation*}
+        
+        \item Let $X$ denote the value of an investor's portfolio when he uses a portfolio process $\Delta_t$. We have,
+        \begin{equation*}
+            dX_t= rX_t dt + \Delta_t(\alpha -r) S_t dt + \Delta_t \sigma S_t dW_t.
+        \end{equation*}
+        Show that $\zeta_t X_t$ is a martingale.\\
+        Hint: show that the differential $d(\zeta_t X_t)$ has no $dt$ term, i.e. no \textit{drift}.
+        
+        \item Let $T>0$ be a fixed terminal time. Show that if an investor wants to begin with some initial capital $X_0$ and invest in order to have portfolio value $V_T$ at time $T$, where $V_T$ is a given $\mathcal{G}_T$-measurable random variable, then he must begin with initial capital
+        \begin{equation*}
+            X_0 = E[\zeta_T V_T].
+        \end{equation*}
+        In other words, the present value at time zero of the random payment $V_T$ at time $T$ is $E[\zeta_T V_T]$. This justifies calling $\zeta_t$ the state price density process.
+    \end{enumerate}
+    
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+
+

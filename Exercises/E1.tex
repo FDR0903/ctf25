@@ -1,0 +1,217 @@
+\documentclass[11pt,a4,table]{article}
+
+\renewcommand{\footnotesize}{\fontsize{9pt}{11pt}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Page Dimensions
+\usepackage[top=1.0in, bottom=1.0in, left= 0.80in, right=0.80in]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Caption options
+\usepackage[margin= 16pt , footnotesize ,  sc , labelfont=bf , labelsep=period , format=plain , justification=centerfirst]{caption}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%load minimum set of other required packages
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{bbm}
+\usepackage{booktabs,longtable}
+\usepackage{eurosym}
+\usepackage{floatrow}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{harvard}
+\usepackage[english]{babel}
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+
+\usepackage[utf8]{inputenc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and tikz
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+	\definecolor{cinnabar}{rgb}{0.89, 0.26, 0.2}
+	\definecolor{ceruleanblue}{rgb}{0.16, 0.32, 0.75}
+
+% and optimally spaces tables
+
+\usepackage{tabularx, booktabs}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Roman numerals command thing.
+\makeatletter
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% fake section command
+\newcommand{\fakesection}[1]{%
+  \par\refstepcounter{section}% Increase section counter
+  \sectionmark{#1}% Add section mark (header)
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}% Add section to ToC
+  % Add more content here, if needed.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ------------------------------------------
+%% Journal of Finance conventions
+%% ------------------------------------------
+
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thetable}{\Roman{table}}
+\renewcommand{\abstractname}{\textsc{ABSTRACT}}
+\makeatletter
+\renewcommand{\baselinestretch}{1.10}
+\renewcommand{\topfraction}{0.99}
+\renewcommand{\bottomfraction}{0.99}
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{2}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.9}
+\renewcommand{\dblfloatpagefraction}{0.9}
+\titleformat{\section}{\centering\large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalsize\itshape}{\thesubsection.}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection.}{1em}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% math shocks cuts, theorems, lemmas etc.
+\newcommand{\inner}[2]{\left < #1 \big | #2 \right >}
+\newcommand{\proj}[2]{\mbox{proj} \left ( #1 \big | #2 \right )}
+\newcommand{\cov}[2]{\mbox{cov}\left (#1 ,#2 \right )}
+\newcommand{\var}[1]{\mbox{var}[#1]}
+\newcommand{\Gray}[1]{{\color{gray}#1}}
+\newcommand{\Red}[1]{{\color{red}#1}}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{criterion}{Criterion}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}{Lemma}
+\newtheorem{notation}{Notation}
+\newtheorem{problem}{Problem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{remark}{Remark}
+\newtheorem{solution}{Solution}
+\newtheorem{summary}{Summary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% and choose line spacing (comes from setspace)
+
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+%\setstretch{1.5}
+%\setstretch{2}
+
+% make quote right flushed.
+\makeatletter{}
+\g@addto@macro\quote\flushright
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\vspace*{-0.7in}
+
+\begin{center}
+ \textbf{Continuous Time Finance: Problem Set 1} \\
+\textit{Binomial Model and Option Pricing} \\
+Fayçal Drissi \\
+\end{center} 
+
+
+\begin{enumerate}
+    \item Explain briefly what is 
+    \begin{enumerate} 
+    \item Sample space 
+    \item Filtration 
+    \item Probability measure and probability space
+    \item Stochastic process adapted to a filtration
+    \item and what is a martingale
+	\end{enumerate}
+    \item 
+    Let us now assume $r=0,u=1/d=2$ and $S_0=4$ in a binomial setup
+    \begin{enumerate}
+    
+        \item Determine the range of the real valued function $S_3:\Omega\rightarrow\mathbb{R}$, i.e. the set of all possible stock prices at the end of period 3.
+    
+        \item Determine the range of the real valued function $V_3:\Omega\rightarrow\mathbb{R}$, of a call option with exercise price $K=4$ and maturity $T=3$.
+    \end{enumerate}
+    
+    Remark: functions like $S_3$ and $V_3$ are called random variables.
+    
+  
+    \item In a two periods binomial model with $r=0, u=1/d=2$ and $S_0 = 4$:
+    
+    \begin{enumerate}
+        \item Compute the price of a European call option with strike price $K=4$ and maturity $T=1$.
+        
+        \item For a European call option with strike price $K=4$ and maturity $T=2$ compute the corresponding hedging strategy by recursively computing $\Delta_1$ and $V_1$ and then $\Delta_0$ and $V_0$.
+    \end{enumerate}
+    
+    \item A married put option consists of buying shares of a stock and simultaneously buying a put option with strike $K$ for the same number of shares (here the number is one). 
+    \begin{enumerate}
+        \item Write and plot the payoff of the option as a function of the terminal stock price.
+        \item Describe the financial motivation to set such a strategy as an investor.
+        \item What is the price of the option in the two-period binomial model ?
+    \end{enumerate}
+    
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+
+
