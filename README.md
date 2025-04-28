@@ -1,4 +1,4 @@
-# Memory Pools
+# Lecture slides - Continuous-Time Finance
 
 ## Run locally
 To start the slide show:
