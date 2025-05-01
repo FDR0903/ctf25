@@ -1,7 +1,7 @@
 ---
 layout: cover
 class: text-center
-title: CTF 2025
+title: CTF 2025 online
 theme: academic
 titleTemplate: '%s'
 favicon: ./images/defiicon.png
@@ -895,6 +895,27 @@ $$
 C^A(t, S; K, T) \quad ? \quad  C^E(t, S; K, T)
 $$
 
+---
+
+# Model independent properties
+
+
+The price of American option is always larger that of a European option with same strike $K$ and maturity $T$:
+$$
+C^A(t, S; K, T) \ge C^E(t, S; K, T)
+$$
+
+- At each point in time, the American option holder can:
+  - **Exercise now**, and receive the immediate payoff
+  - **Continue holding**, and receive the value of the option going forward
+
+- The **European value** is the **Continuation Value only**.
+
+👉 **Conclusion**:
+$$
+\text{American Option Price} \geq \text{European Option Price}
+$$
+the American holder always has **more flexibility**, never less.
 
 ---
 
@@ -905,6 +926,26 @@ $$
 C(t, S; K_1, T) \quad ? \quad C(t, S; K_2, T)
 $$
 
+---
+
+# Model independent properties
+
+Call Option: Strike monotonicity
+$$
+C(t, S; K_1, T) \ge C(t, S; K_2, T)
+$$
+
+- A right to buy at a cheaper price is more valuable
+- Formally, if $K_1 < K_2$, then:
+  - $S_T - K_1 > S_T - K_2$ whenever $S_T > K_2$.
+  - The payoff of the lower strike dominates the higher:
+    $$
+    (S_T - K_1)^+ \geq (S_T - K_2)^+
+    $$
+- Taking expectations under the risk-neutral measure:
+  $$
+  C(t, S; K_1, T) \ge C(t, S; K_2, T)
+  $$
 
 ---
 
@@ -914,6 +955,24 @@ $$
 $$
 P(t, S; K_1, T) \quad ? \quad P(t, S; K_2, T)
 $$
+
+---
+
+# Model independent properties
+
+Put Option: Strike Monotonicity
+
+- A right to sell at a higher price is more valuable
+- Formally, if $K_1 < K_2$, then:
+  - $K_1 - S_T < K_2 - S_T$
+  - The payoff of the higher strike dominates:
+    $$
+    (K_1 - S_T)^+ \leq (K_2 - S_T)^+
+    $$
+- Taking expectations under the risk-neutral measure:
+  $$
+  P(t, S; K_1, T) \le  P(t, S; K_2, T)
+  $$
 
 ---
 
@@ -931,19 +990,43 @@ $$
 
 # Model independent properties
 
+Option Value Increases with Maturity
+
+- For both calls and puts, longer maturity provides **more optionality**.
+- With more time:
+  - There's more chance for favourable movements
+  - The holder never has more rights
+
+- So for $T_1 < T_2$:
+  $$
+  \text{Option}(T_1) \leq \text{Option}(T_2)
+  $$
+
+**Conclusion**: option value increases with time to maturity.
+
+---
+
+# Model independent properties
+
 $$
 C(t, S; K, T) \quad ? \quad S
 $$
 
 ---
 
-# Early exercise
+# Option Price $\le$ Stock Price
 
-* **Proposition**:  Assume an $n-$dates binomial model. Let $S$ be an underlying stock that pays no divident. Then an American call written on $S$ is never exercised early.
+- Method 1:
+  - A call with strike zero is simply worth the stock
+  - The value of a call decreases in the strike, so a call with any strike $K>0$ is worth less than the stock
+- Method 2
+  - Call payoff: $(S_T - K)^+ \leq S_T$  
+  - The risk-neutral expectation of the LHS is the price of the call
+  - The risk-neutral expectation of the LHS is the price of the stock
 
 ---
 
-## Early exercise
+# Early exercise
 
 * **Proposition**:  Assume an $n-$dates binomial model. Let $S$ be an underlying stock that pays no divident. Then an American call written on $S$ is never exercised early.
 * **Proof**: At time $t=n$, the options are worth the same. First we establish that, at time $t<n$, 
@@ -971,11 +1054,11 @@ $$
 
 * **Proposition**:  Assume the three-dates binomial model. Let $S$ be an underlying stock that pays no divident. Then an American call written on $S$ is never exercised early.
 * **Proof**: We have shown that it is better to wait when one holds the portfolio  at time $1$ because its future value is nonnegative, so for any time $t$
-$$C^A(t, S_t) \ge S_t - \frac{1}{R}K$$ 
+$$C^A(t, S_t) \ge S_t - \frac{1}{R^{n-t}}K$$ 
 
 * We conclude by observing that a call yields $K-S_t$ if exercised at time $t$, however
 $$
-K - S_t \le K - S_t/R^{n-t} \le C^A(t, S_t)
+S_t - K \le S_t - K/R^{n-t} \le C^A(t, S_t)
 $$
 
 
@@ -1105,6 +1188,25 @@ where $\sigma(S_1) = \mathcal G_1$. (Use that $S2/S1$ is indepent from $S_1$)
 
 ## Some definitions
 
+* **Exercise**: Assume $n > 2$ in the binomial model.  Prove that 
+$$
+\mathbb E[S_2 \mid \sigma(S_1)] = S_1 \, (p\, u + (1-p)\,d)
+$$
+where $\sigma(S_1) = \mathcal G_1$
+
+$$
+\begin{split}
+\mathbb E[S_2 \mid \sigma(S_1)] & =  \mathbb E[\frac{S_2}{S_1} S_1 \mid \sigma(S_1)]  \\
+& =   \mathbb E[ S_1 \mid \sigma(S_1)] \times \mathbb E[\frac{S_2}{S_1}\mid \sigma(S_1)]  \\
+& = S_1 \, (p\, u + (1-p)\,d)
+\end{split}
+$$
+where we used that $S_1$ is independent from $S_2/S_1$
+
+---
+
+## Some definitions
+
 * **Tower Property** For any $\mathcal H \in \mathcal G$, we have
 $$
 \mathbb E[\mathbb E [X \mid \mathcal G] \mid \mathcal H]= \mathbb E[X \mid \mathcal H] 
@@ -1113,7 +1215,29 @@ The conditional expectation of a conditional expectation is the expectation cond
 
 * **Exercise**: Compute $E[S_{t+k} \mid \mathcal G_{t}]$ 
 
+---
 
+## Some definitions
+
+* **Tower Property** For any $\mathcal H \in \mathcal G$, we have
+$$
+\mathbb E[\mathbb E [X \mid \mathcal G] \mid \mathcal H]= \mathbb E[X \mid \mathcal H] 
+$$
+The conditional expectation of a conditional expectation is the expectation conditioned on the smallest information set
+
+
+* **Exercise**: Compute $E[S_{t+k} \mid \mathcal G_{t}]$ 
+
+$$
+\begin{split}
+\mathbb E[S_{t+k}\mid \mathcal G_t] = & \mathbb E\left[\mathbb E[S_{t+k}\mid \mathcal G_{t+k-1}] \mid \mathcal G_t\right]\\
+= & \mathbb E\left[S_{t+k-1} \, (p\, u + (1-p)\,d) \mid \mathcal G_t\right]
+\\
+= & \cdots \cdots \cdots \\
+= & \mathbb E\left[S_{t} \, (p\, u + (1-p)\,d)^k\mid \mathcal G_t\right]
+
+\end{split}
+$$
 
 ---
 
@@ -1172,7 +1296,28 @@ $$
 
 ## Adapted process and martingales
 * **Exercise**: if $X$ and $Y$ are two martingales on $\mathcal T$ such that $X_n = Y_n$; Show that $X_t = Y_t$ for each $t \in \{0,1,\dots,n\}$
-(by recursion)
+
+---
+
+## Adapted process and martingales
+
+* **Exercise**: if $X$ and $Y$ are two martingales on $\mathcal T$ such that $X_n = Y_n$; Show that $X_t = Y_t$ for each $t \in \{0,1,\dots,n\}$
+* We prove it by recursion. For $t=n-1$, we have
+$$
+\begin{split}
+X_{n-1} = \mathbb E[X_{n} | \mathcal F_{n-1} ] 
+\end{split}
+$$
+* However, we know that $X_{n} = Y_{n}$
+* Thus, 
+$$
+\begin{split}
+X_{n-1} & = \mathbb E[X_{n} | \mathcal F_{n-1} ] \\
+& = \mathbb E[Y_{n} | \mathcal F_{n-1} ] \\
+& =  Y_{n-1}
+\end{split}
+$$
+* We can continue by recursion.
 
 ---
 
@@ -1232,7 +1377,17 @@ $$
 \\
 \end{split}
 $$
-* continue..
+* Under the risk-neutral measure above, we know that
+$$
+\tilde{\mathbb E}[S_{t+1}/S_t\mid \mathcal G_t] = \tilde{\mathbb E}[S_{t+1}\mid \mathcal G_t]/S_t = \tilde p \, u + (1-\tilde p)\,d = 1 + r
+$$
+* We conclude
+$$
+\begin{split}
+\tilde{\mathbb E}\left[S_{t+1}/B_{t+1} \mid \mathcal G_t \right] =  \frac{S_t}{B_{t+1}} \,(1+r) = S_t / B_t
+\\
+\end{split}
+$$
 
 ---
 
@@ -1457,9 +1612,9 @@ layout: two-cols
 * Continuous-time:
   * The stochastic process $W_t$ is a discrete-time Brownian motion if
     * $W_0 = 0$
-    * Increments are independent, i.e., for <br>$r<s\le t<u$:
+    * Increments are independent, i.e., for <br>$r<t\le s<u$:
     $$
-    W(u)-W(t) \quad\text{and}\quad W(s)-W(t)
+    W(u)-W(s) \quad\text{and}\quad W(t)-W(r)
     $$
     are independent random variables
     * Increments are normally distributed: 
@@ -1503,6 +1658,26 @@ layout: two-cols
 * **Exercise**: Show that $W_t^2 - t$ is a martingale
 
 
+---
+
+## Brownian motions (Wiener processes): properties
+
+* Distriution of $W_t$ is $\mathcal N(0,t)$
+
+* **Exercise**: Show that $W$ is a **martingale**. 
+  * Let $s>t$, we want to show $\mathbb E[W_s \mid \mathcal G_t] =  W_t$
+  $$
+    \mathbb E[W_s \mid \mathcal G_t] = \mathbb E[W_s - W_t + W_t \mid \mathcal G_t] = \mathbb E[W_s - W_t \mid \mathcal G_t] + W_t = W_t
+  $$
+
+* **Exercise**: Show that $W_t^2 - t$ is a martingale
+$$
+\begin{split}
+\mathbb E(W_s^2|\mathcal{G}_t)&=\mathbb E((W_s-W_t+W_t)^2|\mathcal{G}_t)\\&=\mathbb E((W_s-W_t)^2|G_t)+\mathbb E(W_t^2|G_t)+\mathbb E(2(W_s-W_t)W_t|G_t)\\&=\mathbb E((W_s-W_t)^2)+W_t^2+2W_t\mathbb E(W_s-W_t|G_t)\\&=(s-t)+W_t^2+2W_t\mathbb E(W_s-W_t)\\&=(s-t)+W_t^2
+\end{split}
+$$
+
+
 
 ---
 
@@ -1511,7 +1686,9 @@ layout: two-cols
 * **Exercise**: show that $\exp\left(\sigma W_t - \sigma^2 t/2\right)$ is a martingale. 
 
 **Hint**: for a Gassian random variable $X$ with mean zero and variance $\xi^2$, the moment generating function is
-
+$$
+\mathbb E[\exp(\sigma\,W_t)] = \exp(t\,\sigma^2/2)
+$$
 
 ---
 
@@ -1525,7 +1702,10 @@ layout: two-cols
   \begin{split}
   \mathbb E[\mathbb \exp\left(\sigma W_s - \sigma^2 s/2\right) \mid \mathcal G_t] =  
   & \mathbb E[\exp\left(\sigma (W_s-W_t+W_t) - \sigma^2 s/2\right) \mid \mathcal G_t] \\
-   =& ....
+  = &\exp\left( - \sigma^2 s/2\right)\mathbb E[\exp\left(\sigma \, W_t\right)\exp\left(\sigma (W_s-W_t)\right) \mid \mathcal G_t] \\
+  = &\exp\left( - \sigma^2 s/2\right)\mathbb E[\exp\left(\sigma \, W_t\right) \mid \mathcal G_t]\mathbb E[\exp\left(\sigma (W_s-W_t)\right) \mid \mathcal G_t] \\
+  = & \exp\left(\sigma W_t -\sigma^2 s/2\right) \exp\left( \sigma^2 (s-t)/2\right)\\
+  = & \exp\left(\sigma W_t - \sigma^2 t/2\right)
   \end{split}
   $$
 
@@ -1541,6 +1721,16 @@ layout: two-cols
 ## Brownian motions (Wiener processes): properties
 
 * **Exercise**:  For $s>t$, compute $Cov(Z_t, Z_s)$
+
+$$
+\begin{split}
+Cov(Z_t, Z_s) = & \mathbb E[Z_t Z_s] - \mathbb E[Z_t]\mathbb E[Z_s] \\
+= & \mathbb E[Z_t (Z_s - Z_t + Z_t)] \\
+= & \mathbb E[Z_t (Z_s - Z_t)] + \mathbb E[Z_t^2]\\
+= & \mathbb E[Z_t]\mathbb E[Z_s - Z_t] + \mathbb E[Z_t^2]\\
+= & t
+\end{split}
+$$
 
 
 ---
@@ -1648,6 +1838,7 @@ $$
   * $\sigma$ is a *percentage* volatility
 * The geometric bank account: 
 $$dB_t =r \, B_t \,dt \implies B_t =\exp(r\,t)$$
+
 
 ---
 
@@ -2114,3 +2305,10 @@ $$
 * Express $U_t$ as a function of $U_0$, $t$, and $W_t$. 
 
 * Compute the expectation of $U_t$.
+
+---
+layout: end
+---
+Thank you !
+
+[faycaldrissi.com](https://www.faycaldrissi.com/)
