@@ -2740,7 +2740,7 @@ $$
 * The sensitivity of price options to time, price, volatility, etc are called Greeks.
   * $\partial_{s} V(t, S_t)$ is called the Delta of the option
   * $\partial_{ss} V(t, S_t)$ is called the Gamma of the option
-  * $V_{t}(t, S_t)$ is called the Theta of the option
+  * $\partial_{t} V(t, S_t)$ is called the Theta of the option
 
 --- 
 
