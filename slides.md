@@ -1732,7 +1732,6 @@ Cov(Z_t, Z_s) = & \mathbb E[Z_t Z_s] - \mathbb E[Z_t]\mathbb E[Z_s] \\
 \end{split}
 $$
 
-
 ---
 
 ## History of Brownian motions
@@ -1742,6 +1741,24 @@ $$
 * **1905**:  theoretical physicist Albert Einstein published a paper where he modeled the motion of the pollen particles as being moved by individual water molecules
 * **Recently**: it is at the core of most financial models, whether we consider
 stocks, interest rates or currencies
+
+---
+layout: end
+---
+Thank you !
+
+[faycaldrissi.com](https://www.faycaldrissi.com/)
+
+---
+layout: intro
+---
+## Session $3$:  Ito Processes and Ito Calculus
+<br />
+<br />
+
+*Fayçal Drissi*
+
+*Saïd Business School, University of Oxford*
 
 ---
 
@@ -1831,7 +1848,7 @@ $$
     dS_t = \mu\,S_t\,dt + \sigma\,S_t\,dW_t
   $$
   or
-    $$
+  $$
     dS_t/S_t = \mu\,dt + \sigma\,dW_t
   $$
   * $\mu$ is a *percentage* drift
@@ -1843,7 +1860,10 @@ $$dB_t =r \, B_t \,dt \implies B_t =\exp(r\,t)$$
 ---
 
 ## Geometric Brownian Motion and Ito Process
-
+* We also use the Geometric Brownian Motion (GBM) with dynamics (SDE)
+  $$
+    dS_t = \mu\,S_t\,dt + \sigma\,S_t\,dW_t
+  $$
 * The GBM is a special case of an Ito process whose dynamics are given by the SDE
 $$
 dX_t = \mu(t,X_t)\,dt + \sigma(t,X_t)\,dW_t
@@ -1872,13 +1892,13 @@ Stochastic Integral <a name="defi"></a></h1>
 
 ---
 
-## Stochastic integrals: motivation
+## Stochastic integrals: motivation - 1
 
 * The Geometric Brownian Motion (GBM) follows the SDE
 $$
   dS_t = \mu\,S_t\,dt + \sigma\,S_t\,dW_t
 $$
-* Naive solution: 
+* Naive solution to the SDE:
   * notice that 
   $$d\log(S_t) = \mu\,dt + \sigma\,dW_t$$ 
   * so
@@ -1887,19 +1907,14 @@ $$
   $$
 
 
+
 ---
 
-## Stochastic integrals: motivation
+## Stochastic integrals: motivation - 1
 
-* The Geometric Brownian Motion (GBM) follows the SDE
-$$
-  dS_t = \mu\,S_t\,dt + \sigma\,S_t\,dW_t
-$$
+
 
 * Naive solution: 
-  * notice that 
-  $$d\log(S_t) = \mu\,dt + \sigma\,dW_t$$ 
-  * so
   $$
   \log(S_t) = \log(S_0) + \mu\,t + \sigma\,W_t \implies S_t = S_0\,\exp(\mu\,t + \sigma\,W_t)
   $$
@@ -1907,21 +1922,21 @@ $$
 $$
 S_t = S_0 \, \exp\left(\left(\mu-\sigma^2/2\right)\,t + \sigma\,W_t\right)
 $$
-* Where does the extra term comes from ? Ito's lemma.
+* Where does the extra term comes from ?  
+## *Ito's lemma*
 
 
 ---
 
-## Stochastic integrals: motivation
+## Stochastic integrals: motivation - 2
 
 * Let $\Pi$ be a self-financed portfolio that invests $\Delta_t$ units in the stock at time $t$.
 
 * The dynamics of $\Pi$ are ?
 
-
 ---
 
-## Stochastic integrals: motivation
+## Stochastic integrals: motivation - 2
 
 * Let $\Pi$ be a self-financed portfolio that invests $\Delta_t$ units in the stock at time $t$.
 
@@ -1932,6 +1947,9 @@ d\Pi_t &= \Delta_t\, dS_t + (\Pi_t - \Delta_t S_t)\, dB_t
 \end{split}
 $$
 
+---
+
+## Stochastic integrals: motivation - 2
 
 
 * When the stock dynamics are GBM
@@ -1958,16 +1976,28 @@ $$
 
 * We need to study the *stochastic integral*
 $$
-\int_0^t S_u\,dW_u
+\int_0^t \Delta_u\,dW_u
 $$
 * When a function $F$ is differentiable, we can define the Lebesgue integral 
+$$
+\int_0^t \Delta_s\,dF(s) = \int_0^t \Delta_s\,F'(s) ds
+$$
+
+
+
+---
+
+# The stochastic integral
+
+* The Lebesgue integral 
 $$
 \int_0^t \Delta_s\,dF(s) = \int_0^t \Delta_s\,F'(s) ds
 $$
 * This does not apply to Brownian motions: Brownian paths are *not differentiable* at any point.
 * To see this: imagine a particle moving around on some trajectory
   * Its trajectory being continuous means that as you slow time down, the particle stays closer and closer to where it was (no big jumps)
-  * Its trajectory being differentiable means that as you slow time down, the particle doesn't just stay near where it was, it moves more & more in a straight line: not the case for a Brownian
+  * Its trajectory being differentiable means that as you slow time down, the particle moves more & more in a straight line 
+    * this is not the case for a Brownian
 
 ---
 
@@ -1987,7 +2017,7 @@ $$
 
 # The stochastic integral
 
-![simpleProcess2](./images/simpleProcess2.png){style="transform: translate(120%, 0%); width: 250px"}
+![simpleProcess2](./images/simpleProcess2.png){style="transform: translate(90%, 0%); width: 320px"}
 
 * Think of the Brownian $W_t$ as the price of an asset. 
 * Think of the dates  $\mathcal T = \{t_0, t_1, \dots, t_n\}$ as trading or rebalancing dates.
@@ -2000,14 +2030,12 @@ $$
 ---
 
 # The stochastic integral
-
-![simpleProcess2](./images/simpleProcess2.png){style="transform: translate(120%, 0%); width: 250px"}
-
+![simpleProcess2](./images/simpleProcess2.png){style="transform: translate(90%, 0%); width: 320px"}
 * Think of the Brownian $W_t$ as the price of an asset. 
 * Think of the dates  $\mathcal T = \{t_0, t_1, \dots, t_n\}$ as trading or rebalancing dates.
 * Think of $\{\Delta(t_0),\Delta(t_1),\dots,\Delta(t_n)\}$ as the position in the asset at each date.
   * at time $t\in[t_{k}, t_{k+1})$: $\quad \quad I_t =\sum_{j=0}^{k-1} \Delta_{t_j} (W_{t_{j+1}} - W_{t_j})+\Delta_{t_{k}} (W_t - W_{t_{k+1}})$
-* The stochastic integral can be seen as the gain from holding the positions $\Delta_t$ in the stock 
+* The stochastic integral can be seen as the gain from holding the positions $\Delta_t$ in the stock  
 $$I_t = \int_0^t \Delta_s \, dW_s = \sum_{j=0}^{k-1} \Delta_{t_j} (W_{t_{j+1}} - W_{t_j})$$
 
 ---
@@ -2070,11 +2098,23 @@ $$
 
 * We can define the stochastic integral $\int_0^t \Delta_t dW_t$ for any general integrand $\Delta_t$
 * $\Delta_t$ can have vary continuously and also jump..
+
+---
+
+# The stochastic integral in the general case
+
+* We can define the stochastic integral $\int_0^t \Delta_t dW_t$ for any general integrand $\Delta_t$
+* $\Delta_t$ can have vary continuously and also jump..
 * In order to guarantee the existence of the stochastic integral, we only require the process $\Delta_t$ to be square integrable, i.e., we require that 
 $$
 \mathbb E\left[\int_0^t \Delta_s^2\, ds\right] < \infty
 $$
 * The class of square integrable processes is denoted $\mathcal L^2$ and is almost always used in CTF
+
+---
+
+# The stochastic integral in the general case
+
 * To prove the theorems above for any process $\Delta_t$
   * First, we approximate $\Delta_t$ with a simple process $\Delta_t^n$, i.e., $\lim_{n\rightarrow\infty}\left|\Delta_t^n-\Delta_t\right|=0$
   * The stochastic integral for $\Delta_t$ is 
@@ -2115,15 +2155,18 @@ Ito's Lemma <a name="defi"></a></h1>
 ---
 
 # Ito's Lemma
-
 * We introduce a differential calculus for differentiable functions of
 stochastic integrals
 * The main tool of Ito's calculus is **Ito's lemma**
-* We need to differentiate functions of the type:
+* **Objective**: differentiate functions of the type:
 $
 t \mapsto f(W_t)
 $
 for some twice continuous differentiable function $f$. 
+
+---
+
+# Ito's Lemma
 * For instance $f(t, x) = x^2$. What are the dynamics of $f(t, W_t)$, or $W_t^2$ ?
 * If we use the chain rule from ordinary calculus we write 
 $$
@@ -2131,8 +2174,8 @@ dW_t^2 / dt = 2\,W_t\,dW_t/dt \implies dW_t^2 = 2 \, W_t \,dW_t
 $$
 or in integral form: $W_t^2 = 2\,\int_0^t W_t dW_t$
 * There are inconsistencies
-  * This implies that $W_t^2$ is differentiable: we know it's not
   * The RHS is a martingale, and $W_t^2$ is not ($W_t^2 - t$ is a martingale)
+  * This implies that $W_t^2$ is differentiable: we know it's not
 * There is an extra term due to **nonzero quadratic variation** of the Brownian motion !!
 
 ---
@@ -2152,16 +2195,22 @@ $$
 * Now, assume $f$ is twice differentiable scalar function, its Taylor expansion in $t$ is
 $$
 \begin{split}
-\frac{\Delta f(t)}{dt}dt
-&= f(t+dt, x) - f(t,x) = \frac{\partial f}{\partial t}\,dt + \frac{1}{2}\frac{\partial^2 f}{\partial t^2}\,(dt)^2 + \cdots \\
-\frac{\Delta f(x)}{dx}dx
-&= f(t, x+dx) - f(t,x) = \frac{\partial f}{\partial x}\,dx + \frac{1}{2}\frac{\partial^2 f}{\partial x^2}\,(dx)^2 + \cdots
+&f(t+dt, x) - f(t,x) = \frac{\partial f}{\partial t}\,dt + \frac{1}{2}\frac{\partial^2 f}{\partial t^2}\,(dt)^2 + \cdots \\
+& f(t, x+dx) - f(t,x) = \frac{\partial f}{\partial x}\,dx + \frac{1}{2}\frac{\partial^2 f}{\partial x^2}\,(dx)^2 + \cdots
 \end{split}
 $$
 
 ---
 
 ## Ito's Lemma: derivation
+
+*  Taylor expansion in $t$ is
+$$
+\begin{split}
+&f(t+dt, x) - f(t,x) = \frac{\partial f}{\partial t}\,dt + \frac{1}{2}\frac{\partial^2 f}{\partial t^2}\,(dt)^2 + \cdots \\
+& f(t, x+dx) - f(t,x) = \frac{\partial f}{\partial x}\,dx + \frac{1}{2}\frac{\partial^2 f}{\partial x^2}\,(dx)^2 + \cdots
+\end{split}
+$$
 
 * By definition of partial derivative:
 $$
@@ -2173,26 +2222,59 @@ $$
 df(t, x) = f_t(t, x) dt + f_x(t, x) dx
 $$
 
-* Substituting $x=B_t$, we have 
+
+---
+
+## Ito's Lemma: derivation
+
+*  Taylor expansion in $t$ is
 $$
 \begin{split}
-df = \lim_{dB_t \to 0 \atop dt \to 0} \;
+&f(t+dt, x) - f(t,x) = \frac{\partial f}{\partial t}\,dt + \frac{1}{2}\frac{\partial^2 f}{\partial t^2}\,(dt)^2 + \cdots \\
+& f(t, x+dx) - f(t,x) = \frac{\partial f}{\partial x}\,dx + \frac{1}{2}\frac{\partial^2 f}{\partial x^2}\,(dx)^2 + \cdots
+\end{split}
+$$
+
+* By definition (total derivative)
+$$
+df(t, x) = f_t(t, x) dt + f_x(t, x) dx
+$$
+* Substituting $x=W_t$, we have 
+$$
+\begin{split}
+df = \lim_{dW_t \to 0 \atop dt \to 0} \;
 &  \frac{\partial f}{\partial t}\,dt
- + \frac{\partial f}{\partial x} dB_t + \frac{1}{2} \left[
+ + \frac{\partial f}{\partial x} dW_t + \frac{1}{2} \left[
        \frac{\partial^2 f}{\partial t^2}\,{\left(dt\right)}^2
-     + \frac{\partial^2 f}{\partial x^2} {\left(dB_t\right)}^2 
+     + \frac{\partial^2 f}{\partial x^2} {\left(dW_t\right)}^2 
 \right] + \cdots.
 \end{split}
 $$
 
-* In the limit, the terms $dt^2$ and $dt\,dB_t$ go to zero faster than $dt$. However, the term $dB_t^2$ goes to zero as fast as $dt$ (quadratic variation)
+---
+
+## Ito's Lemma: derivation
+* Substituting $x=W_t$, we have 
 $$
 \begin{split}
-df = \frac{\partial f}{\partial t}\,dt
- + \frac{\partial f}{\partial x} dB_t + \frac{1}{2} \left[\frac{\partial^2 f}{\partial x^2} dt 
-\right] + O(dt^2).
+df = \lim_{dW_t \to 0 \atop dt \to 0} \;
+&  \frac{\partial f}{\partial t}\,dt
+ + \frac{\partial f}{\partial x} dW_t + \frac{1}{2} \left[
+       \frac{\partial^2 f}{\partial t^2}\,{\left(dt\right)}^2
+     + \frac{\partial^2 f}{\partial x^2} {\left(dW_t\right)}^2 
+\right] + \cdots.
 \end{split}
 $$
+* In the limit, the terms $dt^2$ and $dt\,dB_t$ go to zero faster than $dt$. However, the term $dW_t^2$ goes to zero as fast as $dt$ (quadratic variation)
+  * Recall $\mathbb E[dW_t^2] = dt$
+  * Thus
+  $$
+  \begin{split}
+  df = \frac{\partial f}{\partial t}\,dt
+  + \frac{\partial f}{\partial x} dB_t + \frac{1}{2} \left[\frac{\partial^2 f}{\partial x^2} dt 
+  \right] + O(dt^2).
+  \end{split}
+  $$
 
 ---
 
@@ -2231,6 +2313,20 @@ $$
 
 ---
 
+## Ito's Lemma: exercise
+
+* Compute
+$$
+d\log(W_t)
+$$
+
+$$
+d(W_t^2)
+$$
+
+
+---
+
 ## Ito's Lemma
 
 * We can extent Ito's formula to Ito processes of the form
@@ -2238,6 +2334,14 @@ $$
 dX_t = \mu(t,X_t)\,dt + \sigma(t,X_t)\,dW_t
 $$
 
+---
+
+## Ito's Lemma
+
+* We can extent Ito's formula to Ito processes of the form
+$$
+dX_t = \mu(t,X_t)\,dt + \sigma(t,X_t)\,dW_t
+$$
 * We use the same mnemonic device :
   1. We use normal calculus
   $$
@@ -2251,7 +2355,6 @@ $$
   $$
   df(t, X_t) = \left(f_t(t, X_t) + f_x(t, X_t)\, \mu(t,X_t) + \frac12 f_{xx}(t, X_t) \sigma(t,X_t)^2 \right)dt + f_x(t, X_t) dW_t 
   $$
-
 
 ---
 
@@ -2306,9 +2409,582 @@ $$
 
 * Compute the expectation of $U_t$.
 
+<!--
+layout: end
+Thank you !
+[faycaldrissi.com](https://www.faycaldrissi.com/)
+layout: intro
+## Session $4$: The Black-Scholes Model
+<br />
+<br />
+*Fayçal Drissi*
+
+*Saïd Business School, University of Oxford*
+# Outline
+1. Some famous Ito processes
+2. The Black-Scholes PDE
+3. Multi-dimensional Ito's Lemma
+-->
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Famous Ito processes <a name="defi"></a></h1>
+</p>
+
+---
+
+# Stochastic drift
+
+* Traders sometimes use (adapted) stochastic signals $\alpha_t$ that drive prices
+$$
+dS_t = \alpha_t \, dt + \sigma\,dW_t
+$$
+
+* Example: the imbalance of a limit order book
+![imbalance](./images/imbalance2.png){style="transform: translate(180%, 0%); width: 200px"}
+
+---
+
+# Stochastic drift
+
+$$
+dS_t = \alpha_t \, dt + \sigma\,dW_t
+$$
+
+* Asset prices transition through a number of **regimes**: momentum, mean reversion, and random walks.
+
+![aaplyahoo](./images/aapl_yahoo.png){style="transform: translate(70%, 0%); width: 400px"}
+
+---
+
+# Stochastic drift
+
+$$
+dS_t = \alpha_t \, dt + \sigma\,dW_t
+$$
+
+* The regimes are observed at different time scales (low, medium, and high frequency).
+
+![aapl_intraday](./images/aapl_intraday.png){style="transform: translate(70%, 0%); width: 400px"}
+
+---
+
+# Stochastic drift (controlled)
+
+* Assume that a trader buys an asset at speed $\nu_t\,dt$ and that each dollar bought causes the price to move by $\eta$, then a trader would consider the dynamics
+$$
+dS_t = \eta\,\nu_t\,dt + \sigma\,dW_t
+$$
+
+![impact](./images/impact.png){style="transform: translate(70%, 0%); width: 400px"}
+
+
+---
+
+# Correlated prices
+
+* Some assets are fundamentally correlated because they share the same sources of risk
+$$
+dS_t = \mu\,dt + \sigma\,dW_t,\quad dP_t = m\,dt + s\,dB_t,
+$$
+  * The joint distribution of $W_t$ and $B_t$ is $\mathcal N\left(\begin{pmatrix}
+0 \\
+0 
+\end{pmatrix}, t
+\begin{pmatrix}
+1 & \rho \\
+\rho & 1
+\end{pmatrix}\right)$
+
+![bnpgle](./images/bnpgle.png){style="transform: translate(20%, 0%); width: 700px"}
+
+---
+
+# Time-dependent volatility
+
+* Volatility has seasonality: less intense at the end than at the start of the day
+$$
+dS_t = \mu\,dt + \sigma(t)\,dW_t
+$$
+
+![volatility_Ushaped](./images/volatility_Ushaped.png){style="transform: translate(70%, 0%); width: 350px"}
+
+* Volatility can also be stochastic (and observable)
+$$
+dS_t = \mu\,dt + \sigma_t\,dW_t
+$$
+
+---
+layout: two-cols-header
+---
+
+# Mean-reverting processes: Ornstein–Uhlenbeck
+
+* The SDE for an OU process is (or a Viscek model)
+  $$
+  dS_t = -\theta\,(S_t - \overline S)\,dt + \sigma\,dW_t
+  $$
+  * $\overline S$: long term mean level
+  * $\theta$: speed of mean-reversion
+::left::
+![OU1](./images/OU1.png){style="transform: translate(0%, 0%); width: 450px"}
+::right::
+![OU2](./images/OU2.png){style="transform: translate(0%, 0%); width: 450px"}
+
+
+---
+
+# Mean-reverting processes: Ornstein–Uhlenbeck
+#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
+
+* Step 1: the OU process follows:
+$
+dS_t = -\theta\,(S_t - \overline S)\,dt + \sigma\,dW_t
+$
+* Step 2: Introduce a transformation (to eliminate the mean-reverting drift)
+$$
+Y_t = e^{\theta\, t} S_t
+$$
+* Step 3: Apply Itô's Lemma to $Y_t$
+$$
+\begin{split}
+dY_t = e^{\theta t} dS_t + \theta e^{\theta t} S_t \, dt & = e^{\theta t} \left[ \theta(\overline S - S_t) \, dt + \sigma \, dW_t \right] + \theta e^{\theta t} S_t \, dt \\
+& = \theta \overline S e^{\theta t} \, dt + \sigma e^{\theta t} \, dW_t
+\end{split}
+$$
+* Step 4: Integrate from  $0$ to $t$ (note that $Y_0 = X_0$.)
+$$
+Y_t = Y_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s
+$$
+
+---
+
+# Mean-reverting processes: Ornstein–Uhlenbeck
+#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
+$$
+Y_t = Y_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s
+$$
+
+* Step 5: Solve for $S_t$ Since $Y_t = e^{\theta t} X_t$, we find:
+$$
+S_t = e^{-\theta t} \left( S_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s \right)
+$$
+Using
+$$
+\int_0^t e^{\theta s} \, ds = \frac{e^{\theta t} - 1}{\theta},
+$$
+the final solution becomes:
+$$
+S_t = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t}) + \sigma\, \int_0^t e^{-\theta (t-s)} \, dW_s
+$$
+
+---
+
+# Mean-reverting processes: Ornstein–Uhlenbeck
+#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
+
+* The final solution becomes:
+$$
+S_t = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t}) + \sigma\, \int_0^t e^{-\theta (t-s)} \, dW_s
+$$
+* What is the mean and variance of $S_t$ ?
+  * Mean
+  $$
+  \mathbb{E}[S_t] = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t})
+  $$
+  * Variance (the variance comes only from the stochastic integral: Ito's isometry)
+$$
+\text{Var}(X_t) = \sigma^2 e^{-2\theta t} \, \text{Var}\left( \int_0^t e^{\theta s} \, dW_s \right)
+$$
+By Itô's isometry:
+$
+\text{Var}(X_t) =  \sigma^2 e^{-2\theta t} \mathbb{E}\left[ \left( \int_0^t e^{\theta s} \, dW_s \right)^2 \right] =  \sigma^2 e^{-2\theta t}\int_0^t e^{2\theta s} \, ds= \frac{\sigma^2}{2\theta} \left( 1 - e^{-2\theta t} \right)
+$
+
+---
+
+# Mean-reverting processes: Ornstein–Uhlenbeck
+
+* OU processes are more appropriate for Foreign Exchange and Bond markets
+
+* Assume two identical options written on a stock and one on EURJPY:
+  * Which one is more expensive ?
+
+
+---
+
+# Cox–Ingersoll–Ross (CIR) model for interest rates
+
+* The CIR process follows the SDE:
+$
+\quad\quad dR_t = \theta (\mu - R_t) \, dt + \sigma \sqrt{R_t} \, dW_t
+$
+* **Mean Reversion**: The process reverts to the long-term mean $\mu$ at a rate $\theta$
+* **Level-Dependent Volatility**: The volatility of the process depends on the level of $R_t$, proportional to $\sqrt{R_t}$. As $R_t$ approaches zero, the volatility decreases and only the deterministic term drives the dynamics
+* **Non-Negativity**: The process is never negative if $\theta > 0$, $\mu > 0$, and $\sigma > 0$. 
+  * It never touches zero if $2\theta\mu>\sigma^2$
+  * the CIR model is suitable for modeling processes like interest rates
+![rates1](./images/rates1.png){style="transform: translate(70%, 0%); width: 380px"}
+
+---
+
+# Cox–Ingersoll–Ross (CIR) model for interest rates
+
+#### Solving the CIR SDE with Itô's Lemma
+
+* Step 1: The CIR process follows:
+$
+dR_t = \theta (\mu - R_t) \, dt + \sigma \sqrt{R_t} \, dW_t
+$
+* Step 2: Introduce the transformation:
+$
+Y_t = e^{\theta t} R_t
+$
+* Step 3: Apply Itô’s Lemma to $Y_t$:
+$$
+dY_t = e^{\theta t} dR_t + \theta e^{\theta t} R_t \, dt
+$$
+Simplifying:
+$$
+dY_t = \theta \mu e^{\theta t} \, dt + \sigma e^{\theta t} \sqrt{R_t} \, dW_t
+$$
+
+
+
+---
+
+# Cox–Ingersoll–Ross (CIR) model for interest rates
+
+#### Solving the CIR SDE with Itô's Lemma
+
+
+* Step 4: Integrate from $0$ to $t$ (note that $Y_0 = e^{\theta 0} R_0 = R_0$):
+$$
+Y_t = Y_0 + \int_0^t \theta \mu e^{\theta s} \, ds + \int_0^t \sigma e^{\theta s} \sqrt{R_s} \, dW_s
+$$
+* Step 5: Solve for $R_t$. Since $Y_t = e^{\theta t} R_t$, we obtain:
+$$
+R_t = e^{-\theta t} \left( Y_0 + \int_0^t \theta \mu e^{\theta s} \, ds + \int_0^t \sigma e^{\theta s} \sqrt{R_s} \, dW_s \right)
+$$
+
+Using $Y_0 = R_0$, the final solution becomes:
+$$
+R_t = R_0 e^{-\theta t} + \mu \left( 1 - e^{-\theta t} \right) + \sigma \int_0^t e^{-\theta (t-s)} \sqrt{R_s} \, dW_s
+$$
+
+---
+
+# Cox–Ingersoll–Ross (CIR) model for interest rates
+#### Mean and Variance of $R_t$
+
+* **Mean**: The mean of $R_t$ is given by:
+$$
+\mathbb{E}[R_t] = R_0 e^{-\theta t} + \mu \left( 1 - e^{-\theta t} \right)
+$$
+
+* **Variance**: The variance of $R_t$ is derived from the stochastic integral. Using Itô's isometry:
+$$
+\begin{split}
+\text{Var}(R_{t})=&\sigma^{2}\,e^{-2\theta\,t}\text{Var}\left(\int_{0}^{t}e^{\theta s}\sqrt{R_{s}}\,dW_{s}\right)\\=&\sigma^{2}\,e^{-2\theta\,t}\mathbb{E}\left[\int_{0}^{t}e^{2\,\theta s}R_{s}\,ds\right]\\=&\sigma^{2}\,e^{-2\theta\,t}\int_{0}^{t}e^{2\,\theta s}\left(R_{0}e^{-\theta s}+\mu\left(1-e^{-\theta s}\right)\right)\,ds\\=&R_{0}\frac{\sigma^{2}}{\theta}\,\left(e^{-\theta\,t}-e^{-2\theta\,t}\right)+\frac{\mu\,\sigma^{2}}{2\,\theta}\,\left(1-e^{-\theta\,t}\right)^{2}
+\end{split}
+$$
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Black-Scholes model <a name="defi"></a></h1>
+</p>
+
+---
+
+
+# The Black-Scholes model: history
+
+* Only Nobel Prize (1997) for Mathematical Finance (for Robert Mertin and Myron Scholes. Fischer Black died in 1995 so he was ineligible)
+* Based on Louis Bachelier and Paul Samuelson work
+* Simple model but at the core of all pricing models, and trillions of dollars traded each year
+
+---
+
+# The Black-Scholes model
+
+* Assume an asset's price follows GBM dynamics
+$$
+dS_t = \mu\,S_t\,dt + \sigma\,S_t\,dW_t
+$$
+
+* We want to price a European-style option with payoff $V(S_T, T)$
+  * The payoff depends on the terminal time $T$ and the value of the asset price $S_T$ at this terminal time.
+  * If we can replicated the dynamics of the option price with thoses of a self-financed portfolio, then both investment options have the same price.
+
+
+---
+
+# The Black-Scholes model
+
+* Denote by $V_t = V(t, S_t)$ the price of the derivative at time $t \in[0, T]$
+
+* Use Ito to derive the dynamics of the price of the derivative
+$$
+\begin{split}
+dV_t & = V_t(t, S_t) \, dt + V_s(t, S_t)\,dS_t + \frac12 \, V_{SS}(t, S_t)(dS_t)^2 \\
+& = \left[V_t(t, S_t) + \mu\,S_t\,V_s(t, S_t) + \frac12 \sigma^2\,S_t^2\,V_{SS}(t, S_t)  \right]\,dt + \sigma \, S_t \, V_s(t, S_t)\,dW_t
+\end{split}
+$$
+
+---
+
+# The Black-Scholes model
+
+* Now assume a general self-financed portfolio $\Pi_t$ which holds
+  * $\Delta_t$ units of the stock at time $t$
+  * invests the rest $\Pi_t - \Delta_t\,S_t$ in a money market account yielding a constant interest rate $r$
+* The dynamics of the self-financed portfolio are
+$$
+\begin{split}
+d\Pi_t&  = \Delta_t \, dS_t + r\,(X_t - \Delta_t\,S_t)dt \\
+& = \Delta_t \, (\mu\,S_t\,dt + \sigma\,S_t\,dW_t) + r\,(X_t - \Delta_t\,S_t)dt \\
+& = r\,\Pi_t\,dt + \Delta_t(\mu-r)S_t\,dt + \Delta_t\,\sigma\,S_t\,dW_t
+\end{split}
+$$
+* Breakdown of the portfolio dynamics
+  * $r\,\Pi_t\,dt:$ average risk-free return $r$ on the portfolio
+  * $\Delta_t(\mu-r)S_t\,dt:$ a risk premium $\mu-r$ for investing in the stock, i.e., buying or selling $\Delta_t$ units.
+  * $\Delta_t\,\sigma\,S_t\,dW_t:$ volatility term proportional to the size of the stock investment.
+* **Exercise**: what is the variance of $\Pi_t$
+
+---
+
+# The Black-Scholes model
+
+* Our goal is to replicate (hedge) the European derivative with a slef-financed portfolio $\Pi$. We want
+$$
+\Pi_t = V(t, S_t) \text{ for all } t \in[0,T]
+$$
+
+* The dynamics of the self-financed portfolio that invests $\Delta_t$ in the stock are
+
+---
+
+# The Black-Scholes model
+
+* Our goal is to replicate (hedge) the European derivative with a slef-financed portfolio $\Pi$. We want
+$$
+\Pi_t = V(t, S_t) \text{ for all } t \in[0,T]
+$$
+
+* The dynamics of the self-financed portfolio that invests $\Delta_t$ in the stock are
+$$
+d\Pi_t = \left[r\,\Pi_t + \Delta_t(\mu-r)S_t \right]\,dt + \Delta_t\,\sigma\,S_t\,dW_t
+$$
+
+* The dynamics of the self-financed portfolio are
+$$
+dV_t = \left[V_t(t, S_t) + \mu\,S_t\,V_s(t, S_t) + \frac12\sigma^2\,S_t^2\, V_{SS}(t, S_t)  \right]\,dt + \sigma \, S_t \, V_s(t, S_t)\,dW_t
+$$
+
+
+---
+
+# The Black-Scholes model
+
+* The dynamics are
+$$
+\begin{cases}
+d\Pi_t & = \left[r\,\Pi_t + \Delta_t(\mu-r)S_t \right]\,dt + \Delta_t\,\sigma\,S_t\,dW_t \\
+dV_t & = \left[V_t(t, S_t) + \mu\,S_t\,V_s(t, S_t) + \frac12 \sigma^2\,S_t^2\,V_{SS}(t, S_t)  \right]\,dt + \sigma \, S_t \, V_s(t, S_t)\,dW_t
+\end{cases}
+$$
+
+* To eliminate risk, we need 
+$$
+\boxed{\Delta_t = V_s(t, S_t)}
+$$
+
+* This is called delta-heding ! 
+
+* The sensitivity of price options to time, price, volatility, etc are called Greeks.
+  * $V_s(t, S_t)$ is called the Delta of the option
+  * $V_{ss}(t, S_t)$ is called the Gamma of the option
+  * $V_{t}(t, S_t)$ is called the Theta of the option
+
+--- 
+
+
+# The Black-Scholes model
+
+* The dynamics are
+$$
+\begin{cases}
+d\Pi_t & = \left[r\,\Pi_t + \Delta_t(\mu-r)S_t \right]\,dt + \Delta_t\,\sigma\,S_t\,dW_t \\
+dV_t & = \left[V_t(t, S_t) + \mu\,S_t\,V_s(t, S_t) + \frac12 \sigma^2\,S_t^2\,V_{SS}(t, S_t)  \right]\,dt + \sigma \, S_t \, V_s(t, S_t)\,dW_t
+\end{cases}
+$$
+
+* We insert the delta-hedging formula into the dynamics, and we obtain the **Black-Scholes PDE**
+$$
+\boxed{V_t(t, S_t) + r\,S_t\,V_s(t, S_t) + \frac12 \sigma^2\,S_t^2\,V_{SS}(t, S_t) = r\,V(t, S_t)}
+$$
+for all $t\in[0, T]$, subject to boundary condition
+$$
+V_T = V(T, S_T)
+$$
+
+
+--- 
+
+# Solving the Black-Scholes model 
+
+* Let's solve the Black-Scholes model for a European Call with strike $K$
+$$
+V(S_T, T) = (S_T - K)^+
+$$
+
+* The option's price is 
+$$
+V_t = S_t \, \mathcal N(d_1) - K \,\exp(-r(T-t))\,\mathcal N(d_2)
+$$
+where
+$$
+d_1 = \frac{\log(S_t/K) + (r+\sigma^2/2)(T-t)}{\sigma\sqrt{T-t}}, \quad \text{and } \quad d_2 =  d_1 - \sigma\sqrt{T-t}
+$$
+
+* $\mathcal N$ is the standard normal distribution's CDF: 
+$$\mathcal N(x) = \frac{1}{\sqrt{2\,\pi}}\int_{-\infty}^x e^{-y^2/2}\,dy.$$
+
+---
+
+# Solving the Black-Scholes model 
+
+* Use the following change of variables
+$$
+\begin{split}
+\tau & = T - t \\
+x & = \log(S_t/K) + (r - \sigma^2/2)\tau \\
+u(\tau, x)&  = V(t, S_t)\,e^{r(T-t)}
+\end{split}
+$$
+
+* The Black-Scholes PDE reduces to a *Heat Equation* with initial condition $u(0,x)=K\,(e^{x^+} - 1)$
+$$
+\partial_t u = \sigma^2\, \partial_{xx}u / 2,
+$$
+
+
+* This has solution 
+$$
+u(\tau, x) = \frac{1}{\sigma\sqrt{2\,\pi\,\tau}}\int_{-\infty}^\infty u(0,y)\,e^{-\frac{(x-y)^2}{2\sigma^2\tau}}dy
+$$
+* With some manipulations, we arrive at the solution.
+* We will prove this when we do risk-neutral pricing !
+
+<!-- 
+
+# Black-Scholes model: Observations
+
+* The solution does not depend on the expected return $\mu$ !
+  * Drift can be replaced by the risk-free rate through a mathematical construct called risk-neutral probability pricing. 
+  * Why can we get away with that without introducing errors? The reason lies in the ability to setup a hedge portfolio, thus the market will not compensate us for the drift above and beyond the risk free rate under risk-neutral probability pricing.
+
+* to make it even simpler think of a call with a zero strike on the underlying. How would you price such a call? Well, you would price it like the stock (up to a correction for the risk free interest rate)! Here the same question could be asked: Shouldn't it be priced higher with the underlying having higher drift? The answer is no, because this is already included in the price of the underlying! You would kind of double count this effect.
+
+With "real" options the reason is the same, the only thing that changes is that you have to adapt the proportion of the stock when the price of the underlying changes. But the original reasoning stays the same: The drift does not enter into the price of the derivative because it is already included in the price of the underlying.
+-->
+
+--- 
+
+# Black-Scholes model: Observations
+
+$$
+\boxed{V_t(t, S_t) + r\,S_t\,V_s(t, S_t) + \frac12 V_{SS}(t, S_t) = r\,V(t, S_t)}
+$$
+
+* How general is the B\&S equation above ? 
+  * we assumed no arbitrage
+  * we assumed ability to borrow and lend any amount, even fractional, of cash at the risk-free rate $r$
+  * we assumed ability to buy and sell any amount, even fractional, of the stock
+  * we assumed no frictions when buying and selling
+  * we assumed short-selling without costs
+  * Is it realistic to assume continuous hedging ?
+
+
+--- 
+
+# Black-Scholes model: Observations
+
+$$
+\boxed{V_t(t, S_t) + r\,S_t\,V_s(t, S_t) + \frac12 V_{SS}(t, S_t) = r\,V(t, S_t)}
+$$
+
+* Can we price any type of European option?
+* Can we price an American option ? 
+  * An american option can be exercised at any point in time during $[0, T]$
+
+
+
+
+
+---
+
+# Black-Scholes model with dividends
+
+* Assume a stock pays a dividend yield $q$ continuously. The dynamics of the stock become:
+$$
+dS_t = (\mu - q)\,S_t\,dt + \sigma\,S_t\,dW_t
+$$
+
+* **Exercise**: derive the Black-Scholes formula for a dividend-paying option
+
+--- 
+
+# Ito formula for multiple processes
+
+* Two-dimensional Ito Formula
+  * Let $V(t, x, y)$ be a function twice-differentiable in $x$ and $y$
+  * Let $\partial_tV$, $\partial_xV$, $\partial_{xx}V$, $\partial_yV$, $\partial_{yy}V$, $\partial_{xy}V$ denote the partial derivatives
+
+  * **Theorem** Let $X_t$ and $Y_t$ be two Ito processes. Ito's formula implies that
+    $$
+    \begin{split}
+    dV(t, X_t, Y_t) = & \partial_t V_t\,dt + \partial_x V\,dX_t + \partial_y V\,dY_t \\
+    & + \frac12 \partial_{xx}V d<X,X>_t + \frac12 \partial_{yy}V d<Y,Y>_t + \partial_{xy}V d<X,Y>_t
+    \end{split}
+    $$
+    * where $d<\cdot,\cdot>_t$ is the quadratic covariation (multiplication rule)
+    ![ItoTable](./images/ItoTable.png){style="transform: translate(180%, 0%); width: 200px"}
+    * When $W$ and $Z$ are two Brownians with correlation $\rho$, then  $d<Z,W>_t = \rho\,dt$
+
+
+--- 
+
+# Ito formula for multiple processes
+
+* **Corollary:** Let $X_t$ and $Y_t$ be two Ito processes. Then  (prove it)
+$$
+d(X_t Y_t) = X_t dY_t + Y_t dX_t + d<X,Y>_t
+$$
+
+* **Exercise**: derive the Black-Scholes PDE for a European option paying $V(T,X_T,Y_T)$ at time $T$ where 
+$$
+\begin{cases}
+dX_t/X_t = \mu^X\,dt + \sigma^X dW_t \\
+dY_t/Y_t = \mu^Y\,dt + \sigma^Y dZ_t
+\end{cases}
+$$
+where $W$ and $Z$ are Brownian motions with correlation $\rho$
+  * Step 1: write the dynamics of the option price $V_t$
+  * Step 2: write the dynamics of a self-financed portfolio that invests $\Delta_t^X$ and $\Delta_t^Y$ in the stocks $X$ and $Y$.
+  * Step 3: Use a replication argument to find the hedging strategy
+  * Step 4: Obtain the B&S PDE
+
 ---
 layout: end
 ---
 Thank you !
 
 [faycaldrissi.com](https://www.faycaldrissi.com/)
+
+---
