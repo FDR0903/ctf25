@@ -2195,12 +2195,12 @@ $$
 
 * By definition of partial derivative:
 $$
-f_t(t, x) = \lim_{dt\rightarrow 0} \frac{f(t+dt, x) - f(t,x)}{dt}, \quad f_x(t, x) = \lim_{dx\rightarrow 0} \frac{f(t, x+dx) - f(t,x)}{dx}
+\partial_t f(t, x) = \lim_{dt\rightarrow 0} \frac{f(t+dt, x) - f(t,x)}{dt}, \quad \partial_x f(t, x) = \lim_{dx\rightarrow 0} \frac{f(t, x+dx) - f(t,x)}{dx}
 $$
 
 * By definition (total derivative)
 $$
-df(t, x) = f_t(t, x) dt + f_x(t, x) dx
+df(t, x) = \partial_t f(t, x) dt + \partial_x f(t, x) dx
 $$
 
 
@@ -2218,7 +2218,7 @@ $$
 
 * By definition (total derivative)
 $$
-df(t, x) = f_t(t, x) dt + f_x(t, x) dx
+df(t, x) = \partial_t f(t, x) dt + \partial_x f(t, x) dx
 $$
 * Substituting $x=W_t$, we have 
 $$
@@ -2261,14 +2261,14 @@ $$
 
 # Ito's Lemma
 
-Let $f(t, x)$ be a function for which the partial derivatives $f_t(t,x)$, $f_x(t,x)$, and  $f_{xx}(t,x)$ are defined and continuous, and let $W_t$ be a Brownian motion. Then, the dynamics of $f(t, W_t)$ are defined by the SDE
+Let $f(t, x)$ be a function for which the partial derivatives $\partial_t f(t,x)$, $\partial_x f(t,x)$, and  $\partial_{xx} f(t,x)$ are defined and continuous, and let $W_t$ be a Brownian motion. Then, the dynamics of $f(t, W_t)$ are defined by the SDE
 $$
-df(t, W_t) = \left(f_t(t, W_t)+ \frac12 f_{xx}(t, W_t) \right)\,dt + f_x(t, W_t)\,dW_t 
+df(t, W_t) = \left(\partial_t f(t, W_t)+ \frac12 \partial_{xx} f(t, W_t) \right)\,dt +  \partial_x f(t, W_t)\,dW_t 
 $$
 
 * In integral form:
 $$
-f(t, W_t) = f(0, W_0) + \int_0^t (f_t(s, W_s)+\frac12 f_{xx}(s, W_s))\,ds + \int_0^t f_x(s, W_s)\,dW_s
+f(t, W_t) = f(0, W_0) + \int_0^t (\partial_t f(s, W_s)+\frac12 \partial_{xx} f(s, W_s))\,ds + \int_0^t \partial_x f(s, W_s)\,dW_s
 $$
 
 ---
@@ -2279,7 +2279,10 @@ We can use simple mnemonic device to Ito's lemma
 
 1. For a function $f(t, W_t)$, we first use the rules of calculus to write the Taylor differential 
 $$
-df(t, W_t) = f_t(t, W_t) dt + f_x(t, W_t) dW_t + \frac12 f_{tt}(t, W_t) (dt)^2 + \frac12 f_{xx}(t, W_t) (dW_t)^2 + f_{tx}(t, W_t)\, dt\, dW_t
+\begin{split}
+& df(t, W_t)  \\ 
+& = \partial_t f(t, W_t) dt + \partial_x f(t, W_t) dW_t + \frac12 \partial_{tt} f(t, W_t) (dt)^2 + \frac12 \partial_{xx} f(t, W_t) (dW_t)^2 + \partial_{tx} f(t, W_t)\, dt\, dW_t
+\end{split}
 $$
 
 2. Use the multiplication rule
@@ -2288,7 +2291,7 @@ $$
 
 
 $$
-df(t, W_t) = f_t(t, W_t) dt + f_x(t, W_t) dW_t + \frac12 f_{xx}(t, W_t) dt
+df(t, W_t) = \partial_t f(t, W_t) dt + \partial_x f(t, W_t) dW_t + \frac12 \partial_{xx} f(t, W_t) dt
 $$
 
 
@@ -2310,7 +2313,7 @@ $$
 
 ## Ito's Lemma
 
-* We can extent Ito's formula to Ito processes of the form
+* We can extend Ito's formula to Ito processes of the form
 $$
 dX_t = \mu(t,X_t)\,dt + \sigma(t,X_t)\,dW_t
 $$
@@ -2319,22 +2322,57 @@ $$
 
 ## Ito's Lemma
 
-* We can extent Ito's formula to Ito processes of the form
-$$
-dX_t = \mu(t,X_t)\,dt + \sigma(t,X_t)\,dW_t
-$$
+* We can extend Ito's formula to Ito processes of the form
+$
+\qquad dX_t = \mu(t,X_t)\,dt + \sigma(t,X_t)\,dW_t
+$
 * We use the same mnemonic device :
   1. We use normal calculus
   $$
-  df(t, X_t) = f_t(t, X_t) dt + f_x(t, X_t) dX_t + \frac12 f_{tt}(t, X_t) (dt)^2 + \frac12 f_{xx}(t, X_t) (dX_t)^2 + f_{tx}(t, W_t)\, dt\, dX_t
-  $$
+  \begin{split}
+  & df(t, X_t) \\ & = \partial_t f(t, X_t) dt + \partial_x f(t, X_t) dX_t + \frac12 \partial_{tt} f(t, X_t) (dt)^2 + \frac12 \partial_{xx} f(t, X_t) (dX_t)^2 + \partial_{tx} f(t, W_t)\, dt\, dX_t
+  \end{split}
 
+
+---
+
+## Ito's Lemma
+
+* We can extend Ito's formula to Ito processes of the form
+$
+\qquad dX_t = \mu(t,X_t)\,dt + \sigma(t,X_t)\,dW_t
+$
+* We use the same mnemonic device :
+  1. We use normal calculus
+  $$
+  \begin{split}
+  & df(t, X_t) \\ & = \partial_t f(t, X_t) dt + \partial_x f(t, X_t) dX_t + \frac12 \partial_{tt} f(t, X_t) (dt)^2 + \frac12 \partial_{xx} f(t, X_t) (dX_t)^2 + \partial_{tx} f(t, W_t)\, dt\, dX_t
+  \end{split}
+  $$
   2. All the terms but $(dX_t)^2$ are zero. The term $(dX_t)^2$ can be written as  (using the multiplication table above)
   $$\mu(t,X_t)^2\,dt^2 + \sigma(t,X_t)^2\,dW_t^2 + 2\,\mu(t,X_t)\,\sigma(t,X_t)\,dt \,dW_t = \sigma(t,X_t)^2\,dt$$
 
+
+---
+
+## Ito's Lemma
+
+* We can extend Ito's formula to Ito processes of the form
+$
+\qquad dX_t = \mu(t,X_t)\,dt + \sigma(t,X_t)\,dW_t
+$
+* We use the same mnemonic device :
+  1. We use normal calculus
+  $$
+  \begin{split}
+  & df(t, X_t) \\ & = \partial_t f(t, X_t) dt + \partial_x f(t, X_t) dX_t + \frac12 \partial_{tt} f(t, X_t) (dt)^2 + \frac12 \partial_{xx} f(t, X_t) (dX_t)^2 + \partial_{tx} f(t, W_t)\, dt\, dX_t
+  \end{split}
+  $$
+  2. All the terms but $(dX_t)^2$ are zero. The term $(dX_t)^2$ can be written as  (using the multiplication table above)
+  $$\mu(t,X_t)^2\,dt^2 + \sigma(t,X_t)^2\,dW_t^2 + 2\,\mu(t,X_t)\,\sigma(t,X_t)\,dt \,dW_t = \sigma(t,X_t)^2\,dt$$
   3. We obtain 
   $$
-  df(t, X_t) = \left(f_t(t, X_t) + f_x(t, X_t)\, \mu(t,X_t) + \frac12 f_{xx}(t, X_t) \sigma(t,X_t)^2 \right)dt + f_x(t, X_t) dW_t 
+  df(t, X_t) = \left(\partial_t f(t, X_t) + \partial_x f(t, X_t)\, \mu(t,X_t) + \frac12 \partial_{xx} f(t, X_t) \sigma(t,X_t)^2 \right)dt + \partial_x f(t, X_t) dW_t 
   $$
 
 ---
@@ -2623,8 +2661,8 @@ $$
 * Use Ito to derive the dynamics of the price of the derivative
 $$
 \begin{split}
-dV_t & = V_t(t, S_t) \, dt + V_s(t, S_t)\,dS_t + \frac12 \, V_{SS}(t, S_t)(dS_t)^2 \\
-& = \left[V_t(t, S_t) + \mu\,S_t\,V_s(t, S_t) + \frac12 \sigma^2\,S_t^2\,V_{SS}(t, S_t)  \right]\,dt + \sigma \, S_t \, V_s(t, S_t)\,dW_t
+dV_t & = \partial_{t} V(t, S_t) \, dt + \partial_{s} V(t, S_t)\,dS_t + \frac12 \, \partial_{ss} V(t, S_t)(dS_t)^2 \\
+& = \left[\partial_{t} V(t, S_t) + \mu\,S_t\,\partial_{s} V(t, S_t) + \frac12 \sigma^2\,S_t^2\,\partial_{ss} V(t, S_t)  \right]\,dt + \sigma \, S_t \, \partial_{s} V(t, S_t)\,dW_t
 \end{split}
 $$
 
@@ -2676,7 +2714,7 @@ $$
 
 * The dynamics of the self-financed portfolio are
 $$
-dV_t = \left[V_t(t, S_t) + \mu\,S_t\,V_s(t, S_t) + \frac12\sigma^2\,S_t^2\, V_{SS}(t, S_t)  \right]\,dt + \sigma \, S_t \, V_s(t, S_t)\,dW_t
+dV_t = \left[\partial_{t} V(t, S_t) + \mu\,S_t\,\partial_{s} V(t, S_t) + \frac12\sigma^2\,S_t^2\, \partial_{ss} V(t, S_t)  \right]\,dt + \sigma \, S_t \, \partial_{s} V(t, S_t)\,dW_t
 $$
 
 
@@ -2688,20 +2726,20 @@ $$
 $$
 \begin{cases}
 d\Pi_t & = \left[r\,\Pi_t + \Delta_t(\mu-r)S_t \right]\,dt + \Delta_t\,\sigma\,S_t\,dW_t \\
-dV_t & = \left[V_t(t, S_t) + \mu\,S_t\,V_s(t, S_t) + \frac12 \sigma^2\,S_t^2\,V_{SS}(t, S_t)  \right]\,dt + \sigma \, S_t \, V_s(t, S_t)\,dW_t
+dV_t & = \left[\partial_{t} V(t, S_t) + \mu\,S_t\,\partial_{s} V(t, S_t) + \frac12 \sigma^2\,S_t^2\,\partial_{ss} V(t, S_t)  \right]\,dt + \sigma \, S_t \, \partial_{s} V(t, S_t)\,dW_t
 \end{cases}
 $$
 
 * To eliminate risk, we need 
 $$
-\boxed{\Delta_t = V_s(t, S_t)}
+\boxed{\Delta_t = \partial_{s} V(t, S_t)}
 $$
 
 * This is called delta-heding ! 
 
 * The sensitivity of price options to time, price, volatility, etc are called Greeks.
-  * $V_s(t, S_t)$ is called the Delta of the option
-  * $V_{ss}(t, S_t)$ is called the Gamma of the option
+  * $\partial_{s} V(t, S_t)$ is called the Delta of the option
+  * $\partial_{ss} V(t, S_t)$ is called the Gamma of the option
   * $V_{t}(t, S_t)$ is called the Theta of the option
 
 --- 
@@ -2713,13 +2751,13 @@ $$
 $$
 \begin{cases}
 d\Pi_t & = \left[r\,\Pi_t + \Delta_t(\mu-r)S_t \right]\,dt + \Delta_t\,\sigma\,S_t\,dW_t \\
-dV_t & = \left[V_t(t, S_t) + \mu\,S_t\,V_s(t, S_t) + \frac12 \sigma^2\,S_t^2\,V_{SS}(t, S_t)  \right]\,dt + \sigma \, S_t \, V_s(t, S_t)\,dW_t
+dV_t & = \left[\partial_{t} V(t, S_t) + \mu\,S_t\,\partial_{s} V(t, S_t) + \frac12 \sigma^2\,S_t^2\,\partial_{ss} V(t, S_t)  \right]\,dt + \sigma \, S_t \, \partial_{s} V(t, S_t)\,dW_t
 \end{cases}
 $$
 
 * We insert the delta-hedging formula into the dynamics, and we obtain the **Black-Scholes PDE**
 $$
-\boxed{V_t(t, S_t) + r\,S_t\,V_s(t, S_t) + \frac12 \sigma^2\,S_t^2\,V_{SS}(t, S_t) = r\,V(t, S_t)}
+\boxed{\partial_{t} V(t, S_t) + r\,S_t\,\partial_{s} V(t, S_t) + \frac12 \sigma^2\,S_t^2\,\partial_{ss} V(t, S_t) = r\,V(t, S_t)}
 $$
 for all $t\in[0, T]$, subject to boundary condition
 $$
@@ -2792,7 +2830,7 @@ With "real" options the reason is the same, the only thing that changes is that 
 # Black-Scholes model: Observations
 
 $$
-\boxed{V_t(t, S_t) + r\,S_t\,V_s(t, S_t) + \frac12 V_{SS}(t, S_t) = r\,V(t, S_t)}
+\boxed{\partial_{t} V(t, S_t) + r\,S_t\,\partial_{s} V(t, S_t) + \frac12 \partial_{ss} V(t, S_t) = r\,V(t, S_t)}
 $$
 
 * How general is the B\&S equation above ? 
@@ -2809,7 +2847,7 @@ $$
 # Black-Scholes model: Observations
 
 $$
-\boxed{V_t(t, S_t) + r\,S_t\,V_s(t, S_t) + \frac12 V_{SS}(t, S_t) = r\,V(t, S_t)}
+\boxed{\partial_{t} V(t, S_t) + r\,S_t\,\partial_{s} V(t, S_t) + \frac12 \partial_{ss} V(t, S_t) = r\,V(t, S_t)}
 $$
 
 * Can we price any type of European option?
