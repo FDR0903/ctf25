@@ -327,7 +327,6 @@ $$
 C^d = \max\{d\, S - K, 0\}
 $$
 
-
 ---
 
 ## The call option
@@ -2045,20 +2044,6 @@ $$I_t = \int_0^t \Delta_s \, dW_s = \sum_{j=0}^{k-1} \Delta_{t_j} (W_{t_{j+1}} -
 * **Theorem 1: The stochastic integral $I_t$ is a martingale**
   * **Exercise**: prove it when $I_{t_k} = \sum_{j=0}^{k-1} \Delta_{t_j} (W_{t_{j+1}} - W_{t_j})$
 
-
----
-
-# The stochastic integral is a martingale
-
-* **Theorem 1: The stochastic integral $I_t$ is a martingale**
-  * **Exercise**: prove it when $I_{t_k} = \sum_{j=0}^{k-1} \Delta_{t_j} (W_{t_{j+1}} - W_{t_j})$
-  $$
-  \begin{split}
-  \mathbb E[I_{t_{k+1}}\mid \mathcal G_{t_{k}}] = \mathbb E[I_{t_{k}} + \Delta_{t_k} (W_{t_{k+1}} - W_{t_k}) \mid \mathcal G_{t_{k}}] = I_{t_{k}}.
-  \end{split}
-  $$
-  * Since $I_t$ is a martingale, and $I_0=0$, then $\mathbb E_0[I_t] = 0$
-
 ---
 
 # Ito's isometry
@@ -2085,12 +2070,8 @@ $$
 $\qquad\qquad\qquad\qquad\qquad \mathbb E[(W_{t_{k+1}} - W_{t_k})(W_{t_{\kappa+1}} - W_{t_\kappa})] = 0$
 * Moreover, we know that for all $k$, 
 $$\mathbb E\left[(W_{t_{k+1}} - W_{t_k})^2\right] = t_{k+1}-t_k$$  
-* We conclude 
-$$
-\begin{split}
-\mathbb E[I_{t_k}^2] = & \mathbb E\left[\sum_{j=0}^{k-1} \Delta_{t_j}^2 (W_{t_{j+1}} - W_{t_j})^2 \right]\\ 
-\end{split}
-$$
+* We conclude ... ?
+
 
 ---
 
@@ -2548,60 +2529,9 @@ $$
 Y_t = e^{\theta\, t} S_t
 $$
 * Step 3: Apply Itô's Lemma to $Y_t$
-$$
-\begin{split}
-dY_t = e^{\theta t} dS_t + \theta e^{\theta t} S_t \, dt & = e^{\theta t} \left[ \theta(\overline S - S_t) \, dt + \sigma \, dW_t \right] + \theta e^{\theta t} S_t \, dt \\
-& = \theta \overline S e^{\theta t} \, dt + \sigma e^{\theta t} \, dW_t
-\end{split}
-$$
 * Step 4: Integrate from  $0$ to $t$ (note that $Y_0 = X_0$.)
-$$
-Y_t = Y_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s
-$$
-
----
-
-# Mean-reverting processes: Ornstein–Uhlenbeck
-#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
-$$
-Y_t = Y_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s
-$$
-
-* Step 5: Solve for $S_t$ Since $Y_t = e^{\theta t} X_t$, we find:
-$$
-S_t = e^{-\theta t} \left( S_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s \right)
-$$
-Using
-$$
-\int_0^t e^{\theta s} \, ds = \frac{e^{\theta t} - 1}{\theta},
-$$
-the final solution becomes:
-$$
-S_t = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t}) + \sigma\, \int_0^t e^{-\theta (t-s)} \, dW_s
-$$
-
----
-
-# Mean-reverting processes: Ornstein–Uhlenbeck
-#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
-
-* The final solution becomes:
-$$
-S_t = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t}) + \sigma\, \int_0^t e^{-\theta (t-s)} \, dW_s
-$$
+* Step 5: Solve for $S_t$
 * What is the mean and variance of $S_t$ ?
-  * Mean
-  $$
-  \mathbb{E}[S_t] = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t})
-  $$
-  * Variance (the variance comes only from the stochastic integral: Ito's isometry)
-$$
-\text{Var}(X_t) = \sigma^2 e^{-2\theta t} \, \text{Var}\left( \int_0^t e^{\theta s} \, dW_s \right)
-$$
-By Itô's isometry:
-$
-\text{Var}(X_t) =  \sigma^2 e^{-2\theta t} \mathbb{E}\left[ \left( \int_0^t e^{\theta s} \, dW_s \right)^2 \right] =  \sigma^2 e^{-2\theta t}\int_0^t e^{2\theta s} \, ds= \frac{\sigma^2}{2\theta} \left( 1 - e^{-2\theta t} \right)
-$
 
 ---
 
@@ -2643,53 +2573,16 @@ $
 Y_t = e^{\theta t} R_t
 $
 * Step 3: Apply Itô’s Lemma to $Y_t$:
-$$
-dY_t = e^{\theta t} dR_t + \theta e^{\theta t} R_t \, dt
-$$
-Simplifying:
-$$
-dY_t = \theta \mu e^{\theta t} \, dt + \sigma e^{\theta t} \sqrt{R_t} \, dW_t
-$$
-
-
-
----
-
-# Cox–Ingersoll–Ross (CIR) model for interest rates
-
-#### Solving the CIR SDE with Itô's Lemma
-
-
 * Step 4: Integrate from $0$ to $t$ (note that $Y_0 = e^{\theta 0} R_0 = R_0$):
-$$
-Y_t = Y_0 + \int_0^t \theta \mu e^{\theta s} \, ds + \int_0^t \sigma e^{\theta s} \sqrt{R_s} \, dW_s
-$$
-* Step 5: Solve for $R_t$. Since $Y_t = e^{\theta t} R_t$, we obtain:
-$$
-R_t = e^{-\theta t} \left( Y_0 + \int_0^t \theta \mu e^{\theta s} \, ds + \int_0^t \sigma e^{\theta s} \sqrt{R_s} \, dW_s \right)
-$$
-
-Using $Y_0 = R_0$, the final solution becomes:
-$$
-R_t = R_0 e^{-\theta t} + \mu \left( 1 - e^{-\theta t} \right) + \sigma \int_0^t e^{-\theta (t-s)} \sqrt{R_s} \, dW_s
-$$
+* Step 5: Solve for $R_t$
 
 ---
 
 # Cox–Ingersoll–Ross (CIR) model for interest rates
 #### Mean and Variance of $R_t$
 
-* **Mean**: The mean of $R_t$ is given by:
-$$
-\mathbb{E}[R_t] = R_0 e^{-\theta t} + \mu \left( 1 - e^{-\theta t} \right)
-$$
-
-* **Variance**: The variance of $R_t$ is derived from the stochastic integral. Using Itô's isometry:
-$$
-\begin{split}
-\text{Var}(R_{t})=&\sigma^{2}\,e^{-2\theta\,t}\text{Var}\left(\int_{0}^{t}e^{\theta s}\sqrt{R_{s}}\,dW_{s}\right)\\=&\sigma^{2}\,e^{-2\theta\,t}\mathbb{E}\left[\int_{0}^{t}e^{2\,\theta s}R_{s}\,ds\right]\\=&\sigma^{2}\,e^{-2\theta\,t}\int_{0}^{t}e^{2\,\theta s}\left(R_{0}e^{-\theta s}+\mu\left(1-e^{-\theta s}\right)\right)\,ds\\=&R_{0}\frac{\sigma^{2}}{\theta}\,\left(e^{-\theta\,t}-e^{-2\theta\,t}\right)+\frac{\mu\,\sigma^{2}}{2\,\theta}\,\left(1-e^{-\theta\,t}\right)^{2}
-\end{split}
-$$
+* **Mean**: Find the mean of $R_t$ 
+* **Variance**: Find the variance of $R_t$ 
 
 ---
 
