@@ -327,6 +327,7 @@ $$
 C^d = \max\{d\, S - K, 0\}
 $$
 
+
 ---
 
 ## The call option
@@ -2044,6 +2045,20 @@ $$I_t = \int_0^t \Delta_s \, dW_s = \sum_{j=0}^{k-1} \Delta_{t_j} (W_{t_{j+1}} -
 * **Theorem 1: The stochastic integral $I_t$ is a martingale**
   * **Exercise**: prove it when $I_{t_k} = \sum_{j=0}^{k-1} \Delta_{t_j} (W_{t_{j+1}} - W_{t_j})$
 
+
+---
+
+# The stochastic integral is a martingale
+
+* **Theorem 1: The stochastic integral $I_t$ is a martingale**
+  * **Exercise**: prove it when $I_{t_k} = \sum_{j=0}^{k-1} \Delta_{t_j} (W_{t_{j+1}} - W_{t_j})$
+  $$
+  \begin{split}
+  \mathbb E[I_{t_{k+1}}\mid \mathcal G_{t_{k}}] = \mathbb E[I_{t_{k}} + \Delta_{t_k} (W_{t_{k+1}} - W_{t_k}) \mid \mathcal G_{t_{k}}] = I_{t_{k}}.
+  \end{split}
+  $$
+  * Since $I_t$ is a martingale, and $I_0=0$, then $\mathbb E_0[I_t] = 0$
+
 ---
 
 # Ito's isometry
@@ -2070,8 +2085,12 @@ $$
 $\qquad\qquad\qquad\qquad\qquad \mathbb E[(W_{t_{k+1}} - W_{t_k})(W_{t_{\kappa+1}} - W_{t_\kappa})] = 0$
 * Moreover, we know that for all $k$, 
 $$\mathbb E\left[(W_{t_{k+1}} - W_{t_k})^2\right] = t_{k+1}-t_k$$  
-* We conclude ... ?
-
+* We conclude 
+$$
+\begin{split}
+\mathbb E[I_{t_k}^2] = & \mathbb E\left[\sum_{j=0}^{k-1} \Delta_{t_j}^2 (W_{t_{j+1}} - W_{t_j})^2 \right]\\ 
+\end{split}
+$$
 
 ---
 
@@ -2263,12 +2282,12 @@ $$
 
 Let $f(t, x)$ be a function for which the partial derivatives $\partial_t f(t,x)$, $\partial_x f(t,x)$, and  $\partial_{xx} f(t,x)$ are defined and continuous, and let $W_t$ be a Brownian motion. Then, the dynamics of $f(t, W_t)$ are defined by the SDE
 $$
-df(t, W_t) = \left(\partial_t f(t, W_t)+ \frac12 \partial_{xx} f(t, W_t) \right)\,dt +  \partial_x f(t, W_t)\,dW_t 
+df(t, W_t) = \left(\partial_t f(t, W_t)+ \frac12 \partial_{xx} f(t, W_t) \right)\,dt + \partial_x f(t, W_t)\,dW_t 
 $$
 
 * In integral form:
 $$
-f(t, W_t) = f(0, W_0) + \int_0^t (\partial_t f(s, W_s)+\frac12 \partial_{xx} f(s, W_s))\,ds + \int_0^t \partial_x f(s, W_s)\,dW_s
+f(t, W_t) = f(0, W_0) + \int_0^t (f_t(s, W_s)+\frac12 f_{xx}(s, W_s))\,ds + \int_0^t f_x(s, W_s)\,dW_s
 $$
 
 ---
@@ -2276,6 +2295,7 @@ $$
 # Ito's Lemma: mnemonic device
 
 We can use simple mnemonic device to Ito's lemma
+
 
 1. For a function $f(t, W_t)$, we first use the rules of calculus to write the Taylor differential 
 $$
@@ -2304,10 +2324,26 @@ $$
 d\log(W_t)
 $$
 
+We use the function $f(t,x)=\log(x)$ for which we know that $\partial_t f(t,x) =  0$, $\partial_x f(t,x) =  1/x$ and $\partial_{xx} f(t,x) =  -1/x^2$. By Ito's lemma:
+
+$$
+d\log(W_{t})=\frac{1}{W_{t}}dW_{t}-\frac{1}{2\,W_{t}^{2}}dt
+$$
+
+---
+
+## Ito's Lemma: exercise
+
+* Compute
+
 $$
 d(W_t^2)
 $$
+Similarly to above, by Ito's lemma
 
+$$
+dW_{t}^{2}=2\,W_{t}\,dW_{t}+dt
+$$
 
 ---
 
@@ -2386,7 +2422,7 @@ $$
 
 * Consider the function 
 $$ 
-f(S_t) = \log(S_t)
+f(t, x) = \log(x)
 $$
 
 * Using Ito's Lemma, prove that
@@ -2394,6 +2430,51 @@ $$
 S_t = S_0 \, \exp\left(\left(\mu-\sigma^2/2\right)\,t + \sigma\,W_t\right)
 $$
 
+---
+
+# Ito's Lemma for Geometric Brownian Motion
+
+* Prove that
+$$
+S_t = S_0 \, \exp\left(\left(\mu-\sigma^2/2\right)\,t + \sigma\,W_t\right)
+$$
+* Apply Ito's Lemma to $f(t,x)$ to obtain
+$$
+\begin{split}
+df(t, S_t) & = \frac{\partial f}{\partial t} \, dt + \frac{\partial f}{\partial x} \, dS_t + \frac{1}{2} \frac{\partial^2 f}{\partial x^2} \, (dS_t)^2 \\
+& 
+\end{split}
+$$
+* Compute the derivatives:$\frac{\partial f}{\partial t} = 0, \quad \frac{\partial f}{\partial x} = \frac{1}{x}, \quad \frac{\partial^2 f}{\partial x^2} = -\frac{1}{x^2}$
+* Substitute: 
+$$
+d\log(S_t) = \frac{1}{S_t} \, dS_t - \frac{1}{2} \cdot \frac{1}{S_t^2} \cdot (dS_t)^2
+$$
+* We know $(dS_t)^2 = \sigma^2 S_t^2 \, dt$
+
+---
+
+# Ito's Lemma for Geometric Brownian Motion
+
+* Substitute:
+$$
+d\log(S_t) = \frac{1}{S_t} (\mu S_t \, dt + \sigma S_t \, dW_t) - \frac{1}{2} \cdot \frac{1}{S_t^2} \cdot \sigma^2 S_t^2 \, dt
+$$
+
+* Simplify:
+$$
+d\log(S_t) = (\mu - \tfrac{1}{2}\sigma^2) \, dt + \sigma \, dW_t
+$$
+
+* Integrate from $0$ to $t$
+$$
+\log(S_t) - \log(S_0) = \left(\mu - \tfrac{1}{2}\sigma^2\right)t + \sigma W_t
+$$
+
+* Exponentiate both sides:
+$$
+S_t = S_0 \, \exp\left(\left(\mu - \tfrac{1}{2}\sigma^2\right)t + \sigma W_t\right)
+$$
 
 ---
 
@@ -2410,6 +2491,20 @@ X_t = f(S_t) = S_t^2
 $$
 
 * Write the dynamics of $X_t$
+
+---
+
+# Ito's Lemma: exercise
+
+* Consider the function: $f(t, x) = x^2$
+* apply Ito's Lemma and follow similar steps as above to obtain
+$$
+dX_t = (2\mu + \sigma^2) S_t^2 \, dt + 2\sigma S_t^2 \, dW_t
+$$
+* or equivalently
+$$
+dX_t/X_t = (2\mu + \sigma^2) \, dt + 2\sigma \, dW_t
+$$
 
 ---
 
@@ -2444,6 +2539,70 @@ layout: intro
 2. The Black-Scholes PDE
 3. Multi-dimensional Ito's Lemma
 -->
+
+---
+
+# Ito's Lemma: exercise
+
+* Let $Y_t$ be the GBPUSD rate (USD per GBP):
+$$
+dY_t = \mu^Y \, Y_t \, dt + \sigma^Y\,Y_t\,dW_t
+$$
+
+* Apply Itô's Lemma to $U_t = \frac{1}{Y_t}$ by considering the function $f(t,x) = 1/x$:
+$$
+dU_t = -\frac{1}{Y_t^2} \, dY_t + \tfrac{1}{2} \cdot 2 \cdot \frac{1}{Y_t^3} \cdot (dY_t)^2
+$$
+
+* Simplify 
+$$
+\begin{split}
+dU_t & = -\frac{1}{Y_t^2} (\mu^Y Y_t \, dt + \sigma^Y Y_t \, dW_t) + \frac{\sigma^{Y2} Y_t^2}{Y_t^3} \, dt \\
+& = (-\mu^Y + (\sigma^Y)^2) U_t \, dt - \sigma^Y U_t \, dW_t
+\end{split}
+$$
+
+* This is a GBM and we know the solution
+$$
+U_t = U_0 \, \exp\left(\left(-\mu^Y + \tfrac{(\sigma^Y)^2}{2}\right) t - \sigma^Y W_t\right)
+$$
+
+---
+
+# Ito's Lemma: exercise
+
+* We compute the expectation of $U_t$ 
+$$
+\mathbb{E}[U_t] = U_0 \, \exp\left(\left(-\mu^Y + \tfrac{(\sigma^Y)^2}{2}\right) t\right) \cdot \mathbb{E}\left[\exp(-\sigma^Y W_t)\right]
+$$
+
+* Simplify by using the moment generating function
+$$
+\mathbb{E}[U_t] = U_0 \, \exp\left(\left(-\mu^Y + \tfrac{(\sigma^Y)^2}{2}\right) t\right) \cdot \exp\left(\tfrac{(\sigma^Y)^2 t}{2}\right)
+$$
+
+* Finally
+$$
+\mathbb{E}[U_t] = U_0 \, \exp\left(\left(-\mu^Y + (\sigma^Y)^2\right) t\right)
+$$
+
+---
+layout: end
+---
+Thank you !
+
+[faycaldrissi.com](https://www.faycaldrissi.com/)
+
+---
+layout: intro
+---
+## Session $4$:  The Black-Scholes model
+<br />
+<br />
+
+*Fayçal Drissi*
+
+*Saïd Business School, University of Oxford*
 
 ---
 
@@ -2567,9 +2726,60 @@ $$
 Y_t = e^{\theta\, t} S_t
 $$
 * Step 3: Apply Itô's Lemma to $Y_t$
-* Step 4: Integrate from  $0$ to $t$ (note that $Y_0 = X_0$.)
-* Step 5: Solve for $S_t$
+$$
+\begin{split}
+dY_t = e^{\theta t} dS_t + \theta e^{\theta t} S_t \, dt & = e^{\theta t} \left[ \theta(\overline S - S_t) \, dt + \sigma \, dW_t \right] + \theta e^{\theta t} S_t \, dt \\
+& = \theta \overline S e^{\theta t} \, dt + \sigma e^{\theta t} \, dW_t
+\end{split}
+$$
+* Step 4: Integrate from  $0$ to $t$ (note that $Y_0 = S_0$.)
+$$
+Y_t = Y_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s
+$$
+
+---
+
+# Mean-reverting processes: Ornstein–Uhlenbeck
+#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
+$$
+Y_t = Y_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s
+$$
+
+* Step 5: Solve for $S_t$ Since $Y_t = e^{\theta t} S_t$, we find:
+$$
+S_t = e^{-\theta t} \left( S_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s \right)
+$$
+Using
+$$
+\int_0^t e^{\theta s} \, ds = \frac{e^{\theta t} - 1}{\theta},
+$$
+the final solution becomes:
+$$
+S_t = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t}) + \sigma\, \int_0^t e^{-\theta (t-s)} \, dW_s
+$$
+
+---
+
+# Mean-reverting processes: Ornstein–Uhlenbeck
+#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
+
+* The final solution becomes:
+$$
+S_t = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t}) + \sigma\, \int_0^t e^{-\theta (t-s)} \, dW_s
+$$
 * What is the mean and variance of $S_t$ ?
+  * Mean
+  $$
+  \mathbb{E}[S_t] = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t})
+  $$
+  * Variance (the variance comes only from the stochastic integral: Ito's isometry)
+$$
+\text{Var}(S_t) = \sigma^2 e^{-2\theta t} \, \text{Var}\left( \int_0^t e^{\theta s} \, dW_s \right)
+$$
+By Itô's isometry:
+$
+\text{Var}(S_t) =  \sigma^2 e^{-2\theta t} \mathbb{E}\left[ \left( \int_0^t e^{\theta s} \, dW_s \right)^2 \right] =  \sigma^2 e^{-2\theta t}\int_0^t e^{2\theta s} \, ds= \frac{\sigma^2}{2\theta} \left( 1 - e^{-2\theta t} \right)
+$
 
 ---
 
@@ -2611,16 +2821,53 @@ $
 Y_t = e^{\theta t} R_t
 $
 * Step 3: Apply Itô’s Lemma to $Y_t$:
+$$
+dY_t = e^{\theta t} dR_t + \theta e^{\theta t} R_t \, dt
+$$
+Simplifying:
+$$
+dY_t = \theta \mu e^{\theta t} \, dt + \sigma e^{\theta t} \sqrt{R_t} \, dW_t
+$$
+
+
+
+---
+
+# Cox–Ingersoll–Ross (CIR) model for interest rates
+
+#### Solving the CIR SDE with Itô's Lemma
+
+
 * Step 4: Integrate from $0$ to $t$ (note that $Y_0 = e^{\theta 0} R_0 = R_0$):
-* Step 5: Solve for $R_t$
+$$
+Y_t = Y_0 + \int_0^t \theta \mu e^{\theta s} \, ds + \int_0^t \sigma e^{\theta s} \sqrt{R_s} \, dW_s
+$$
+* Step 5: Solve for $R_t$. Since $Y_t = e^{\theta t} R_t$, we obtain:
+$$
+R_t = e^{-\theta t} \left( Y_0 + \int_0^t \theta \mu e^{\theta s} \, ds + \int_0^t \sigma e^{\theta s} \sqrt{R_s} \, dW_s \right)
+$$
+
+Using $Y_0 = R_0$, the final solution becomes:
+$$
+R_t = R_0 e^{-\theta t} + \mu \left( 1 - e^{-\theta t} \right) + \sigma \int_0^t e^{-\theta (t-s)} \sqrt{R_s} \, dW_s
+$$
 
 ---
 
 # Cox–Ingersoll–Ross (CIR) model for interest rates
 #### Mean and Variance of $R_t$
 
-* **Mean**: Find the mean of $R_t$ 
-* **Variance**: Find the variance of $R_t$ 
+* **Mean**: The mean of $R_t$ is given by:
+$$
+\mathbb{E}[R_t] = R_0 e^{-\theta t} + \mu \left( 1 - e^{-\theta t} \right)
+$$
+
+* **Variance**: The variance of $R_t$ is derived from the stochastic integral. Using Itô's isometry:
+$$
+\begin{split}
+\text{Var}(R_{t})=&\sigma^{2}\,e^{-2\theta\,t}\text{Var}\left(\int_{0}^{t}e^{\theta s}\sqrt{R_{s}}\,dW_{s}\right)\\=&\sigma^{2}\,e^{-2\theta\,t}\mathbb{E}\left[\int_{0}^{t}e^{2\,\theta s}R_{s}\,ds\right]\\=&\sigma^{2}\,e^{-2\theta\,t}\int_{0}^{t}e^{2\,\theta s}\left(R_{0}e^{-\theta s}+\mu\left(1-e^{-\theta s}\right)\right)\,ds\\=&R_{0}\frac{\sigma^{2}}{\theta}\,\left(e^{-\theta\,t}-e^{-2\theta\,t}\right)+\frac{\mu\,\sigma^{2}}{2\,\theta}\,\left(1-e^{-\theta\,t}\right)^{2}
+\end{split}
+$$
 
 ---
 
@@ -2712,7 +2959,7 @@ $$
 d\Pi_t = \left[r\,\Pi_t + \Delta_t(\mu-r)S_t \right]\,dt + \Delta_t\,\sigma\,S_t\,dW_t
 $$
 
-* The dynamics of the self-financed portfolio are
+* The dynamics of the option price are
 $$
 dV_t = \left[\partial_{t} V(t, S_t) + \mu\,S_t\,\partial_{s} V(t, S_t) + \frac12\sigma^2\,S_t^2\, \partial_{ss} V(t, S_t)  \right]\,dt + \sigma \, S_t \, \partial_{s} V(t, S_t)\,dW_t
 $$
@@ -2735,7 +2982,7 @@ $$
 \boxed{\Delta_t = \partial_{s} V(t, S_t)}
 $$
 
-* This is called delta-heding ! 
+* This is called **delta-heding** ! 
 
 * The sensitivity of price options to time, price, volatility, etc are called Greeks.
   * $\partial_{s} V(t, S_t)$ is called the Delta of the option
@@ -2755,7 +3002,7 @@ dV_t & = \left[\partial_{t} V(t, S_t) + \mu\,S_t\,\partial_{s} V(t, S_t) + \frac
 \end{cases}
 $$
 
-* We insert the delta-hedging formula into the dynamics, and we obtain the **Black-Scholes PDE**
+* We insert the **delta-hedging** formula into the dynamics, and we obtain the **Black-Scholes PDE**
 $$
 \boxed{\partial_{t} V(t, S_t) + r\,S_t\,\partial_{s} V(t, S_t) + \frac12 \sigma^2\,S_t^2\,\partial_{ss} V(t, S_t) = r\,V(t, S_t)}
 $$
@@ -2917,5 +3164,3 @@ layout: end
 Thank you !
 
 [faycaldrissi.com](https://www.faycaldrissi.com/)
-
----
