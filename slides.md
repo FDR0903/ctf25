@@ -61,7 +61,6 @@ Why Continuous-Time Finance ? <a name="defi"></a></h1>
 
 * Beyond tractability, continuous-time models models are sometimes essential for understanding the risks of complex financial instruments
 
-
 ---
 
 # Why Continuous-Time Finance ?
@@ -538,7 +537,7 @@ $$
 C(t) =\frac{1}{R}\left[\frac{R-d}{u-d} C^u+\frac{u-R}{u-d} C^d\right] .
 $$
 
-* Define a new probability measure $\tilde P$ that assigns $\tilde p$ to the *up state* and $1-\tilde p$ to the *down state*
+* Define a new probability measure $\tilde{\mathbb P}$ that assigns $\tilde p$ to the *up state* and $1-\tilde p$ to the *down state*
 $$
 \tilde p = \frac{R-d}{u-d}
 $$
@@ -1325,7 +1324,7 @@ $$
 
 * **Reminder session 1**:
 ![binomialO4](./images/binomialO4.png){style="transform: translate(30%, 0%); width: 500px"}
-* We defined a new probability measure $\tilde P$ that assigns a probability 
+* We defined a new probability measure $\tilde{\mathbb P}$ that assigns a probability 
 $$
 \tilde p = \frac{R-d}{u-d}
 $$
@@ -1350,7 +1349,7 @@ $$
 S_t / B_t = S_t / (1+r)^t
 $$
 
-* We can show that a binomial risk-neutral probability measure $\tilde P$ is obtained by defining the binomial probability
+* We can show that a binomial risk-neutral probability measure $\tilde{\mathbb P}$ is obtained by defining the binomial probability
 $$
 \tilde p = \frac{1+r-d}{u-d}
 $$
@@ -1359,13 +1358,13 @@ $$
 
 ##  Risk Neutral Probability Measure and Martingales
 
-* **Exercise**: prove that $S_t / B_t$ is a martingale under $\tilde P$.
+* **Exercise**: prove that $S_t / B_t$ is a martingale under $\tilde{\mathbb P}$.
 
 ---
 
 ##  Risk Neutral Probability Measure and Martingales
 
-* **Exercise**: prove that $S_t / B_t$ is a martingale under $\tilde P$.
+* **Exercise**: prove that $S_t / B_t$ is a martingale under $\tilde{\mathbb P}$.
 * We need to show 
 $$
 \tilde{\mathbb E}\left[S_{t+1}/B_{t+1} \mid \mathcal G_t \right] = S_{t}/B_{t}
@@ -1412,7 +1411,7 @@ $$
 
 ## Self-financing Strategies, Risk Neutral Probability Measure and Martingales
 
-* **Exercise**: show that the discounted self-financed portfolio value process $(\Pi_t/B_t)$ is a martingale under $\tilde P$.
+* **Exercise**: show that the discounted self-financed portfolio value process $(\Pi_t/B_t)$ is a martingale under $\tilde{\mathbb P}$.
 
 ---
 
@@ -2620,9 +2619,6 @@ $$
 dS_t = \alpha_t \, dt + \sigma\,dW_t
 $$
 
-* Example: the imbalance of a limit order book
-![imbalance](./images/imbalance2.png){style="transform: translate(180%, 0%); width: 200px"}
-
 ---
 
 # Stochastic drift
@@ -2649,6 +2645,20 @@ $$
 
 ---
 
+# Stochastic drift
+
+$$
+dS_t = \alpha_t \, dt + \sigma\,dW_t
+$$
+
+* The regimes are observed at different time scales (low, medium, and high frequency).
+
+* Example: the imbalance of a limit order book
+![imbalance](./images/imbalance2.png){style="transform: translate(180%, 0%); width: 200px"}
+
+
+---
+
 # Stochastic drift (controlled)
 
 * Assume that a trader buys an asset at speed $\nu_t\,dt$ and that each dollar bought causes the price to move by $\eta$, then a trader would consider the dynamics
@@ -2657,26 +2667,6 @@ dS_t = \eta\,\nu_t\,dt + \sigma\,dW_t
 $$
 
 ![impact](./images/impact.png){style="transform: translate(70%, 0%); width: 400px"}
-
-
----
-
-# Correlated prices
-
-* Some assets are fundamentally correlated because they share the same sources of risk
-$$
-dS_t = \mu\,dt + \sigma\,dW_t,\quad dP_t = m\,dt + s\,dB_t,
-$$
-  * The joint distribution of $W_t$ and $B_t$ is $\mathcal N\left(\begin{pmatrix}
-0 \\
-0 
-\end{pmatrix}, t
-\begin{pmatrix}
-1 & \rho \\
-\rho & 1
-\end{pmatrix}\right)$
-
-![bnpgle](./images/bnpgle.png){style="transform: translate(20%, 0%); width: 700px"}
 
 ---
 
@@ -2714,81 +2704,37 @@ layout: two-cols-header
 
 ---
 
-# Mean-reverting processes: Ornstein–Uhlenbeck
-#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
+# Solving the Ornstein-Uhlenbeck SDE
 
-* Step 1: the OU process follows:
+* **Step 1**: the OU process follows:
 $
 dS_t = -\theta\,(S_t - \overline S)\,dt + \sigma\,dW_t
 $
-* Step 2: Introduce a transformation (to eliminate the mean-reverting drift)
+* **Step 2**: Introduce a transformation (to eliminate the mean-reverting drift)
 $$
 Y_t = e^{\theta\, t} S_t
 $$
-* Step 3: Apply Itô's Lemma to $Y_t$
+* **Step 3**: Apply Itô's Lemma to $Y_t$
 $$
 \begin{split}
-dY_t = e^{\theta t} dS_t + \theta e^{\theta t} S_t \, dt & = e^{\theta t} \left[ \theta(\overline S - S_t) \, dt + \sigma \, dW_t \right] + \theta e^{\theta t} S_t \, dt \\
-& = \theta \overline S e^{\theta t} \, dt + \sigma e^{\theta t} \, dW_t
+dY_t = ....
 \end{split}
 $$
-* Step 4: Integrate from  $0$ to $t$ (note that $Y_0 = S_0$.)
+* **Step 4**: Integrate from  $0$ to $t$ (note that $Y_0 = S_0$.)
 $$
-Y_t = Y_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s
+Y_t = Y_0 + .... + \sigma \int_0^t ... \, dW_s
 $$
-
----
-
-# Mean-reverting processes: Ornstein–Uhlenbeck
-#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
-$$
-Y_t = Y_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s
-$$
-
-* Step 5: Solve for $S_t$ Since $Y_t = e^{\theta t} S_t$, we find:
-$$
-S_t = e^{-\theta t} \left( S_0 + \theta \overline S \int_0^t e^{\theta s} \, ds + \sigma \int_0^t e^{\theta s} \, dW_s \right)
-$$
-Using
-$$
-\int_0^t e^{\theta s} \, ds = \frac{e^{\theta t} - 1}{\theta},
-$$
-the final solution becomes:
-$$
-S_t = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t}) + \sigma\, \int_0^t e^{-\theta (t-s)} \, dW_s
-$$
-
----
-
-# Mean-reverting processes: Ornstein–Uhlenbeck
-#### Solving the Ornstein-Uhlenbeck SDE with Itô's Lemma
-
-* The final solution becomes:
-$$
-S_t = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t}) + \sigma\, \int_0^t e^{-\theta (t-s)} \, dW_s
-$$
+* **Step 5**: Solve for $S_t$ using $Y_t = e^{\theta t} S_t$
 * What is the mean and variance of $S_t$ ?
-  * Mean
-  $$
-  \mathbb{E}[S_t] = S_0\,e^{-\theta t} + \overline S(1-e^{-\theta t})
-  $$
-  * Variance (the variance comes only from the stochastic integral: Ito's isometry)
-$$
-\text{Var}(S_t) = \sigma^2 e^{-2\theta t} \, \text{Var}\left( \int_0^t e^{\theta s} \, dW_s \right)
-$$
-By Itô's isometry:
-$
-\text{Var}(S_t) =  \sigma^2 e^{-2\theta t} \mathbb{E}\left[ \left( \int_0^t e^{\theta s} \, dW_s \right)^2 \right] =  \sigma^2 e^{-2\theta t}\int_0^t e^{2\theta s} \, ds= \frac{\sigma^2}{2\theta} \left( 1 - e^{-2\theta t} \right)
-$
 
 ---
 
-# Mean-reverting processes: Ornstein–Uhlenbeck
+# Ornstein–Uhlenbeck process for markets
 
 * OU processes are more appropriate for Foreign Exchange and Bond markets
 
-* Assume two identical options written on a stock and one on EURJPY:
-  * Which one is more expensive ?
+* Assume two options with same strike and maturity, written on a stock and on EURJPY
+  * which one is more expensive ?
 
 
 ---
@@ -2796,15 +2742,49 @@ $
 # Cox–Ingersoll–Ross (CIR) model for interest rates
 
 * The CIR process follows the SDE:
-$
+$$
 \quad\quad dR_t = \theta (\mu - R_t) \, dt + \sigma \sqrt{R_t} \, dW_t
-$
+$$
+* **Mean Reversion**: The process reverts to the long-term mean $\mu$ at a rate $\theta$
+
+---
+
+# Cox–Ingersoll–Ross (CIR) model for interest rates
+
+* The CIR process follows the SDE:
+$$
+\quad\quad dR_t = \theta (\mu - R_t) \, dt + \sigma \sqrt{R_t} \, dW_t
+$$
+* **Mean Reversion**: The process reverts to the long-term mean $\mu$ at a rate $\theta$
+* **Level-Dependent Volatility**: The volatility of the process depends on the level of $R_t$, proportional to $\sqrt{R_t}$. As $R_t$ approaches zero, the volatility decreases and only the deterministic term drives the dynamics
+
+
+---
+
+# Cox–Ingersoll–Ross (CIR) model for interest rates
+* The CIR process follows the SDE:
+$$
+\quad\quad dR_t = \theta (\mu - R_t) \, dt + \sigma \sqrt{R_t} \, dW_t
+$$
 * **Mean Reversion**: The process reverts to the long-term mean $\mu$ at a rate $\theta$
 * **Level-Dependent Volatility**: The volatility of the process depends on the level of $R_t$, proportional to $\sqrt{R_t}$. As $R_t$ approaches zero, the volatility decreases and only the deterministic term drives the dynamics
 * **Non-Negativity**: The process is never negative if $\theta > 0$, $\mu > 0$, and $\sigma > 0$. 
   * It never touches zero if $2\theta\mu>\sigma^2$
-  * the CIR model is suitable for modeling processes like interest rates
-![rates1](./images/rates1.png){style="transform: translate(70%, 0%); width: 380px"}
+  
+---
+
+# Cox–Ingersoll–Ross (CIR) model for interest rates
+
+* The CIR process follows the SDE:
+$$
+\quad\quad dR_t = \theta (\mu - R_t) \, dt + \sigma \sqrt{R_t} \, dW_t
+$$
+
+* the CIR model is suitable for modeling processes like interest rates
+
+
+![rates1](./images/rates1.png){style="transform: translate(70%, 20%); width: 380px"}
+
 
 ---
 
@@ -2812,61 +2792,83 @@ $
 
 #### Solving the CIR SDE with Itô's Lemma
 
-* Step 1: The CIR process follows:
-$
+* **Step 1**: The CIR process follows:
+$$
 dR_t = \theta (\mu - R_t) \, dt + \sigma \sqrt{R_t} \, dW_t
-$
-* Step 2: Introduce the transformation:
-$
+$$
+* **Step 2**: Introduce the transformation:
+$$
 Y_t = e^{\theta t} R_t
-$
-* Step 3: Apply Itô’s Lemma to $Y_t$:
 $$
-dY_t = e^{\theta t} dR_t + \theta e^{\theta t} R_t \, dt
-$$
-Simplifying:
+* **Step 3**: Apply Itô’s Lemma to $Y_t$:
 $$
 dY_t = \theta \mu e^{\theta t} \, dt + \sigma e^{\theta t} \sqrt{R_t} \, dW_t
 $$
 
-
-
----
-
-# Cox–Ingersoll–Ross (CIR) model for interest rates
-
-#### Solving the CIR SDE with Itô's Lemma
-
-
-* Step 4: Integrate from $0$ to $t$ (note that $Y_0 = e^{\theta 0} R_0 = R_0$):
-$$
-Y_t = Y_0 + \int_0^t \theta \mu e^{\theta s} \, ds + \int_0^t \sigma e^{\theta s} \sqrt{R_s} \, dW_s
-$$
-* Step 5: Solve for $R_t$. Since $Y_t = e^{\theta t} R_t$, we obtain:
-$$
-R_t = e^{-\theta t} \left( Y_0 + \int_0^t \theta \mu e^{\theta s} \, ds + \int_0^t \sigma e^{\theta s} \sqrt{R_s} \, dW_s \right)
-$$
-
-Using $Y_0 = R_0$, the final solution becomes:
-$$
-R_t = R_0 e^{-\theta t} + \mu \left( 1 - e^{-\theta t} \right) + \sigma \int_0^t e^{-\theta (t-s)} \sqrt{R_s} \, dW_s
-$$
+* **Step 4**: Integrate from $0$ to $t$ and solve for $R_t$..
+* What is the mean and variance ?
 
 ---
 
-# Cox–Ingersoll–Ross (CIR) model for interest rates
-#### Mean and Variance of $R_t$
+# Correlated prices
 
-* **Mean**: The mean of $R_t$ is given by:
+* Some assets are fundamentally correlated because they share the same sources of risk
 $$
-\mathbb{E}[R_t] = R_0 e^{-\theta t} + \mu \left( 1 - e^{-\theta t} \right)
+dS_t = \mu\,dt + \sigma\,dW_t,\quad dP_t = m\,dt + s\,dB_t,
+$$
+  * The joint distribution of $W_t$ and $B_t$ is $\mathcal N\left(\begin{pmatrix}
+0 \\
+0 
+\end{pmatrix}, t
+\begin{pmatrix}
+1 & \rho \\
+\rho & 1
+\end{pmatrix}\right)$
+
+![bnpgle](./images/bnpgle.png){style="transform: translate(20%, 0%); width: 700px"}
+
+
+--- 
+
+# Ito formula for multiple processes
+
+* Two-dimensional Ito Formula
+  * Let $V(t, x, y)$ be a function twice-differentiable in $x$ and $y$
+  * Let $\partial_tV$, $\partial_xV$, $\partial_{xx}V$, $\partial_yV$, $\partial_{yy}V$, $\partial_{xy}V$ denote the partial derivatives
+
+  * **Theorem** Let $X_t$ and $Y_t$ be two Ito processes. Ito's formula implies that
+    $$
+    \begin{split}
+    dV(t, X_t, Y_t) = & \partial_t V_t\,dt + \partial_x V\,dX_t + \partial_y V\,dY_t \\
+    & + \frac12 \partial_{xx}V d<X,X>_t + \frac12 \partial_{yy}V d<Y,Y>_t + \partial_{xy}V d<X,Y>_t
+    \end{split}
+    $$
+    * where $d<\cdot,\cdot>_t$ is the quadratic covariation (multiplication rule)
+    ![ItoTable](./images/ItoTable.png){style="transform: translate(180%, 0%); width: 200px"}
+    * When $W$ and $Z$ are two Brownians with correlation $\rho$, then  $d<Z,W>_t = \rho\,dt$
+
+
+--- 
+
+# Ito formula for multiple processes
+
+* **Corollary: Ito product rule (to prove)** Let $X_t$ and $Y_t$ be two Ito processes. Then 
+$$
+d(X_t \,Y_t) = X_t dY_t + Y_t dX_t + d<X,Y>_t
 $$
 
-* **Variance**: The variance of $R_t$ is derived from the stochastic integral. Using Itô's isometry:
+
+--- 
+
+# Ito formula for multiple processes
+
+* Let $X_t$ and $Y_t$ be two GBMs with correlation $\rho$ and zero drift:
 $$
-\begin{split}
-\text{Var}(R_{t})=&\sigma^{2}\,e^{-2\theta\,t}\text{Var}\left(\int_{0}^{t}e^{\theta s}\sqrt{R_{s}}\,dW_{s}\right)\\=&\sigma^{2}\,e^{-2\theta\,t}\mathbb{E}\left[\int_{0}^{t}e^{2\,\theta s}R_{s}\,ds\right]\\=&\sigma^{2}\,e^{-2\theta\,t}\int_{0}^{t}e^{2\,\theta s}\left(R_{0}e^{-\theta s}+\mu\left(1-e^{-\theta s}\right)\right)\,ds\\=&R_{0}\frac{\sigma^{2}}{\theta}\,\left(e^{-\theta\,t}-e^{-2\theta\,t}\right)+\frac{\mu\,\sigma^{2}}{2\,\theta}\,\left(1-e^{-\theta\,t}\right)^{2}
-\end{split}
+dX_t / X_t = \sigma_X\,dW_{X,t},\qquad dY_t / Y_t = \sigma_Y\,dW_{Y,t}
+$$
+prove that
+$$
+\frac{d(X_t / Y_t)}{X_t/Y_t} =  (\sigma_Y^2  - \rho \,\sigma_X\,\sigma_Y)\,dt  + \sigma_X\,dW_{X,t}  - \sigma_Y\,dW_{Y,t}
 $$
 
 ---
@@ -2878,10 +2880,9 @@ Black-Scholes model <a name="defi"></a></h1>
 
 ---
 
-
 # The Black-Scholes model: history
 
-* Only Nobel Prize (1997) for Mathematical Finance (for Robert Mertin and Myron Scholes. Fischer Black died in 1995 so he was ineligible)
+* Nobel Prize (1997) for Robert Mertin and Myron Scholes. (Fischer Black died in 1995 so he was ineligible)
 * Based on Louis Bachelier and Paul Samuelson work
 * Simple model but at the core of all pricing models, and trillions of dollars traded each year
 
@@ -2896,7 +2897,7 @@ $$
 
 * We want to price a European-style option with payoff $V(S_T, T)$
   * The payoff depends on the terminal time $T$ and the value of the asset price $S_T$ at this terminal time.
-  * If we can replicated the dynamics of the option price with thoses of a self-financed portfolio, then both investment options have the same price.
+  * If we can replicated the dynamics of the option price with those of a self-financed portfolio, then both investment options have the same price.
 
 
 ---
@@ -2921,18 +2922,39 @@ $$
   * $\Delta_t$ units of the stock at time $t$
   * invests the rest $\Pi_t - \Delta_t\,S_t$ in a money market account yielding a constant interest rate $r$
 * The dynamics of the self-financed portfolio are
+
+---
+
+# The Black-Scholes model
+
+* Now assume a general self-financed portfolio $\Pi_t$ which holds
+  * $\Delta_t$ units of the stock at time $t$
+  * invests the rest $\Pi_t - \Delta_t\,S_t$ in a money market account yielding a constant interest rate $r$
+* The dynamics of the self-financed portfolio are
 $$
 \begin{split}
-d\Pi_t&  = \Delta_t \, dS_t + r\,(X_t - \Delta_t\,S_t)dt \\
-& = \Delta_t \, (\mu\,S_t\,dt + \sigma\,S_t\,dW_t) + r\,(X_t - \Delta_t\,S_t)dt \\
+d\Pi_t&  = \Delta_t \, dS_t + r\,(\Pi_t - \Delta_t\,S_t)dt \\
+& = \Delta_t \, (\mu\,S_t\,dt + \sigma\,S_t\,dW_t) + r\,(\Pi_t - \Delta_t\,S_t)dt \\
 & = r\,\Pi_t\,dt + \Delta_t(\mu-r)S_t\,dt + \Delta_t\,\sigma\,S_t\,dW_t
 \end{split}
 $$
+
+---
+
+# The Black-Scholes model
+
+$$
+\begin{split}
+d\Pi_t= r\,\Pi_t\,dt + \Delta_t(\mu-r)S_t\,dt + \Delta_t\,\sigma\,S_t\,dW_t
+\end{split}
+$$
+
+
 * Breakdown of the portfolio dynamics
   * $r\,\Pi_t\,dt:$ average risk-free return $r$ on the portfolio
   * $\Delta_t(\mu-r)S_t\,dt:$ a risk premium $\mu-r$ for investing in the stock, i.e., buying or selling $\Delta_t$ units.
   * $\Delta_t\,\sigma\,S_t\,dW_t:$ volatility term proportional to the size of the stock investment.
-* **Exercise**: what is the variance of $\Pi_t$
+* **Exercise**: what is the variance of $\Pi_t$ ?
 
 ---
 
@@ -2942,8 +2964,6 @@ $$
 $$
 \Pi_t = V(t, S_t) \text{ for all } t \in[0,T]
 $$
-
-* The dynamics of the self-financed portfolio that invests $\Delta_t$ in the stock are
 
 ---
 
@@ -2984,13 +3004,7 @@ $$
 
 * This is called **delta-heding** ! 
 
-* The sensitivity of price options to time, price, volatility, etc are called Greeks.
-  * $\partial_{s} V(t, S_t)$ is called the Delta of the option
-  * $\partial_{ss} V(t, S_t)$ is called the Gamma of the option
-  * $\partial_{t} V(t, S_t)$ is called the Theta of the option
-
---- 
-
+---
 
 # The Black-Scholes model
 
@@ -3011,6 +3025,72 @@ $$
 V_T = V(T, S_T)
 $$
 
+---
+
+# The Black-Scholes model
+
+* The **Black-Scholes PDE** depend on the option Greeks
+$$
+\boxed{\partial_{t} V(t, S_t) + r\,S_t\,\partial_{s} V(t, S_t) + \frac12 \sigma^2\,S_t^2\,\partial_{ss} V(t, S_t) = r\,V(t, S_t)}
+$$
+
+* The sensitivity of price options to time, price, volatility, etc are called Greeks.
+  * $\partial_{s} V(t, S_t)$ is called the Delta of the option
+  * $\partial_{ss} V(t, S_t)$ is called the Gamma of the option
+  * $\partial_{t} V(t, S_t)$ is called the Theta of the option
+  * $\partial_{\sigma} V(t, S_t)$ is called the Vega of the option
+
+---
+
+# Delta: Sensitivity to Stock Price
+
+- **Call option Delta**:  
+  o Positive  
+  o Increases as option moves **in the money** (stock price ↑)  
+  o Ranges from 0 (far out-of-money) to 1 (deep in-the-money)
+
+- **Put option Delta**:  
+  o Negative  
+  o Becomes more negative as option moves **in the money**  
+  o Ranges from -1 (deep in-the-money) to 0 (far out-of-money)
+
+![callputdelta](./images/callputdelta.png){style="transform: translate(60%, -5%); width: 380px"}
+
+---
+
+# Gamma: Curvature
+
+- **Gamma** (sensitivity of Delta):  
+  o Always **positive** for both calls and puts  
+  o Highest when option is **at-the-money**  
+  o Means Delta changes fastest near strike price  
+
+![callputgamma](./images/callputgamma.png){style="transform: translate(60%, -5%); width: 400px"}
+
+
+---
+
+# Vega: Volatility Sensitivity
+
+- **Vega** (sensitivity to volatility):  
+  o Always **positive**  
+  o Both calls and puts **gain value** if volatility ↑  
+  o Peak Vega when option is at-the-money  
+
+![callputvega](./images/callputvega.png){style="transform: translate(60%, -5%); width: 400px"}
+
+
+---
+
+# Option Greeks: Intuition
+### Theta: Time Decay
+
+- **Call and Put Theta**:  
+  o Usually **negative** (options lose value over time: volatility has less time to materialize)  
+  o Strongest (most negative) when option is **near expiry** and at-the-money: <br>
+     at-the-money options derive their value purely from time and volatility, they have almost no intrinsic value
+
+![callputtheta](./images/callputtheta.png){style="transform: translate(60%, -5%); width: 400px"}
 
 --- 
 
@@ -3057,7 +3137,7 @@ $$
 u(\tau, x) = \frac{1}{\sigma\sqrt{2\,\pi\,\tau}}\int_{-\infty}^\infty u(0,y)\,e^{-\frac{(x-y)^2}{2\sigma^2\tau}}dy
 $$
 * With some manipulations, we arrive at the solution.
-* We will prove this when we do risk-neutral pricing !
+* We will prove this with probabilistic arguments when we do risk-neutral pricing !
 
 <!-- 
 
@@ -3086,7 +3166,7 @@ $$
   * we assumed ability to buy and sell any amount, even fractional, of the stock
   * we assumed no frictions when buying and selling
   * we assumed short-selling without costs
-  * Is it realistic to assume continuous hedging ?
+  * we assumed **continuous hedging**
 
 
 --- 
@@ -3099,15 +3179,12 @@ $$
 
 * Can we price any type of European option?
 * Can we price an American option ? 
-  * An american option can be exercised at any point in time during $[0, T]$
-
-
 
 
 
 ---
 
-# Black-Scholes model with dividends
+# Exercise: Black-Scholes model with dividends
 
 * Assume a stock pays a dividend yield $q$ continuously. The dynamics of the stock become:
 $$
@@ -3116,34 +3193,28 @@ $$
 
 * **Exercise**: derive the Black-Scholes formula for a dividend-paying option
 
+* **Observation**: agents who hold the stock receive both capital gains $dS_t$ **and dividends** $q\,S_t\,dt$, the self-financed portfolio dynamics are
+
+
+---
+
+# Exercise: Black-Scholes model with dividends
+
+* Assume a stock pays a dividend yield $q$ continuously. The dynamics of the stock become:
+$$
+dS_t = (\mu - q)\,S_t\,dt + \sigma\,S_t\,dW_t
+$$
+
+* **Exercise**: derive the Black-Scholes formula for a dividend-paying option
+
+* **Observation**: agents who hold the stock receive both capital gains $dS_t$ **and dividends** $q\,S_t\,dt$, the self-financed portfolio dynamics are
+$$
+d\Pi_t = \Delta_t \, (dS_t + q\,S_t\,dt) + (\Pi_t - \Delta_t\,S_t)\,r\,dt
+$$
+
 --- 
 
-# Ito formula for multiple processes
-
-* Two-dimensional Ito Formula
-  * Let $V(t, x, y)$ be a function twice-differentiable in $x$ and $y$
-  * Let $\partial_tV$, $\partial_xV$, $\partial_{xx}V$, $\partial_yV$, $\partial_{yy}V$, $\partial_{xy}V$ denote the partial derivatives
-
-  * **Theorem** Let $X_t$ and $Y_t$ be two Ito processes. Ito's formula implies that
-    $$
-    \begin{split}
-    dV(t, X_t, Y_t) = & \partial_t V_t\,dt + \partial_x V\,dX_t + \partial_y V\,dY_t \\
-    & + \frac12 \partial_{xx}V d<X,X>_t + \frac12 \partial_{yy}V d<Y,Y>_t + \partial_{xy}V d<X,Y>_t
-    \end{split}
-    $$
-    * where $d<\cdot,\cdot>_t$ is the quadratic covariation (multiplication rule)
-    ![ItoTable](./images/ItoTable.png){style="transform: translate(180%, 0%); width: 200px"}
-    * When $W$ and $Z$ are two Brownians with correlation $\rho$, then  $d<Z,W>_t = \rho\,dt$
-
-
---- 
-
-# Ito formula for multiple processes
-
-* **Corollary:** Let $X_t$ and $Y_t$ be two Ito processes. Then  (prove it)
-$$
-d(X_t Y_t) = X_t dY_t + Y_t dX_t + d<X,Y>_t
-$$
+# Exercise: option on two stocks
 
 * **Exercise**: derive the Black-Scholes PDE for a European option paying $V(T,X_T,Y_T)$ at time $T$ where 
 $$
@@ -3153,10 +3224,539 @@ dY_t/Y_t = \mu^Y\,dt + \sigma^Y dZ_t
 \end{cases}
 $$
 where $W$ and $Z$ are Brownian motions with correlation $\rho$
-  * Step 1: write the dynamics of the option price $V_t$
-  * Step 2: write the dynamics of a self-financed portfolio that invests $\Delta_t^X$ and $\Delta_t^Y$ in the stocks $X$ and $Y$.
-  * Step 3: Use a replication argument to find the hedging strategy
-  * Step 4: Obtain the B&S PDE
+  * **Step 1**: write the dynamics of the option price $V_t$
+  * **Step 2**: write the dynamics of a self-financed portfolio that invests $\Delta_t^X$ and $\Delta_t^Y$ in the stocks $X$ and $Y$.
+  * **Step 3**: Use a replication argument to find the hedging strategy
+  * **Step 4**: Obtain the B&S PDE
+
+<!--
+layout: intro
+
+## Session $5$: Risk-Neutral pricing in continuous-time
+<br />
+<br />
+
+*Fayçal Drissi*
+
+*Saïd Business School, University of Oxford*
+-->
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Reminder: Risk-neutrak Valuation in a Binomial Setup <a name="defi"></a></h1>
+</p>
+
+---
+
+## Pricing in a binomial setup
+
+* Two states of the world with probabilities $p$ and $1 − p$
+* There is a bond that pays a constant interest rate $r$.
+* The payoff at time $T$ of a call option is $\max\{S(T) - K, 0 \}$. Let $C(t)$ be the price at time $t.$ 
+![binomialO2](./images/binomialO2.png){style="transform: translate(10%, 0%); width: 700px"}
+* To price the call, we set a portfolio $\Pi(t)$ with $B$ pounds in the bond and $\Delta$ units of the asset $S$
+$$
+\Pi^u(t+1) = B\, (1+ r) + \Delta\,u\,S= C^u \text{  and  } \Pi^d(t+1) = B\, (1+ r) + \Delta\,d\,S = C^d
+$$
+* By **no-abitrage**, the portfolio at time $t$ has the same value as the call and we write ($R=1+r$)
+$$
+C(t) = \Pi(t) = \Delta S+B  =\frac{C^u-C^d}{u S-d S} S+\frac{-d C^u+u C^d}{R(u-d)} =\frac{1}{R}\left[\frac{R-d}{u-d} C^u+\frac{u-R}{u-d} C^d\right] .
+$$
+
+---
+
+## Risk-Neutral valuation in a binomial setup
+
+* **Remark:** the price $C(t)$ of the option does not depend on the binomial probability $p$
+* If we define a new probability measure $\tilde{\mathbb P}$ that assigns $\tilde p$ to *up state* and $1-\tilde p$ to *down state*
+$$
+\tilde p = \frac{R-d}{u-d}
+$$
+* Under this risk-neutral probability measure, the price is the discounted expected payoff
+$$
+C(t) =\frac{1}{R}\left[\tilde p C^u+(1-\tilde p) C^d\right] .
+$$
+* Under this measure, the discounted price $C(t)/B(t)$ is a martingale, i.e., 
+$$C(t) =\mathbb E\left[\frac{B(T)}{B(t)} C(T) \mid \mathcal F_t\right]$$
+* Can we do this in continuous time ? yes.
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Risk-neutral Valuation in continuous-time <a name="defi"></a></h1>
+</p>
+
+---
+
+## Risk-Neutral Valuation
+
+* A derivative's price is the risk-neutral expectation of the payoff, discounted at the risk-free rate
+* We need a method to contruct this risk-neutral measure
+* The main tool to construct a risk-neutral measure $\tilde{\mathbb P}$ is *Girsanov theorem*
+
+<br>
+
+---
+
+## Girsanov theorem
+Let $W_t$ be a Brownian motion on a probability space $(\Omega,\mathcal{G},P)$ and let $\Theta_t$ be an adapted process. Define a measure $\tilde{\mathbb P}$ on $(\Omega,\mathcal{G})$ where for all $A\in\mathcal G$
+$$
+\tilde{\mathbb P}(A) = \int_A \underbrace{\exp\big(-\int_0^t\Theta_u dW_u - \frac{1}{2}\int_0^t \Theta^2_u du\big)}_{= Z_u} d\mathbb P
+$$
+  * $\tilde{\mathbb P}$ is a probability measure equivalent to $P$ (they agree on null sets)
+  * The process $\tilde W_t = W_t +\int_0^t\Theta_u du$ is a Brownian motion under $\tilde{\mathbb P}$.
+
+
+---
+
+## Girsanov theorem
+Another way of writing the change of measure is that for any adapted process $X_t$, we can write the expectation under $\tilde{\mathbb P}$ from the expectation under $\mathbb P$. For $s\le t$:
+$$
+\mathbb{E}_{\widetilde{\mathbb{P}}}[X_t \mid \mathcal{F}_s] = \frac{1}{Z_s} \, \mathbb{E}_{\mathbb{P}}[Z_t \,X_t \mid \mathcal{F}_s]
+$$
+or 
+$
+\mathbb{E}_{\widetilde{\mathbb{P}}}[X_t] =  \mathbb{E}_{\mathbb{P}}[Z_t \,X_t]
+$
+
+---
+
+## Girsanov theorem
+Another way of writing the change of measure is that for any adapted process $X_t$, we can write the expectation under $\tilde{\mathbb P}$ from the expectation under $\mathbb P$. For $s\le t$:
+$$
+\mathbb{E}_{\widetilde{\mathbb{P}}}[X_t \mid \mathcal{F}_s] = \frac{1}{Z_s} \, \mathbb{E}_{\mathbb{P}}[Z_t \,X_t \mid \mathcal{F}_s]
+$$
+or 
+$
+\mathbb{E}_{\widetilde{\mathbb{P}}}[X_t] =  \mathbb{E}_{\mathbb{P}}[Z_t \,X_t]
+$
+
+* $Z_t = \exp\left(-\int_0^t\Theta_u dW_u - \frac{1}{2}\int_0^t \Theta^2_u du\right)$ is called the *Radon-nikodym derivative*  
+* It is usually denoted by ${d\tilde{\mathbb P}}/{d\mathbb P}$
+
+---
+
+## Risk-Neutral Valuation
+
+* **Exercise**: Show that $Z_t = \exp\left(-\int_0^t\Theta_u dW_u - \frac{1}{2}\int_0^t \Theta^2_u du\right)$ is a martingale under $\mathbb P$
+
+---
+
+## Risk-Neutral Valuation
+
+* **Exercise**: Show that $Z_t\,\tilde{W}_t$, where $d\tilde{W}_t = dW_t + \Theta_t \, dt$, and $dZ_t = -\Theta_t Z_t \, dW_t$, is a martingale under $\mathbb P$.
+
+---
+
+## Risk-Neutral Valuation
+
+* **Exercise**: Show that $\tilde{W}_t$ is a martingale under $\tilde{\mathbb P}$.
+
+
+---
+
+## Risk-Neutral Valuation: how to 
+
+* Assume $\mathbb P$ is the physical (actual) probability measure and consider a GBM stock price process 
+$$
+dS_t = \mu \, S_t \, dt + \sigma \, S_t\,dW_t
+$$
+
+* Suppose there is a risk-free interest rate process $R_t$
+
+---
+
+## Risk-Neutral Valuation: how to 
+
+* **Step 1**: Write the dynamics of the bond price
+$
+dB_t = R\,B_t\,dt \implies 
+B_t = \exp(R\,t)
+$
+
+---
+
+## Risk-Neutral Valuation: how to 
+
+* **Step 1**: Write the dynamics of the bond price
+$
+dB_t = R\,B_t\,dt \implies 
+B_t = \exp(R\,t)
+$
+* **Step 2**: write the dynamics of the discounted price process:
+$$
+d\left(\frac{S_t}{B_t}\right) = \frac{1}{B_t}dS_t - S_t\,\frac{dB_t}{B_t^2} = \frac{S_t}{B_t}\,\left(-R\,dt + \mu \, dt + \sigma\,dW_t \right)=\sigma\frac{S_t}{B_t}\left(\frac{\mu-R}{\sigma}dt+dW_t\right)
+$$
+
+---
+
+## Risk-Neutral Valuation: how to 
+
+* **Step 1**: Write the dynamics of the bond price
+$
+dB_t = R\,B_t\,dt \implies 
+B_t = \exp(R\,t)
+$
+* **Step 2**: write the dynamics of the discounted price process:
+$$
+d\left(\frac{S_t}{B_t}\right) = \frac{1}{B_t}dS_t - S_t\,\frac{dB_t}{B_t^2} = \frac{S_t}{B_t}\,\left(-R\,dt + \mu \, dt + \sigma\,dW_t \right)=\sigma\frac{S_t}{B_t}\left(\frac{\mu-R}{\sigma}dt+dW_t\right)
+$$
+* **Step 3**: we know $B_t/S_t$ is a martingale under the risk-neutral measure $\tilde{\mathbb P}$. <br> So the drift of the dynamics of $S_t/B_t$ under $\tilde{\mathbb P}$ is zero. <br> We define a new Brownian $\tilde W$ under $\tilde{\mathbb P}$ that eliminates the drift
+$$d\tilde W_t = \frac{\mu-R}{\sigma}+dW_t \implies d(\frac{S_t}{B_t}) = \sigma \frac{S_t}{B_t} d\tilde W_t$$
+
+---
+
+## Risk-Neutral Valuation: how to 
+
+* **Step 1**: Write the dynamics of the bond price
+$
+dB_t = R\,B_t\,dt \implies 
+B_t = \exp(R\,t)
+$
+* **Step 2**: write the dynamics of the discounted price process:
+$$
+d\left(\frac{S_t}{B_t}\right) = \frac{1}{B_t}dS_t - S_t\,\frac{dB_t}{B_t^2} = \frac{S_t}{B_t}\,\left(-R\,dt + \mu \, dt + \sigma\,dW_t \right)=\sigma\frac{S_t}{B_t}\left(\frac{\mu-R}{\sigma}dt+dW_t\right)
+$$
+* **Step 3**: we know $B_t/S_t$ is a martingale under the risk-neutral measure $\tilde{\mathbb P}$. <br> So the drift of the dynamics of $S_t/B_t$ under $\tilde{\mathbb P}$ is zero. <br> We define a new Brownian $\tilde W$ under $\tilde{\mathbb P}$ that eliminates the drift
+$$d\tilde W_t = \frac{\mu-R}{\sigma}+dW_t \implies d(\frac{S_t}{B_t}) = \sigma \frac{S_t}{B_t} d\tilde W_t$$
+* $\frac{\mu-R}{\sigma}$ is called the market price of risk
+
+---
+
+## Risk-Neutral Valuation: how to 
+
+* More precisely, we define $\tilde{\mathbb P}$ using Girsanov theorem with the market price of risk 
+$$
+\Theta_t = \Theta = \frac{\mu-R}{\sigma}
+$$
+* We know by Gisanov's theorem that 
+$$
+\tilde W_t = W_t +\Theta t 
+$$
+is a Brownian motion under $\tilde{\mathbb P}$.
+
+
+---
+
+## Risk-Neutral Valuation: how to 
+
+* More precisely, we define $\tilde{\mathbb P}$ using Girsanov theorem with the market price of risk 
+$$
+\Theta_t = \Theta = \frac{\mu-R}{\sigma}
+$$
+* We know by Gisanov's theorem that 
+$$
+\tilde W_t = W_t +\Theta t 
+$$
+is a Brownian motion under $\tilde{\mathbb P}$.
+* Therefore, we call $\tilde{\mathbb P}$ the risk-neutral measure
+* Under this measure, the dynamics of the price are
+$$
+dS_t = R\,S_t\,dt + \sigma \,S_t\,d\tilde W_t
+$$
+* **Remark**: The change from ${\mathbb P}$ to $\tilde{\mathbb P}$ changes the mean but not the volatility !
+
+
+---
+
+## Risk-Neutral Valuation: how to - 2
+
+* Otherwise, to find the change of measure, we can proceed as follows:
+  * **Step 1**: we know that under the risk-neutral probabiliy measure $\tilde{\mathbb P}$, **the drift of the stock price is the short rate** (when the stock does not pay dividends !),  so
+  $$
+  dS_t = r\,S_t\,dt + \sigma\,S_t\,d\tilde{W}_t
+  $$
+
+  * **Step 2**: we know that the price dynamics under the physical measure are
+  $$
+  dS_t = \mu\,S_t\,dt + \sigma\,S_t\,d{W}_t
+  $$
+  So it's easy to see that we need 
+  $$
+  d\tilde{W}_t = dW_t + \frac{\mu - r}{\sigma}dt
+  $$
+
+
+
+---
+
+## Risk-Neutral Valuation: Exercise
+
+* Assume a stochastic (adapted) rate $R_t$ and define
+$$
+dB_t = R_t \, B_t \, dt \implies B_t = \exp\left(\int_0^t R_s\,ds\right)
+$$
+
+* Assume a stochastic (adapted) volatility $\sigma_t$ and the price dynamics
+$$
+dS_t = \mu_t \, S_t \, dt + \sigma_t \,S_t\,dW_t
+$$
+
+* Write the dynamics of $S$ under the risk-neutral measure, and define explicitly the new Brownian.
+
+---
+
+
+## Self-financed portfolio under the risk-neutral measure
+
+* Assume an agent who holds a self-financed portfolio $\Pi_t$ with $\Delta_t$ shares of stock at time $t$. 
+* Assume a risk-free rate $R$
+* The dynamics of the portfolio are 
+$$
+d\Pi_t = \Delta_t dS_t + (\Pi_t - \Delta_t\,S_t)\,R\,dt 
+$$
+
+
+---
+
+## Self-financed portfolio under the risk-neutral measure
+* Under the risk-neutral measure, the dynamics of $S$ are $dS_t/S_t = R\,dt + \sigma\,d\tilde{W}_t$.
+* So the dynamics of the self-financed portfolio are
+$$
+d\Pi_t = \Delta_t dS_t + (\Pi_t - \Delta_t\,S_t)\,R\,dt = \Pi_t \,R\,dt  + \sigma\,\Delta_t S_t d\tilde{W}_t
+$$
+* Define the **discount process** $\quad D_t = 1/B_t \implies D_t = \exp(-R\,t) \quad \text{and} \quad dD_t = -R\,D_t \,dt$
+* The dynamics of the discounted self-financed portfolio are
+$$
+d\frac{\Pi_t}{B_t}=d({\Pi_t}{D_t}) = D_t (\Pi_t \,R\,dt  + \sigma\,\Delta_t S_t d\tilde{W}_t) - \Pi_t \,D_t\, R\,dt = \sigma\,D_t \,\Delta_t S_t d\tilde{W}_t
+$$
+
+* **Lemma: Every self-financed portfolio is a martingale** under the risk-neutral probability !
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Pricing under the risk-neutral measure </h1>
+</p>
+
+---
+
+## Pricing under the risk-neutral measure
+
+* Let $V_T$ be the payoff of a derivative security at time $T$.
+  * We assume any type of path-dependent payoff (asian options !)
+
+* We assume that there is a (possibly stochastic) interest rate $R_t$ and we define the discount process
+$$
+dD_t = -R_t\,D_t\,dt
+$$
+
+* Our goal is to find the initial capital $X_0 = V_0$ and the process $\Delta_t$ such that we hedge a derivative, i.e., such that we replicate the payoff with a self-financed portfolio
+$$
+\Pi_T = V_T.
+$$
+
+---
+
+## Pricing under the risk-neutral measure
+
+* We know from before that $D_t\,\Pi_t$ is martingale, so
+$$
+D_t \, \Pi_t = \tilde{\mathbb E}\left[D_T \, \Pi_T \mid \mathcal G_t\right]
+$$
+
+* Using the definition of $D_t$, we obtain the risk-neutral pricing formula for the continuous-time model:
+$$
+V_t = \tilde{\mathbb E}\left[\frac{D_T}{D_t} \, \Pi_T \mid \mathcal G_t\right]= \tilde{\mathbb E}\left[e^{-\int_t^T R_s \,ds} \, \Pi_T \mid \mathcal G_t\right], \quad\text{for all t }\in[0,T] 
+$$
+
+* We have assumed that a hedging portfolio $\Pi$ exists !
+
+---
+
+## Beyond this
+
+* We can show (using the martingale representation theorem) that if the volatility is not zero and that the filtration is generated by the Brownian, that all derivatives with measurable payoff can be hedged.
+
+* **First funadmental theorem of asset pricing**: if a market model has a risk-neutral probability measure, then it does not admit arbitrage
+
+* Definition: a market model is complete if every derivative security can be hedged
+
+* **Second fundamental theorem of asset pricing**: Consider a market model that has a risk-neutral probability measure. This model is complete if and only if the risk-neutral probability measure is unique
+
+
+---
+
+## Pricing a call option on dividend-paying stock
+
+* We showed that discounted stock prices are martingales under $\tilde{\mathbb P}$
+
+* This is true when the stock does not pay dividends !
+
+* For the value of a portfolio investing in a *dividend paying stock* to be a martingale, the discounted value of the stock with dividends reinvested must be a martingale!
+
+* Consider a stock that pays dividends continuously at a rate $q\ge0$
+
+* The model for the stock price is
+$$
+dS_t = \mu\,S_t\,dt - q\,S_t\,dt + \sigma\,S_t\,dW_t
+$$
+
+
+---
+
+## Pricing a call option on dividend-paying stock
+
+* Agents who hold the stock receive both capital gains and dividends. The dynamics of a self-financed portfolio is
+$$
+\begin{split}
+d\Pi_t & = \Delta_t\,dS_t + \Delta_t\,q\,dt  + (\Pi_t-\Delta_t\,S_t)\,R\,dt \\
+& = R\,\Pi_t\,dt + \Delta_t\,S_t\,\sigma(\Theta\,dt + dW_t)
+\end{split}
+$$
+where $\Theta = \frac{\mu-R}{\sigma}$ is the usual market price of risk
+
+* We use Girsanov theorem to define $\tilde{\mathbb P}$ under which $d\tilde W_t=dW_t +\Theta dt$ is a Brownian
+
+* Under this measure, the discounted portfolio is a martingale ! (exercise: verify)
+
+* We can use the risk-neutral pricing formula exactly as before ! 
+
+* The only difference is that in dividend case, the stock price dynamics under the risk-neutral measure are
+$$
+dS_t = (R-q)\,S_t\,dt + \sigma\,S_t\,d\tilde W_t
+$$
+
+* The solution is .... $S_t = S_0 e^{\sigma\,\tilde W_t + (r-q-\sigma^2/2)t}$ 
+
+---
+
+## Pricing a call option on dividend-paying stock
+
+* The risk-neutral pricing formula gives us
+$$
+V_t = \tilde{\mathbb E}[e^{-r(T-t)}(S_T - K)^+ \mid \mathcal G_t]
+$$
+we can price a call on a dividend-paying stock
+
+* Solution: 
+$$
+V(t, S_t) = S_t \, e^{-q(T-t)}\mathcal N(d_1) - Ke^{-r(T-t)}\mathcal N(d_2)
+$$
+where 
+$$
+d_1=\frac{\ln{\frac{S_t}{K}}+\left(r-a+\frac{\sigma^2}{2}\right)(T-t)}{\sigma\sqrt{T-t}}, \qquad d_2=d_1-\sigma\sqrt{T-t}
+$$
+
+
+---
+
+## Pricing a call option on dividend-paying stock (Proof - 1)
+
+* Step 1: Stock price dynamics under $\tilde{\mathbb{P}}$
+
+When the stock pays a continuous dividend yield $q$, its dynamics under $\tilde{\mathbb{P}}$ are:
+$$
+dS_t = (r - q) S_t \, dt + \sigma S_t \, d\tilde W_t
+$$
+
+* Step 2: Solution by Itô calculus:
+$$
+S_T = S_t \exp\left( (r - q - \frac{1}{2}\sigma^2)(T-t) + \sigma (\tilde W_T - \tilde W_t) \right)
+$$
+
+* Step 3: Taking logarithm:
+$$
+\log S_T \sim \mathcal{N}\left( \log S_t + (r-q-\frac{1}{2}\sigma^2)(T-t), \, \sigma^2(T-t) \right)
+$$
+
+* Step 4: Define:
+$$
+d_1 = \frac{\log(S_t/K) + (r-q+\frac{1}{2}\sigma^2)(T-t)}{\sigma \sqrt{T-t}}, \quad d_2 = d_1 - \sigma\sqrt{T-t}
+$$
+
+---
+
+## Pricing a call option on dividend-paying stock (Proof - 2)
+
+* Step 5: 
+$$
+\mathbb{E}[(S_T - K)^+ \mid \mathcal{G}_t] = \mathbb{E}^{\mathbb{Q}}[S_T \mathbf{1}_{S_T > K}] - K \tilde{\mathbb P}[S_T > K]
+$$
+
+* Step 6:
+$$
+\begin{split}
+\tilde{\mathbb P}[S_T > K] & = \tilde{\mathbb P}[\log(S_T/S_t) > \log(K/S_t)] \\
+&  = \tilde{\mathbb P}[(r - q - \frac{1}{2}\sigma^2)(T-t) + \sigma (\tilde W_T - \tilde W_t) > \log(K/S_t)] \\
+&= \tilde{\mathbb P}[-\frac{\tilde W_T - \tilde W_t}{\sqrt{T-t}} > d_2] \\
+& = \mathcal N(d_2) 
+\end{split}
+$$
+
+
+---
+
+## Pricing a call option on dividend-paying stock (Proof - 3)
+
+* Step 7: 
+$$
+\begin{split}
+\tilde{\mathbb E}[S_T \mathbf{1}_{S_T > K}] & =S_t \exp\left( (r - q - \frac{1}{2}\sigma^2)(T-t)\right)  \int_{S_T > K} \exp\left(\sigma (\tilde W_T - \tilde W_t) \right) d\tilde{\mathbb P}
+\end{split}
+$$
+we know that $\tilde W_T - \tilde W_t \sim \mathcal N (0, \sqrt{T-t})$ and 
+$
+S_T > K \implies \tilde W_T - \tilde W_t > -d_2 \, \sqrt{T-t}. 
+$
+So, using the PDF of a normal distribution
+$$
+\int_{-d_2 \, \sqrt{T-t}}^{\infty} \exp\left(\sigma (\tilde W_T - \tilde W_t) \right) d\tilde{\mathbb P} = \frac{1}{\sqrt{2\,\pi\,(T-t)}}\int_{-d_2 \, \sqrt{T-t}}^{\infty} \exp\left(\sigma \,z - \frac{z^2}{2(T-t)}  \right) dz
+$$
+
+--- 
+
+## Pricing a call option on dividend-paying stock (Proof - 4)
+Thus
+$$
+\begin{split}
+\tilde{\mathbb E}[S_T \mathbf{1}_{S_T > K}] &  = S_t\,e^{(r-q)(T-t)}\frac{1}{\sqrt{2\,\pi\,(T-t)}}\int_{-d_2 \, \sqrt{T-t}}^{\infty} \exp\left(-\frac12 \left(\frac{z-\sigma(T-t)}{\sqrt{T-t}}\right)^2 \right) dz \\
+& = S_t\,e^{(r-q)(T-t)}\mathcal N(d_2 + \sigma \sqrt{T-t}) \\
+& = S_t\,e^{(r-q)(T-t)}\mathcal N(d_1) \\
+\implies V(t, S_t) & = S_t\,e^{-q(T-t)}\mathcal N(d_2) - K\,e^{-r(T-t)}\mathcal N(d_1)
+\end{split}
+$$
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Feynman-Kac </h1>
+</p>
+
+---
+
+## Feynman-Kac
+
+* When $q=0$, the price is 
+$
+V(t, S_t)  = S_t\,\mathcal N(d_2) - K\,e^{-r(T-t)}\mathcal N(d_1)
+$
+* We obtained the same result when pricing using the Black-Scholes PDE
+* This is normal ! both objects are equivalent: this is the Feynmanc-Kac representation theorem. <br><br>
+
+
+--- 
+
+### Feynman-Kac: Theorem
+Consider the general Ito process with SDE
+$$
+dX_t = \mu(t, X_t)\,dt  + \sigma(t, X_t)\,dW_t
+$$
+Define the function 
+$$
+f(t, x) = \mathbb E[e^{-r(T-t)}h(X_T)\mid \mathcal F_t]
+$$
+then $f(t,x)$ satisfies the PDE, with terminal condition $f(T,x) = h(x)$,
+$$
+\partial_t f(t, x) + \mu(t, X_t)\partial_x f(t, x) + \frac12 \sigma(t, X_t)^2\partial_{xx} f(t, x) = r\,f(t,x)
+$$
+
+
 
 ---
 layout: end
