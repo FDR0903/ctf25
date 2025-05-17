@@ -4056,7 +4056,7 @@ $$
 \begin{split}
 \tilde{\mathbb P}[S_T > K] & = \tilde{\mathbb P}[\log(S_T/S_t) > \log(K/S_t)] \\
 &  = \tilde{\mathbb P}[(r - q - \frac{1}{2}\sigma^2)(T-t) + \sigma (\tilde W_T - \tilde W_t) > \log(K/S_t)] \\
-&= \tilde{\mathbb P}[-\frac{\tilde W_T - \tilde W_t}{\sqrt{T-t}} > d_2] \\
+&= \tilde{\mathbb P}[-\frac{\tilde W_T - \tilde W_t}{\sqrt{T-t}} < d_2] \\
 & = \mathcal N(d_2) 
 \end{split}
 $$
@@ -4101,8 +4101,8 @@ $$\tilde W_T - \tilde W_t \sim \mathcal N (0, \sqrt{T-t})$$
 We know
 $$
 \begin{split}
-S_T > K & \implies \exp\left( (r - q - \frac{1}{2}\sigma^2)(T-t) + \sigma (\tilde W_T - \tilde W_t) \right) > K \\
-& \implies  \tilde W_T - \tilde W_t > -d_2 \, \sqrt{T-t} 
+S_T > K & \iff S_t\,\exp\left( (r - q - \frac{1}{2}\sigma^2)(T-t) + \sigma (\tilde W_T - \tilde W_t) \right) > K \\
+& \iff  \tilde W_T - \tilde W_t > -d_2 \, \sqrt{T-t} 
 \end{split}
 $$
 
@@ -4150,6 +4150,9 @@ $$
 
 # Exercise: Greeks of Problem Set 4
 
+
+
+
 ---
 
 # Exercise
@@ -4190,7 +4193,77 @@ with $\tilde{W}$ a standard Brownian motion
 * **Obtain the price of the call option at time $t=0$**
 * **HINT 1**: *Use Ito's lemma for $Y_t = e^{-r\,t}\,S_t$ and solve for $Y_t$*
 * **HINT 1**: *recall that the PDF of $\mathcal N(0,1)$ is $\phi(x) = \frac{e^{-x^2/2}}{\sqrt{2\,\pi}}$*
-* **HINT 2**: *use the property that $\int^\infty_a x\,\frac{e^{-\frac12\,x^2}}{\sqrt{2\,\pi}}= \phi(a)$*
+* **HINT 2**: *use the property that $\int^\infty_a x\,\frac{e^{-\frac12\,x^2}}{\sqrt{2\,\pi}}dx= \phi(a)$*
+
+---
+
+# Solution
+
+* We know that under the risk-neutral probability
+$$
+S_T = e^{r\,T}\,S_0 +\sigma\,\int^T_0 e^{r\,(T-u)}\,d\tilde W_u
+$$
+
+--- 
+
+# Solution
+
+* We know that under the risk-neutral probability
+$$
+S_T = e^{r\,T}\,S_0 +\sigma\,\int^T_0 e^{r\,(T-u)}\,d\tilde W_u
+$$
+* The risk-neutral pricing formula is
+$$
+\begin{split}
+V(S,0) =& e^{-r\,T} \,\tilde{\mathbb E} [\max(S_T-K,0)|S_0]\\
+=& e^{-r\,T} \,\tilde{\mathbb E} \left[\max( e^{r\,T}\,S_0 +\sigma\,\int^T_0 e^{r\,(T-u)}\,d\tilde W_u-K,0)|S_0\right]
+\end{split}
+$$
+
+--- 
+
+# Solution
+
+* We know that under the risk-neutral probability
+$$
+S_T = e^{r\,T}\,S_0 +\sigma\,\int^T_0 e^{r\,(T-u)}\,d\tilde W_u
+$$
+* The risk-neutral pricing formula is
+$$
+\begin{split}
+V(S,0) =& e^{-r\,T} \,\tilde{\mathbb E} [\max(S_T-K,0)|S_0]\\
+=& e^{-r\,T} \,\tilde{\mathbb E} \left[\max( e^{r\,T}\,S_0 +\sigma\,\int^T_0 e^{r\,(T-u)}\,d\tilde W_u-K,0)|S_0\right]
+\end{split}
+$$
+* Use $r=0\text{ and }K=S_0$
+$$
+\begin{split}
+ V(S,0) = \tilde{\mathbb E} \left[\max(\sigma\,\int^T_0\,d\tilde W_u,0)|S_0\right] \implies V(S,0) = \tilde{\mathbb E} \left[\max(\sigma\,\sqrt{T} X, 0)\right]
+\end{split}
+$$
+where $X$ is a Gaussian variable $N(0,1)$
+
+--- 
+
+# Solution
+
+Recall that the PDF of $\mathcal N(0,1)$ is $\phi(x) = \frac{e^{-x^2/2}}{\sqrt{2\,\pi}}$ so
+$$
+\begin{split}
+V(S,0) =& \sigma\,\sqrt{T}\int_0^\infty x\,\phi(x) dx\\
+     =& \frac{\sigma\,\sqrt{T}}{\sqrt{2\,\pi}}\int_0^\infty x\,e^{-x^2/2} dx
+\end{split}
+$$
+
+use the property that $\int^\infty_a x\,\frac{e^{-\frac12\,x^2}}{\sqrt{2\,\pi}}dx= \phi(a)$
+
+$$
+\begin{split}
+V(S,0)=& \frac{\sigma\,\sqrt{T}}{\sqrt{2\,\pi}}\int_0^\infty x\,e^{-x^2/2} dx\\
+    =& \frac{\sigma\,\sqrt{T}}{\sqrt{2\,\pi}}
+\end{split}
+$$
+
 
 ---
 
@@ -4572,8 +4645,24 @@ $$
 V_t = V(t, S_t, Y_t)
 $$
 * Write the risk-neutral pricing formula
-* Use that $e^{-rt}v(t,S_t,Y_t)$ is a martingale to write the PDE solved by $V$
+* Use that $e^{-rt}V(t,S_t,Y_t)$ is a martingale to write the PDE solved by $V$
 and write the terminal condition at $t=T$
+
+---
+
+# Asian Options: solution
+
+* The value of the Asian option at time $t$ is:
+$$
+        V_t = V(t, S_t, Y_t) = \tilde{E}\left[e^{-r(T-t)} \left(\frac{1}{T}Y_T-K\right)^+\bigg\vert\mathcal{G}_t \right].
+$$
+
+* $e^{-rt}V(t,S_t,Y_t)$ is a martingale, then we obtain the PDE
+
+$$
+        v_t(t,x,y) + rxv_x(t,x,y) + xv_y(t,x,y) + \frac{1}{2}\sigma^2x^2v_{xx}(t,x,y) = rV(t,x,y),
+$$
+with terminal condition $V(T,x,y) = (\frac{y}{T}-K)^+$, for all $x$ and $y$.
 
 ---
 
@@ -4653,12 +4742,34 @@ $$
 * How can we find the PDE for the unknown function $f(t,r)$?
 * We shall find a martingale, take its differential and set the $dt$ term to zero!
 * The martingale is $D_tB(t,T)$...
-
-use
+    $$ \begin{split} 
+        d(D_tf(t,r_t)) = &f(t,r_t) dD_t + D_t df(t,r_t)\\
+        = &D_t\left[-r_t\,f(t,r_t) + \partial_t f(t,r_t) + \beta(t,r_t) \partial_r f(t,r_t) + \frac{1}{2}\gamma^2 \partial_{rr} f(t,r_t)\right] dt \\
+        &+ D_t\gamma \partial_r f(t,r_t) d\tilde{W}.
+    \end{split} $$  
+where we used 
 $$
 dr_t = \beta(t,r_t) dt + \gamma(t,r_t) d\tilde{W}_t.
-$$ 
-and derive the PDE and the terminal condition
+$$   
+
+---
+
+# Interest rate models
+
+* We must have $B(t,T) = f(t,r_t)$ for some function $f(t,r)$.
+* How can we find the PDE for the unknown function $f(t,r)$?
+* We shall find a martingale, take its differential and set the $dt$ term to zero!
+* The martingale is $D_tB(t,T)$...
+    $$ \begin{split} 
+        d(D_tf(t,r_t)) = &f(t,r_t) dD_t + D_t df(t,r_t)\\
+        = &D_t\left[-r_t\,f(t,r_t) + \partial_t f(t,r_t) + \beta(t,r_t) \partial_r f(t,r_t) + \frac{1}{2}\gamma^2 \partial_{rr} f(t,r_t)\right] dt \\
+        &+ D_t\gamma \partial_r f(t,r_t) d\tilde{W}.
+    \end{split} $$  
+* Setting the drift to zero gives:
+$$
+        \partial_t f(t,r) + \beta(t,r) \partial_r f(t,r) + \frac{1}{2}\gamma^2 (t,r)\partial_{rr} f(t,r)= rf(t,r),
+$$
+with terminal condition $f(T,r)=1$ for all $r$.
 
 ---
 
@@ -4669,6 +4780,21 @@ $$
         dr_t = (a(t)-b(t)r_t) dt + \sigma(t) d\tilde{W}_t,
 $$   
 where $a(t), b(t)$ and $\sigma(t)$ are nonrandom positive functions of time. What is the PDE under the Hull-White model ?
+
+
+---
+
+# Example: Hull-White model
+
+* In the **Hull-White** model, the interest rate follows: 
+$$
+        dr_t = (a(t)-b(t)r_t) dt + \sigma(t) d\tilde{W}_t,
+$$   
+where $a(t), b(t)$ and $\sigma(t)$ are nonrandom positive functions of time. What is the PDE under the Hull-White model ?
+* The PDE for the zcb price becomes:
+$$
+        f_t(t,r) + (a(t)-b(t)r)f_r(t,r) + \frac{1}{2}\sigma^2(t)f_{rr}(t,r) = rf(t,r).
+$$
 
 ---
 
@@ -4761,16 +4887,17 @@ Zero-Coupon Bond Options </h1>
 # Zero-Coupon Bond Options
 
 * Consider a general short rate model and let $0\leq t \leq T_1 < T_2$ be given.
-$$
-dr_t = \beta(t,r_t) dt + \gamma(t,r_t) d\tilde{W}_t.
-$$
+    $$
+    dr_t = \beta(t,r_t) dt + \gamma(t,r_t) d\tilde{W}_t.
+    $$
 * $T_2$ is the maturity of a zcb, $T_1$ is the maturity of a European call on the zcb.
 * Suppose we have solved for the zcb price function $f(t,r)$.
 * How can we compute the value $c(t,r_t)$ of this option at time $t$?
 * The risk-neutral valuation formula gives:
 $$
-c(t,r_t) = \tilde{\mathbb E}\left[e^{-\int_t^{T_1} r_s ds} (f(T_1,r_{T_1}) -K)^+\bigg\vert \mathcal{G}_t \right].
+        c(t,r_t) = \tilde{\mathbb E}\left[e^{-\int_t^{T_1} r_s ds} (f(T_1,r_{T_1}) -K)^+\bigg\vert \mathcal{G}_t \right].
 $$
+
 
 
 ---
@@ -4780,6 +4907,26 @@ $$
 * Derive the PDE solved by the price of an option on a zcb
 
 
+---
+
+# Zero-Coupon Bond Options
+
+* Derive the PDE solved by the price of an option on a zcb
+* The discounted call price $D_tc(t,r_t)$ is a martingale.
+* By computing the differential and setting the drift to zero we find the PDE:
+    
+$$
+        \partial_t c(t,r) + \beta(t,r) \partial_r c(t,r) + \frac{1}{2}\gamma^2(t,r) \partial_{rr} c(t,r) = rc(t,r).
+$$
+    
+* This is the same PDE that governs $f(t,r)$!
+* But the terminal condition is different!
+    
+$$
+        c(T_1,r)=(f(T_1,r)-K)^+ \text{ for all } r
+$$
+    
+* The call price function can be determined numerically.
 
 ---
 layout: end
