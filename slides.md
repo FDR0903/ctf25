@@ -1613,7 +1613,7 @@ layout: two-cols
     * $W_0 = 0$
     * Increments are independent, i.e., for <br>$r<t\le s<u$:
     $$
-    W(u)-W(s) \quad\text{and}\quad W(t)-W(r)
+    W(u)-W(s) \quad\text{and}\quad W_t-W(r)
     $$
     are independent random variables
     * Increments are normally distributed: 
@@ -4559,13 +4559,35 @@ where $r, a, b$ and $\sigma$ are positive constants and $d\tilde{W}_{1,t} d\tild
 * The financial interpretation is that in periods of high volatility prices go down and vice-versa.
 
 ---
+layout: end
+---
+Thank you !
+
+[faycaldrissi.com](https://www.faycaldrissi.com/)
+
+---
+layout: intro
+---
+
+## Session $7$: Interest rates derivatives
+<br />
+<br />
+
+*Fayçal Drissi*
+
+*Saïd Business School, University of Oxford*
+
+
+---
 
 <br /><br /><br /><br /><br /><br />
 <p style="text-align: center;"><h1>
 Four-step procedure for finding the partial differential equation </h1>
 </p>
 
+
 ---
+
 
 # Four-step procedure for finding the partial differential equation
 
@@ -4610,7 +4632,7 @@ Asian Options </h1>
 # Asian Options
 
 * The Feynman-Kac theorem can be used to find prices and hedges even for path-dependent options.
-* We consider an Asian option with payoff:
+* We consider an Asian option with (arithmetic averaging) payoff:
 $$
 V_T=\left(\frac{1}{T}\int_0^T S_u\, du - K\right)^+.
 $$
@@ -4650,7 +4672,7 @@ and write the terminal condition at $t=T$
 
 ---
 
-# Asian Options: solution
+# Asian Option: solution
 
 * The value of the Asian option at time $t$ is:
 $$
@@ -4664,40 +4686,334 @@ $$
 $$
 with terminal condition $V(T,x,y) = (\frac{y}{T}-K)^+$, for all $x$ and $y$.
 
+* This can be solved with monte-carlo methods 
+
+---
+
+# Asian option with geometric averaging
+
+* We consider an Asian option with geometric averaging payoff:
+$$
+V_T=(G_T - K)^+ = \left(\exp\left(\frac{1}{T}\int_0^T \log(S_u)\, du \right)- K\right)^+.
+$$
+where $S$ follows the GBM dynamics under the risk-neutral measure
+$$
+dS_t/S_t = r\,dt + \sigma\,dW_t
+$$
+* Show that
+$$
+ G_T = S_{0}\exp\left(\frac12\left(r-\frac12\sigma^{2} \right )T+ \frac{\sigma}{T}\int_{0}^{T} (T-t)dW_{t}\right)
+$$
+**HINT** : use $d[(T-t)W_{t}] = (T-t)dW_{t} - W_{t}dt$
+
+---
+
+# Asian option with geometric averaging
+
+* Write the risk-neutral pricing formula 
+
+* Show that 
+$$
+G_{T} \geq K \implies \frac{\sigma}{T} \int_{0}^{T}(T-t)dW_{t} \geq \log {K\over{S_{0}}} - \frac12\left(r- \frac12\sigma^{2}\right)T
+$$
+
+use 
+$$
+ G_T = S_{0}\exp\left(\frac12\left(r-\frac12\sigma^{2} \right )T+ \frac{\sigma}{T}\int_{0}^{T} (T-t)dW_{t}\right)
+$$
+
+---
+
+# Asian option with geometric averaging
+
+* Write the risk-neutral pricing formula 
+
+* Show that 
+$$
+G_{T} \geq K \implies \frac{\sigma}{T} \int_{0}^{T}(T-t)dW_{t} \geq \log {K\over{S_{0}}} - \frac12\left(r- \frac12\sigma^{2}\right)T
+$$
+* What is the distribution of 
+$
+\int_{0}^{T}(T-t)dW_{t}
+$
+
+
+---
+
+# Asian option with geometric averaging
+
+* Write the risk-neutral pricing formula 
+
+* Show that 
+$$
+G_{T} \geq K \implies \frac{\sigma}{T} \int_{0}^{T}(T-t)dW_{t} \geq \log {K\over{S_{0}}} - \frac12\left(r- \frac12\sigma^{2}\right)T
+$$
+* What is the distribution of 
+$
+\int_{0}^{T}(T-t)dW_{t}
+$
+* Define 
+$$
+\ell = \frac{\log {K\over{S_{0}}} - \frac12 \left(r- \frac12 \sigma^{2}\right)T}{\sigma\sqrt{T/3}}
+$$
+and show
+$$
+V_0  = {\frac{e^{-rT}}{\sqrt{2\pi}}} \int_{\ell}^{\infty}\left(S_{0}e^{\frac12\left(r-\frac12\sigma^{2} \right )T + \sigma\sqrt{T/3}x}-K \right )e^{-x^{2}/2}dx
+$$
+
+---
+
+
+# Asian Option: exercise
+
+The final solution is
+$$
+V_0 = S_{0}e^{(b-r)T}\Phi(d_{1}) - Ke^{-rT}\Phi(d_{2})
+$$
+where
+$$
+b = {1\over{2}}\left(r- {1\over{6}}\sigma^{2}\right), \;d_{1} = {\log {S_{0}\over{K}} + \left(b+{1\over{6}}\sigma^{2}\right)T \over{\sigma\sqrt{T/3}}}, \; d_{2} = d_{1}-\sigma\sqrt{T/3}
+$$
+
 ---
 
 
 <br /><br /><br /><br /><br /><br />
 <p style="text-align: center;"><h1>
-Interest rate models </h1>
+Yield curves </h1>
 </p>
 
 ---
 
-# Interest rate models
+# Definitions: Short Rate
+
+Let $B(t, T)$ be the price at time $t$ of a **zero-coupon bond** with maturity $T$.
+
+* Short Rate and Bank Account
+Define implicitly the **simply compounded rate** $L$ through
+$$
+    B(t,T)=\frac{1}{1+(T-t)L(t,T)}
+$$
+
+
+
+The short rate $R_t$ is defined as
+$$
+    R_t\equiv \lim_{T\rightarrow t} L(t,T)
+$$
+
+
+
+Denote with $M_t$ a continuously compounded money market account. Starting with one unit of currency $(M_0=1)$ we have
+$$
+    M_t=e^{\int_0^t R_u du}
+$$
+
+---
+
+# Definitions: Forward Rates
+
+* **Definition: Simply-compounded Forward Rates**  <br>
+The simply-compounded forward rate $F(t,T,S)$ is defined, for $S>T$, as
+$$
+\frac{B(t,T)}{B(t,S)} = 1+(S-T)F(t,T,S)
+$$
+
+
+---
+
+# Definitions: Forward Rates
+
+* **Definition: Simply-compounded Forward Rates**  <br>
+The simply-compounded forward rate $F(t,T,S)$ is defined, for $S>T$, as
+$$
+\frac{B(t,T)}{B(t,S)} = 1+(S-T)F(t,T,S)
+$$
+
+
+
+
+* **Definition: Instantaneous Forward Rates**  <br>
+The instantaneous forward rate $F(t,T)$ is defined as
+$$
+    F(t,T) \equiv \lim_{S\rightarrow T} F(t,T,S)
+$$
+
+<!-- = -\frac{\partial \log B(t,T)}{\partial T} -->
+
+
+
+Note that the above implies that
+$$
+    B(t,T) = \exp\left(-\int_t^T F(t,u) du\right)
+$$
+
+
+---
+
+# Coupon Bonds and Floating Rate Bonds
+
+* **Definition: Coupon Bond and Floating Rate Bond** <br>
+  * Valuation date is $t$. 
+  * Fix a number of dates $t\leq T_1 < ... < T_n$. 
+  * A *coupon bond* pays a fixed coupon $c_i$ at times $T_i$, and the face value $1$ at time $T_n$. 
+  * A *floating rate* note pays at time $T_i$ the coupon
+  $$(T_i-T_{i-1})L(T_{i-1},T_i)$$ 
+  and the face value $1$ at time $T_n$.
+
+
+
+---
+
+# Coupon Bonds and Floating Rate Bonds
+
+* **Exercise**: Compute the price of a coupon bond in terms of zero bonds.
+
+
+
+
+---
+
+# Coupon Bonds and Floating Rate Bonds
+
+* **Exercise**: Compute the price of a coupon bond in terms of zero bonds.
+* The process of determining zero-coupon bond prices from coupon-paying bond prices is called **bootstrapping**
+
+---
+
+# Coupon Bonds and Floating Rate Bonds
+
+* **Exercise**: Compute the price of a coupon bond in terms of zero bonds.
+* The process of determining zero-coupon bond prices from coupon-paying bond prices is called **bootstrapping**
+* Each bond has a yield specific to its maturity $\Rightarrow$ **yield curve**!
+
+---
+
+# Coupon Bonds and Floating Rate Bonds
+
+* **Exercise**: Compute the price of a coupon bond in terms of zero bonds.
+* The process of determining zero-coupon bond prices from coupon-paying bond prices is called **bootstrapping**
+* Each bond has a yield specific to its maturity $\Rightarrow$ **yield curve**!
+* The interest rate (or **short rate**) is an idealization corresponding to the shortest-maturity yield.
+
+
+
+---
+
+# Yield to Maturity
+
+* **Definition: Zero Yield**<br>
+The continuously compounded zero yield $y(t,T)$ is defined as
+$$
+    y(t,T) = -\frac{\log B(t,T)}{T-t}.
+$$
+
+For a fixed $t$, the function $T\mapsto y(t,T)$ is called the **yield curve**.
+
+
+
+* Using previous definitions we immediately have
+$$
+    y(t,T) = \frac{\int_t^T F(t,u) du}{T-t}
+$$
+
+
+---
+
+# Yield Curve
+
+* Yield curves are usually upward sloping: the longer the maturity, the higher the yield, with diminishing marginal increases
+
+
+![yieldcurveconcave](./images/yieldcurveconcave.png){style="transform: translate(60%, 0%); width: 400px"}
+
+* The slope of the yield curve can be measured by the difference between the yields of the two-year and ten-year yields (**term spread**)
+
+---
+
+# Panel of Zero Yields
+
+![PanelofZeroYields](./images/PanelofZeroYields.png){style="transform: translate(40%, 0%); width: 470px"}
+
+
+---
+
+# Yield Curve shapes
+
+* **Normal yield curve**: positive slope of the yield curve<br>
+  o Expectations of economic growth $\implies$ higher inflation $\implies$ tight monetary policy & higher short-term interest rates<br>
+  o Need risk premium associated with uncertainty about inflation. Investors price these risks into the yield curve by demanding higher yields for longer maturities
+
+![yieldcurvesUS](./images/yieldcurvesUS.png){style="transform: translate(50%, 0%); width: 450px"}
+
+
+---
+
+# Yield Curve shapes
+
+* **Steep yield curve**: very positive slope of the yield curve<br>
+  o Expectations of quick improvement of economy $\implies$ very high future inflation $\implies$ tight monetary policy & higher short-term interest rates<br>
+  o Seen at the beginning of an economic expansion (or after the end of a recession)
+
+![yieldcurvesUS](./images/yieldcurvesUS.png){style="transform: translate(50%, 0%); width: 450px"}
+
+
+
+---
+
+# Yield Curve shapes
+
+* **Flat yield curve**: all maturities have similar yields<br>
+* **Hamped yield curve**: short-term and long-term yields are equal and medium-term yields are higher<br>
+  o Flat curves send signals of uncertainty in the economy<br>
+
+![yieldcurvesUS](./images/yieldcurvesUS.png){style="transform: translate(50%, 0%); width: 450px"}
+
+
+---
+
+# Yield Curve shapes
+
+* **Inverted yield curve**: negative slope of the yield curve<br>
+  o lower yields associated with low-risk long-term debt<br>
+  o Expectations that the economy will enter a recession in the near future<br>
+  o inverted yield curve accurately forecasts U.S. recessions
+![yieldcurvesUS](./images/yieldcurvesUS.png){style="transform: translate(50%, 0%); width: 450px"}
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Short rate models </h1>
+</p>
+
+
+---
+
+# Short rate models
 
 * Start with an SDE for the interest rate under the risk-neutral measure $\tilde{\mathbb P}$:
 $$
-        dr_t = \beta(t,r_t) dt + \gamma(t,r_t) d\tilde{W}_t.
+        dR_t = \beta(t,R_t) dt + \gamma(t,R_t) d\tilde{W}_t.
 $$    
 * These are also called short rate models
 * For the moment we consider one-factor models.
 * The discount process is
 $$
-        D_t = e^{-\int_0^t r_s ds}
+        D_t = e^{-\int_0^t R_s ds}
 $$
 
 with dynamics
 
 $$
-dD_t = -r\,D_t\,dt
+dD_t = -R_t\,D_t\,dt
 $$    
 
 
 
 ---
 
-# Interest rate models and Zero-Coupon Bonds (ZCP)
+#  Zero-Coupon Bonds (ZCB)
 
 * A zero-coupon bond is a contract promising to pay $1$ at maturity $T$.
 * The discounted price of the bond is a martingale under $\tilde{P}$ <br>
@@ -4705,15 +5021,15 @@ $$
 
 ---
 
-# Interest rate models and Zero-Coupon Bonds (ZCP)
+# Zero-Coupon Bonds (ZCB)
 
 * A zero-coupon bond is a contract promising to pay $1$ at maturity $T$.
 * The discounted price of the bond is a martingale under $\tilde{P}$ <br>
     $\rightarrow$ The price of the bond $B(t,T)$ satisfies  the risk neutral pricing formula:
     $$ 
     \begin{split} 
-        D_t B(t,T) &= \tilde{\mathbb E}[D(T)\underbrace{B(T,T)}_{1}|\mathcal{G}_t]\\
-        &\rightarrow B(t,T) = \tilde{\mathbb E}\left[ e^{-\int_t^T r_s ds} \bigg\vert \mathcal{G}_t\right]
+        D_t B(t,T) &= \tilde{\mathbb E}[D_T\underbrace{B(T,T)}_{1}|\mathcal{G}_t]\\
+        &\rightarrow B(t,T) = \tilde{\mathbb E}\left[ e^{-\int_t^T R_s ds} \bigg\vert \mathcal{G}_t\right]
     \end{split} 
     $$
     
@@ -4722,54 +5038,16 @@ $$
 
 # Interest rate models
 
-* We must have $B(t,T) = f(t,r_t)$ for some function $f(t,r)$.
-* How can we find the PDE for the unknown function $f(t,r)$?
+* We must have $B(t,T) = f(t,R_t)$ for some function $f(t,R)$.
+* How can we find the PDE for the unknown function $f(t,R)$?
 
 ---
 
 # Interest rate models
 
-* We must have $B(t,T) = f(t,r_t)$ for some function $f(t,r)$.
-* How can we find the PDE for the unknown function $f(t,r)$?
+* We must have $B(t,T) = f(t,R_t)$ for some function $f(t,R)$.
+* **Exercise**: How can we find the PDE for the unknown function $f(t,R)$ (and the terminal condition)
 * We shall find a martingale, take its differential and set the $dt$ term to zero!
-* The martingale is
-
----
-
-# Interest rate models
-
-* We must have $B(t,T) = f(t,r_t)$ for some function $f(t,r)$.
-* How can we find the PDE for the unknown function $f(t,r)$?
-* We shall find a martingale, take its differential and set the $dt$ term to zero!
-* The martingale is $D_tB(t,T)$...
-    $$ \begin{split} 
-        d(D_tf(t,r_t)) = &f(t,r_t) dD_t + D_t df(t,r_t)\\
-        = &D_t\left[-r_t\,f(t,r_t) + \partial_t f(t,r_t) + \beta(t,r_t) \partial_r f(t,r_t) + \frac{1}{2}\gamma^2 \partial_{rr} f(t,r_t)\right] dt \\
-        &+ D_t\gamma \partial_r f(t,r_t) d\tilde{W}.
-    \end{split} $$  
-where we used 
-$$
-dr_t = \beta(t,r_t) dt + \gamma(t,r_t) d\tilde{W}_t.
-$$   
-
----
-
-# Interest rate models
-
-* We must have $B(t,T) = f(t,r_t)$ for some function $f(t,r)$.
-* How can we find the PDE for the unknown function $f(t,r)$?
-* We shall find a martingale, take its differential and set the $dt$ term to zero!
-* The martingale is $D_tB(t,T)$...
-    $$ \begin{split} 
-        d(D_tf(t,r_t)) = &f(t,r_t) dD_t + D_t df(t,r_t)\\
-        = &D_t\left[-r_t\,f(t,r_t) + \partial_t f(t,r_t) + \beta(t,r_t) \partial_r f(t,r_t) + \frac{1}{2}\gamma^2 \partial_{rr} f(t,r_t)\right] dt \\
-        &+ D_t\gamma \partial_r f(t,r_t) d\tilde{W}.
-    \end{split} $$  
-* Setting the drift to zero gives:
-$$
-        \partial_t f(t,r) + \beta(t,r) \partial_r f(t,r) + \frac{1}{2}\gamma^2 (t,r)\partial_{rr} f(t,r)= rf(t,r),
-$$
-with terminal condition $f(T,r)=1$ for all $r$.
 
 ---
 
@@ -4777,9 +5055,9 @@ with terminal condition $f(T,r)=1$ for all $r$.
 
 * In the **Hull-White** model, the interest rate follows: 
 $$
-        dr_t = (a(t)-b(t)r_t) dt + \sigma(t) d\tilde{W}_t,
+        dR_t = (a(t)-b(t)R_t) dt + \sigma(t) d\tilde{W}_t,
 $$   
-where $a(t), b(t)$ and $\sigma(t)$ are nonrandom positive functions of time. What is the PDE under the Hull-White model ?
+where $a(t), b(t)$ and $\sigma(t)$ are nonrandom positive functions of time. What is the ZCB PDE under the Hull-White model ?
 
 
 ---
@@ -4788,12 +5066,12 @@ where $a(t), b(t)$ and $\sigma(t)$ are nonrandom positive functions of time. Wha
 
 * In the **Hull-White** model, the interest rate follows: 
 $$
-        dr_t = (a(t)-b(t)r_t) dt + \sigma(t) d\tilde{W}_t,
+        dR_t = (a(t)-b(t)R_t) dt + \sigma(t) d\tilde{W}_t,
 $$   
-where $a(t), b(t)$ and $\sigma(t)$ are nonrandom positive functions of time. What is the PDE under the Hull-White model ?
+where $a(t), b(t)$ and $\sigma(t)$ are nonrandom positive functions of time. What is the ZCB PDE under the Hull-White model ?
 * The PDE for the zcb price becomes:
 $$
-        f_t(t,r) + (a(t)-b(t)r)f_r(t,r) + \frac{1}{2}\sigma^2(t)f_{rr}(t,r) = rf(t,r).
+        \partial_{t} f(t,R) + (a(t)-b(t)r)\partial_{r} f(t,R) + \frac{1}{2}\sigma^2(t)\partial_{rr} f(t,R) = rf(t,R).
 $$
 
 ---
@@ -4802,15 +5080,15 @@ $$
 
 * We guess and then verify that the solution has the form:
 $$
-f(t,r) = e^{-rC(t,T)-A(t,T)}
+B(t, T) = f(t,R_t) = e^{-R_t\,C(t,T)-A(t,T)}
 $$
 for some deterministic functions $A(t,T)$ and $C(t,T)$.
-* The yield is then an affine function of $r$:
+* The yield is then an affine function of $R$:
 $$
-Y(t,T) = \frac{1}{T-t}(rC(t,T) + A(t,T))
+Y(t,T) = \frac{1}{T-t}(R_t\,C(t,T) + A(t,T))
 $$
     
-* The Hull-White model belongs to the class of affine yield models
+* The Hull-White model belongs to the class of **affine yield models**
 
 ---
 
@@ -4818,15 +5096,15 @@ $$
 
 * From
 $$
-f(t,r) = e^{-rC(t,T)-A(t,T)}
+f(t,R) = e^{-R\,C(t,T)-A(t,T)}
 $$
 we can compute the partial derivatives of $f$ and plug them in the PDE:
 $$ \begin{split} 
-    \Big[& (-C'(t,T) + b(t)C(t,T)-1)r \\ & - A'(t,T) - a(t)C(t,T) 
-     + \frac{1}{2}\sigma^2(t)C^2(t,T) \Big] f(t,r) = 0.
+    \Big[& (-C'(t,T) + b(t)C(t,T)-1)R \\ & - A'(t,T) - a(t)C(t,T) 
+     + \frac{1}{2}\sigma^2(t)C^2(t,T) \Big] f(t,R) = 0.
 \end{split} 
 $$    
-* This must hold for all $r \Rightarrow$ The term that multiplies $r$ must be zero!
+* This must hold for all $R \Rightarrow$ The term that multiplies $R$ must be zero!
 
 
 ---
@@ -4835,15 +5113,15 @@ $$
 
 * From
 $$
-f(t,r) = e^{-rC(t,T)-A(t,T)}
+f(t,R) = e^{-R\,C(t,T)-A(t,T)}
 $$
 we can compute the partial derivatives of $f$ and plug them in the PDE:
 $$ \begin{split} 
-    \Big[& (-C'(t,T) + b(t)C(t,T)-1)r \\ & - A'(t,T) - a(t)C(t,T) 
-     + \frac{1}{2}\sigma^2(t)C^2(t,T) \Big] f(t,r) = 0.
+    \Big[& (-C'(t,T) + b(t)C(t,T)-1)R \\ & - A'(t,T) - a(t)C(t,T) 
+     + \frac{1}{2}\sigma^2(t)C^2(t,T) \Big] f(t,R) = 0.
 \end{split} 
 $$    
-* This must hold for all $r \Rightarrow$ The term that multiplies $r$ must be zero!
+* This must hold for all $R \Rightarrow$ The term that multiplies $R$ must be zero!
 * This gives us a system of ODE:
     $$ \begin{cases} 
         C'(t,T) &= b(t)C(t,T)-1,\\
@@ -4865,6 +5143,177 @@ $$
 
 ---
 
+# Affine Models
+
+* **Affine Models** are a particularly tractable model class
+* General **multivariate** affine diffusion models can be written in SDE form
+    $$
+        dX_t = \mu(X_t) dt + \sigma(X_t) dW_t
+    $$
+    
+* The instantaneous drift and covariance matrix
+$$    \begin{split}
+    \mu(x) &= b + \beta x\\
+    \sigma(x)\sigma(x)^T &= a + \sum_{i=1}^m \alpha_i\,x_i
+\end{split}$$
+    
+* The one-factor CIR, Vasicek and Hull-White models are examples of affine models.
+* Virtually any multivariate application uses affine models!
+* **Exercise**: Derive the ZCB pricing formula for a general one-factor affine model
+
+
+
+---
+
+# Affine Term Structure Models
+
+* We assume the short rate is an affine function of multiple factors:
+$$
+R_t = \delta_0 + \delta\cdot \,X_t
+$$
+
+
+---
+
+# Affine Term Structure Models
+
+* We assume the short rate is an affine function of multiple factors:
+$$
+R_t = \delta_0 + \delta\cdot \,X_t
+$$
+* We assume that bond prices $B(t,T)$ are of exponential affine form
+$$
+B(t,T) = e^{-\phi(t,T)-\psi(t,T)X_t}.
+$$
+
+---
+
+# Affine Term Structure Models
+
+* We assume the short rate is an affine function of multiple factors:
+$$
+R_t = \delta_0 + \delta\cdot \,X_t
+$$
+* We assume that bond prices $B(t,T)$ are of exponential affine form
+$$
+B(t,T) = e^{-\phi(t,T)-\psi(t,T)X_t}.
+$$
+* We can apply Itô's multidimensional formula to obtain the dynamics of bonds as a function of the state variables $X$.
+* From the formula of $B(t,T)$ and the ZCB PDE we get a system of differential equation for $\phi$ and $\psi$
+
+---
+
+# Example: Vasicek (1977) model
+
+* Short rate as Ornstein-Uhlenbeck (OU) process:
+    $$
+        dR_t = (\alpha - \beta R_t) dt + \sigma dW_t, \quad R_0\geq 0
+    $$
+    with $\alpha,\beta,\sigma$ constant.
+* **Exercise**, show that the solution is (using $P_t = \exp(\beta\,t)\,R_t$)
+    $$
+        R_t = R_0 e^{-\beta t} + \frac{\alpha}{\beta}(1-e^{-\beta t}) + \sigma\,e^{-\beta\,t}\, \int_0^T e^{\beta s} dW_s
+    $$
+
+---
+
+# Example: Vasicek (1977) model
+
+* Short rate as Ornstein-Uhlenbeck (OU) process:
+    $$
+        dR_t = (\alpha - \beta R_t) dt + \sigma dW_t, \quad R_0\geq 0
+    $$
+    with $\alpha,\beta,\sigma$ constant.
+* **Exercise**, show that the solution is (using $P_t = \exp(\beta\,t)\,R_t$)
+    $$
+        R_t = R_0 e^{-\beta t} + \frac{\alpha}{\beta}(1-e^{-\beta t}) + \sigma\,e^{-\beta\,t}\, \int_0^T e^{\beta s} dW_s
+    $$
+* $R_t$ Gaussian $\Rightarrow$ **$P[R_t<0] >0$**
+* $\beta>0\Rightarrow R_t$ mean-reverting to long-term level $\alpha/\beta$ and stationary.
+* $\beta<0\Rightarrow R_t$ degenerates
+
+
+---
+
+# Example: Vasicek (1977) model
+
+* The bond prices $B(t,T)$ is exponential affine
+$$
+B(t,T) = e^{-\phi(t,T)-\psi(t,T)X_t}.
+$$
+
+* Affine functions:
+$$\begin{split}
+  \psi(\tau) &= \frac{1}{\beta}(1-e^{-\beta\tau})\\
+  \phi(\tau) &= \frac{1}{\beta}\left(\alpha -\frac{\sigma^2}{2\beta}\right) (\tau + \psi^V(\tau)) + \frac{\sigma^2}{4\beta}(\psi^V(\tau))^2
+\end{split}$$
+
+---
+
+# Simulated Vasicek paths
+
+
+![SimulatedVasicek](./images/SimulatedVasicek.png){style="transform: translate(40%, 0%); width: 470px"}
+
+
+Parameters: $\beta=1, R_0=0, \alpha/\beta=0, \sigma=10\%$, 5 years of daily data.
+
+
+
+---
+
+# Example: Cox-Ingersoll-Ross (1985) model
+
+* Short rate as square-root process:
+    $$
+        dR_t = (\alpha-\beta R_t) dt + \sigma\sqrt{R_t} dW_t, R_0 \geq 0
+    $$
+    
+    with $\alpha,\beta,\sigma$ positive constants.
+    
+* $R_t\sim$ non-central $\chi^2$ distribution.
+* $2\alpha\geq\sigma^2 \Rightarrow R_t>0$ whenever $R_0>0$.
+* $\psi^{CIR}(t,T)$ and $\phi^{CIR}(t,T)$ are a bit involved but still available in closed form!
+
+---
+
+# Simulated CIR paths
+
+
+![SimulatedCIR](./images/SimulatedCIR.png){style="transform: translate(40%, 0%); width: 470px"}
+
+
+Parameters: $\beta=1, R_0=0.01, \alpha/\beta=0.01, \sigma=10\%$, 5 years of daily data.
+
+
+
+---
+
+# Multidimensional Affine Models
+
+* Main drawback of Vasicek and CIR models is that prices are explicit functions of the short rate.
+
+---
+
+# Multidimensional Affine Models
+
+* Main drawback of Vasicek and CIR models is that prices are explicit functions of the short rate.
+* How many factors drive the term structure of interest rates?
+
+---
+
+# Multidimensional Affine Models
+
+* Main drawback of Vasicek and CIR models is that prices are explicit functions of the short rate.
+* How many factors drive the term structure of interest rates?
+* We can consider multidimensional models in the affine class
+* $N$ state variables of which $m$ enter the volatility. For example...
+    * $N$-factor Vasicek
+    * $N$-factor CIR
+* Generally no explicit formulae!
+
+---
+
 <br /><br /><br /><br /><br /><br />
 <p style="text-align: center;"><h1>
 Zero-Coupon Bond Options </h1>
@@ -4876,11 +5325,11 @@ Zero-Coupon Bond Options </h1>
 
 * Consider a general short rate model and let $0\leq t \leq T_1 < T_2$ be given.
     $$
-    dr_t = \beta(t,r_t) dt + \gamma(t,r_t) d\tilde{W}_t.
+    dR_t = \beta(t,R_t) dt + \gamma(t,R_t) d\tilde{W}_t.
     $$
 * $T_2$ is the maturity of a zcb, $T_1$ is the maturity of a European call on the zcb.
-* Suppose we have solved for the zcb price function $f(t,r)$.
-* How can we compute the value $c(t,r_t)$ of this option at time $t$?
+* Suppose we have solved for the zcb price function $f(t,R)$.
+* How can we compute the value $c(t,R_t)$ of this option at time $t$?
 
 ---
 
@@ -4888,14 +5337,27 @@ Zero-Coupon Bond Options </h1>
 
 * Consider a general short rate model and let $0\leq t \leq T_1 < T_2$ be given.
     $$
-    dr_t = \beta(t,r_t) dt + \gamma(t,r_t) d\tilde{W}_t.
+    dR_t = \beta(t,R_t) dt + \gamma(t,R_t) d\tilde{W}_t.
     $$
 * $T_2$ is the maturity of a zcb, $T_1$ is the maturity of a European call on the zcb.
-* Suppose we have solved for the zcb price function $f(t,r)$.
-* How can we compute the value $c(t,r_t)$ of this option at time $t$?
-* The risk-neutral valuation formula gives:
+* Suppose we have solved for the zcb price function $f(t,R)$.
+* How can we compute the value $c(t,R_t)$ of this option at time $t$?
+* The risk-neutral valuation formula gives..
+
+---
+
+# Zero-Coupon Bond Options
+
+* Consider a general short rate model and let $0\leq t \leq T_1 < T_2$ be given.
+    $$
+    dR_t = \beta(t,R_t) dt + \gamma(t,R_t) d\tilde{W}_t.
+    $$
+* $T_2$ is the maturity of a zcb, $T_1$ is the maturity of a European call on the zcb.
+* Suppose we have solved for the zcb price function $f(t,R)$.
+* How can we compute the value $c(t,R_t)$ of this option at time $t$?
+* The risk-neutral valuation formula gives..
 $$
-        c(t,r_t) = \tilde{\mathbb E}\left[e^{-\int_t^{T_1} r_s ds} (f(T_1,r_{T_1}) -K)^+\bigg\vert \mathcal{G}_t \right].
+c(t,R_t) = \tilde{\mathbb E}\left[e^{-\int_t^{T_1} R_s ds} (f(T_1,R_{T_1}) -K)^+\bigg\vert \mathcal{G}_t \right].
 $$
 
 
@@ -4904,29 +5366,269 @@ $$
 
 # Zero-Coupon Bond Options
 
-* Derive the PDE solved by the price of an option on a zcb
+* **Exercise**: Derive the PDE solved by the price of an option on a zcb
+* Use that the discounted call price $D_tc(t,R_t)$ is a martingale.
 
 
 ---
 
-# Zero-Coupon Bond Options
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Forward rate models </h1>
+</p>
 
-* Derive the PDE solved by the price of an option on a zcb
-* The discounted call price $D_tc(t,r_t)$ is a martingale.
-* By computing the differential and setting the drift to zero we find the PDE:
-    
+---
+
+# Motivation for Forward Rate Modeling
+* Short-rate models (unless very involved) yield very unrealistic forward rate volatilities.
+
+
+---
+
+# Motivation for Forward Rate Modeling
+* Short-rate models (unless very involved) yield very unrealistic forward rate volatilities.
+* Assume that for $T > 0$, the instantaneous forward rate $F(t,T)$ has a stochastic differential which under the risk-neutral measure is given by
+$$    \begin{split}
+        dF(t,T) &= \alpha(t,T) dt + \sigma(t,T) dW_t\\
+        f(0,T) &= \text{"observed" instantaneous forward rate}.
+    \end{split}$$
+* $W$ is a one-dimensional (for simplicity) Brownian motion.
+* $\alpha$ and $\sigma$ are adapted processses.
+
+---
+
+# Tools for Forward Rate Modeling
+
+* We can work out the dynamics of bond prices
+* Introduce $X_t\coloneqq -\int_t^T F(t,u) du$
+* An extension of Itô's formula yields
+$$    \begin{split}
+        dX_t &= F(t,t) dt - \int_t^T dF(t,u) du\\
+        &= R_t dt - \int_t^T [\alpha(t,u) dt + \sigma(t,u) dW_t] du\\
+        &= R_t dt - \alpha^*(t,T) dt - \sigma^*(t,T) dW_t,
+    \end{split}$$
+with
 $$
-        \partial_t c(t,r) + \beta(t,r) \partial_r c(t,r) + \frac{1}{2}\gamma^2(t,r) \partial_{rr} c(t,r) = rc(t,r).
+\alpha^*(t,T)\coloneqq \int_t^T \alpha(t,u) du, ~\sigma^*(t,T)\coloneqq \int_t^T \sigma(t,u) du.
 $$
-    
-* This is the same PDE that governs $f(t,r)$!
-* But the terminal condition is different!
-    
+
+---
+
+# Tools for Forward Rate Modeling
+$$    \begin{split}
+        dX_t = R_t dt - \alpha^*(t,T) dt - \sigma^*(t,T) dW_t,
+    \end{split}$$
+with
 $$
-        c(T_1,r)=(f(T_1,r)-K)^+ \text{ for all } r
+\alpha^*(t,T)\coloneqq \int_t^T \alpha(t,u) du, ~\sigma^*(t,T)\coloneqq \int_t^T \sigma(t,u) du.
 $$
+* **Exercise**:
+    Show that
+    $$
+        \frac{dB(t,T)}{B(t,T)} =\left( R_t-\alpha^*(t,T) + \frac{1}{2}\sigma^* (t,T)^2\right) dt - \sigma^*(t,T) dW_t.
+    $$
+
+---
+
+
+# Tools for Forward Rate Modeling
+
+* **Proposition: HJM drift condition**
+Under the risk neutral measure the processes $\alpha$ and $\sigma$ must satisfy
+$$
+\alpha(t,T)=\sigma(t,T)\sigma^*(t,T).
+$$
+
+**Hint**: $D(t)B(t,T)$ must be a martingale!
+
+
+---
+
+# Relation to Affine Models
+
+* Since $R_t=F(t,t)$ we have for $t\leq T$:
+    $$
+        R_T=f(t,T) + \int_t^T \alpha(u,T) du + \int_t^T \sigma(u,T) dW(u).
+    $$
+* The short rate depends on the path of $\alpha, \sigma$, and $W$.
+* This is in contrast to affine models, for which the short rate is linear function of (Markov) state variables.
+* The procedure of specifying forward rate models which are consistent with short rate models is called **embedding**.
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Interest rate options: caps and floors </h1>
+</p>
+
+---
+
+# Market Models
+
+* **Definition**: Caplets and Floorlets <br>
+    A **caplet** with strike $K$ pays for $t\leq S\leq T$
+    $$
+        (T-S)(F(S,T)-K)^+,
+    $$
+    a **floorlet**
+    $$
+        (T-S)(F-L(S,T))^+.
+    $$
+
+* The markets use Black's formula for pricing caplets
+* Black's model assumes that the forward rate under the forward measure $\tilde{P}^T$ (for pricing instruments on $L(S,T))$ is lognormally distributed.
+
+
+---
+
+# Caplet Pricing in the Black Model
+
+We derive the Black formula for a caplet using the forward measure.  
+Notation:
+- $F(t, S, T)$: forward rate at time $t$ between $S$ and $T$
+- $B(t, T)$: zero-coupon bond maturing at $T$
+
+---
+
+## Caplet
+
+A **caplet** pays at time $T$:
+
+$$
+\text{Payoff} = \tau \cdot \max(F(S, T) - K, 0)
+$$
+
+Our goal is to compute the caplet value at time $t \leq S$, which is:
+
+$$
+\text{Caplet}_t = \tau \cdot \mathbb{E}^{\mathbb{Q}} \left[ \frac{1}{B(t, T)} \cdot \max(F(S, T) - K, 0) \mid \mathcal{F}_t \right]
+$$
+
+---
+
+## Step 1: Change of Measure
+
+To simplify, we switch to the **T-forward measure**  $\mathbb{Q}^T$ with numéraire $B(t, T)$. Then:
+
+$$
+\text{Caplet}_t = \tau \cdot B(t, T) \cdot \mathbb{E}^{\mathbb{Q}^T} \left[ \max(F(S, T) - K, 0) \mid \mathcal{F}_t \right]
+$$
+
+Under $\mathbb{Q}^T$, the forward rate $F(t, S, T)$ is a **martingale**, and we assume lognormal dynamics:
+
+$$
+dF(t, S, T) = \sigma \cdot F(t, S, T) \cdot dW_t^{\mathbb{Q}^T}
+$$
+
+---
+
+## Step 2: Distribution of $F(S, T)$
+
+From the SDE, it follows that:
+
+$$
+\log F(S, T) \sim \mathcal{N} \left( \log F(t, S, T) - \tfrac{1}{2} \sigma^2 (S - t),\ \sigma^2 (S - t) \right)
+$$
+
+So the distribution of $F(S, T)$ is **lognormal** under $\mathbb{Q}^T$, with:
+
+$$
+F(S, T) = F(t, S, T) \cdot \exp\left( -\tfrac{1}{2} \sigma^2 (S - t) + \sigma \sqrt{S - t} \cdot Z \right)
+$$
+
+where $Z\sim \mathcal{N}(0,1)$.
+
+---
+
+## Step 3: Caplet as Call Option on Forward Rate
+
+Now, the caplet becomes a standard European call option on the forward rate:
+
+$$
+\text{Caplet}_t = \tau \cdot B(t, T) \cdot \mathbb{E}^{\mathbb{Q}^T} \left[ \max(F(S, T) - K, 0) \right]
+$$
+
+Apply the **Black formula**:
+
+$$
+\text{Caplet}_t = \tau \cdot B(t, T) \cdot \left[ F(t, S, T) \cdot \mathcal N(d_+) - K \cdot \mathcal N(d_-) \right]
+$$
+
+---
+
+# Caps and Caplets
+
+
+* Assume a discrete time grid (tenor) $T_0,T_1,...$ and denote simply compounded forward rate
+    $$
+        F(t, T_i, T_{i+1})\eqqcolon F_i(t)
+    $$
+    and $\delta_i\coloneqq T_{i+1} - T_i$ (usually 3 months).
+* Definition of simply compounded forward rates gives
+    $$
+        \log\left[\frac{B(t,T_i)}{B(t,T_{i+1})}\right] = \log(1+\delta_i F_i(t)).
+    $$
+
+
+---
+
+# Caps and Caplets
+
+
+* **Definition: Cap** <br>
+    A cap is a portfolio of caplets, and a caplet is a call option that caps the interest rate paid on a floating loan.
+
+* At each time step $T_i$ the floating rate $L(T_{i-1}, T_i)$ is compared to the cap rate $K$.
+    $$
+        CAP(t) = \sum_{i=1}^n \tilde{E}\left\{e^{-\int_t^{T_i} R_u du} \delta_{i-1}(L(T_{i-1},T_i)-K)^+\right\}
+    $$
+
+
+
+---
+
+# Caps and ZCB Options 
+
+
+* Caplet payoff at $T_i$ is equivalent to a payoff at $T_{i-1}$ of
+$$    \begin{split}
+        &\frac{\delta_{i-1}}{1+L(T_{i-1}, T_i)\delta_{i-1}}(L(T_{i-1},T_i)-K)^+\\
+        = &(1+K\delta_{i-1})\left(\frac{1}{1+K\delta_{i-1}}-\frac{1}{1+L(T_{i-1},T_i)\delta_{i-1}}\right)^+\\
+        = &\frac{1}{X}(X-B(T_{i-1}, T_i))^+.
+    \end{split}$$
+* Put option with strike $X$, notional $1/X$ and maturity $T_{i-1}$ on a zero-coupon bond with maturity $T_i$!
+* The cap price with maturity $T_n$ is thus:
+$$    \begin{split}
+        CAP(t) &=\sum_{i=1}^n Caplet(t,T_{i-1}, T_i, K)= \sum_{i=1}^n \frac{1}{X}ZBP(t,T_{i-1}, T_i,X).
+    \end{split}$$
+
+
+
+
+---
+
+# Caps stylised facts
+
+![CapsStylizedFacts](./images/CapsStylizedFacts.png){style="transform: translate(40%, 0%); width: 470px"}
+
+
+
+* Another implied volatility skew!
+* Hump in the term structure of implied cap volatilities is related to a hump in the volatilities of instantaneous forward rates.
+
+
+---
+
+# References
+
+* This is just a drop in the ocean of interest rate modeling!
+* Many more models and assets to price...
+* If you are interested, a good reference is:
+    Brigo, D. and Mercurio, F. (2006), Interest Rate models - Theory and Practice, 2nd ed., Springer Finance}.
+* Very detailed, and the authors have huge practical experience.
     
-* The call price function can be determined numerically.
+
+
 
 ---
 layout: end
