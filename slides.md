@@ -1,7 +1,7 @@
 ---
 layout: cover
 class: text-center
-title: CTF 2025 online
+title: CTF 2025
 theme: academic
 titleTemplate: '%s'
 favicon: ./images/defiicon.png
@@ -119,16 +119,15 @@ economics, and computer science (Despite its short history, Quantitative Finance
 
 ---
 
-
 # Course outline
-### Session 1: Binomial model for option pricing
-### Session 2: Pricing Principles and the Absence of Arbitrage
-### Session 3: Introduction to Stochastic Processes
-### Session 4: The Black-Scholes Model
-### Session 5: Risk-Neutral Pricing in Continuous-Time
-### Session 6: Pricing in practice
-### Session 7: ...
-### Session 8: ...
+### Session $1$: Binomial model for option pricing
+### Session $2$: Pricing Principles and the Absence of Arbitrage
+### Session $3$: Introduction to Stochastic Processes
+### Session $4$: The Black-Scholes Model
+### Session $5$: Risk-Neutral Pricing in Continuous-Time
+### Session $6$: Pricing in practice
+### Session $7$: Interest Rates Models
+### Session $8$: Forward measures and Interest Rates Derivatives
 
 ---
 
@@ -5046,8 +5045,46 @@ $$
 # Interest rate models
 
 * We must have $B(t,T) = f(t,R_t)$ for some function $f(t,R)$.
-* **Exercise**: How can we find the PDE for the unknown function $f(t,R)$ (and the terminal condition)
+* How can we find the PDE for the unknown function $f(t,R)$?
 * We shall find a martingale, take its differential and set the $dt$ term to zero!
+* The martingale is
+
+---
+
+# Interest rate models
+
+* We must have $B(t,T) = f(t,R_t)$ for some function $f(t,R)$.
+* How can we find the PDE for the unknown function $f(t,R)$?
+* We shall find a martingale, take its differential and set the $dt$ term to zero!
+* The martingale is $D_tB(t,T)$...
+    $$ \begin{split} 
+        d(D_tf(t,R_t)) = &f(t,R_t) dD_t + D_t df(t,R_t)\\
+        = &D_t\left[-R_t\,f(t,R_t) + \partial_t f(t,R_t) + \beta(t,R_t) \partial_r f(t,R_t) + \frac{1}{2}\gamma^2 \partial_{rr} f(t,R_t)\right] dt \\
+        &+ D_t\gamma \partial_r f(t,R_t) d\tilde{W}.
+    \end{split} $$  
+where we used 
+$$
+dR_t = \beta(t,R_t) dt + \gamma(t,R_t) d\tilde{W}_t.
+$$   
+
+---
+
+# Interest rate models
+
+* We must have $B(t,T) = f(t,R_t)$ for some function $f(t,R)$.
+* How can we find the PDE for the unknown function $f(t,R)$?
+* We shall find a martingale, take its differential and set the $dt$ term to zero!
+* The martingale is $D_tB(t,T)$...
+    $$ \begin{split} 
+        d(D_tf(t,R_t)) = &f(t,R_t) dD_t + D_t df(t,R_t)\\
+        = &D_t\left[-R_t\,f(t,R_t) + \partial_t f(t,R_t) + \beta(t,R_t) \partial_r f(t,R_t) + \frac{1}{2}\gamma^2 \partial_{rr} f(t,R_t)\right] dt \\
+        &+ D_t\gamma \partial_r f(t,R_t) d\tilde{W}.
+    \end{split} $$  
+* Setting the drift to zero gives
+$$
+        \partial_t f(t,R) + \beta(t,R) \partial_r f(t,R) + \frac{1}{2}\gamma^2 (t,R)\partial_{rr} f(t,R)= rf(t,R),
+$$
+with terminal condition $f(T,R)=1$ for all $R$.
 
 ---
 
@@ -5313,6 +5350,27 @@ Parameters: $\beta=1, R_0=0.01, \alpha/\beta=0.01, \sigma=10\%$, 5 years of dail
 * Generally no explicit formulae!
 
 ---
+layout: end
+---
+Thank you !
+
+[faycaldrissi.com](https://www.faycaldrissi.com/)
+
+---
+layout: intro
+---
+
+## Session $8$: Forward measures and Interest Rates Derivatives
+<br />
+<br />
+
+*Fayçal Drissi*
+
+*Saïd Business School, University of Oxford*
+
+
+
+---
 
 <br /><br /><br /><br /><br /><br />
 <p style="text-align: center;"><h1>
@@ -5366,244 +5424,585 @@ $$
 
 # Zero-Coupon Bond Options
 
-* **Exercise**: Derive the PDE solved by the price of an option on a zcb
+* Derive the PDE solved by the price of an option on a zcb
 * Use that the discounted call price $D_tc(t,R_t)$ is a martingale.
 
 
 ---
 
+# Zero-Coupon Bond Options
+
+* Derive the PDE solved by the price of an option on a zcb
+* The discounted call price $D_tc(t,R_t)$ is a martingale.
+* By computing the differential and setting the drift to zero we find the PDE:  
+
+$$
+\partial_t c(t,R) + \beta(t,R) \partial_r c(t,R) + \frac{1}{2}\gamma^2(t,R) \partial_{rr} c(t,R) = rc(t,R)
+$$
+* This is the same PDE that governs $f(t,R)$!
+* But the terminal condition is different!  
+
+$$
+c(T_1,R)=(f(T_1,R)-K)^+ \text{ for all } r
+$$    
+* The call price function can be determined numerically
+
+---
+
+
 <br /><br /><br /><br /><br /><br />
 <p style="text-align: center;"><h1>
-Forward rate models </h1>
+Change of Numéraire </h1>
 </p>
 
 ---
 
-# Motivation for Forward Rate Modeling
-* Short-rate models (unless very involved) yield very unrealistic forward rate volatilities.
+# The Change-of-Numeraire Technique
 
+* The risk neutral formula gives the unique no-arbitrage price of an attainable contingent
+claim
+$$
+\pi_t = \tilde{\mathbb E}\left[ \frac{D_T}{D_t} H \mid \mathcal F_t\right] = \tilde{\mathbb E}[ D(t, T)\, H \mid \mathcal F_t ],
+$$  
+<v-click> 
+
+* Sometimes, the risk-neutral measure is not necessarily the most natural and convenient measure for pricing the claim (German et al. 1995)
+<v-click> 
+
+* Under stochastic interest rates, for example, the presence of the stochastic discount factor
+$$
+D(t, T) = \exp\left(-\int_t^T r_s ds\right)
+$$
+complicates considerably the calculation of the expectation
+* In such cases, a change of measure can be helpful
+</v-click>
+</v-click>
 
 ---
 
-# Motivation for Forward Rate Modeling
-* Short-rate models (unless very involved) yield very unrealistic forward rate volatilities.
-* Assume that for $T > 0$, the instantaneous forward rate $F(t,T)$ has a stochastic differential which under the risk-neutral measure is given by
-$$    \begin{split}
-        dF(t,T) &= \alpha(t,T) dt + \sigma(t,T) dW_t\\
-        f(0,T) &= \text{"observed" instantaneous forward rate}.
-    \end{split}$$
-* $W$ is a one-dimensional (for simplicity) Brownian motion.
-* $\alpha$ and $\sigma$ are adapted processses.
+# The Change-of-Numeraire Technique
+
+* **Definition:  A numeraire is *any positive non-dividend-paying asset***
+
+* A numéraire is a reference asset that is chosen so as to normalize all other asset prices with respect to it
+<v-click> 
+
+* Choosing a numéraire $Z$ implies that the relative prices $S/Z$ are considered instead of securities prices $S$ themselves
+
+* In general, a numéraire $Z$ is identifiable with a self financing strategy 
+</v-click>
 
 ---
 
-# Tools for Forward Rate Modeling
+# The Change-of-Numeraire Technique
 
-* We can work out the dynamics of bond prices
-* Introduce $X_t\coloneqq -\int_t^T F(t,u) du$
-* An extension of Itô's formula yields
-$$    \begin{split}
-        dX_t &= F(t,t) dt - \int_t^T dF(t,u) du\\
-        &= R_t dt - \int_t^T [\alpha(t,u) dt + \sigma(t,u) dW_t] du\\
-        &= R_t dt - \alpha^*(t,T) dt - \sigma^*(t,T) dW_t,
-    \end{split}$$
-with
+* **Proposition: generalisation of risk-neutral pricing to any numeraire**
+
+Assume there exists a numeraire $B$ and a probability measure $\tilde{\mathbb P}$, equivalent to the physical measure $\mathbb P$, such that the price of any traded asset $X$ (without intermediate payments) relative to $B$ is a martingale under
+$\tilde{\mathbb P}$ , i.e.
 $$
-\alpha^*(t,T)\coloneqq \int_t^T \alpha(t,u) du, ~\sigma^*(t,T)\coloneqq \int_t^T \sigma(t,u) du.
+\frac{X_t}{B_t}=\tilde{\mathbb E}\left[\frac{X_T}{B_T}\mid\mathcal{F}_t\right] \quad 0\leq t\leq T.
 $$
+<v-click> 
 
----
-
-# Tools for Forward Rate Modeling
-$$    \begin{split}
-        dX_t = R_t dt - \alpha^*(t,T) dt - \sigma^*(t,T) dW_t,
-    \end{split}$$
-with
+Let $N$ be an arbitrary numéraire. Then there exists a probability measure $\mathbb Q^N$, equivalent to the initial $\mathbb P$, such that the price of any attainable claim $Y$, normalised by $N$ is a martingale under $Q^N$
 $$
-\alpha^*(t,T)\coloneqq \int_t^T \alpha(t,u) du, ~\sigma^*(t,T)\coloneqq \int_t^T \sigma(t,u) du.
-$$
-* **Exercise**:
-    Show that
-    $$
-        \frac{dB(t,T)}{B(t,T)} =\left( R_t-\alpha^*(t,T) + \frac{1}{2}\sigma^* (t,T)^2\right) dt - \sigma^*(t,T) dW_t.
-    $$
-
----
-
-
-# Tools for Forward Rate Modeling
-
-* **Proposition: HJM drift condition**
-Under the risk neutral measure the processes $\alpha$ and $\sigma$ must satisfy
-$$
-\alpha(t,T)=\sigma(t,T)\sigma^*(t,T).
+\frac{Y_t}{N_t}=\mathbb E^N\left[\frac{X_T}{N_T}\mid\mathcal{F}_t\right] \quad 0\leq t\leq T.
 $$
 
-**Hint**: $D(t)B(t,T)$ must be a martingale!
-
-
----
-
-# Relation to Affine Models
-
-* Since $R_t=F(t,t)$ we have for $t\leq T$:
-    $$
-        R_T=f(t,T) + \int_t^T \alpha(u,T) du + \int_t^T \sigma(u,T) dW(u).
-    $$
-* The short rate depends on the path of $\alpha, \sigma$, and $W$.
-* This is in contrast to affine models, for which the short rate is linear function of (Markov) state variables.
-* The procedure of specifying forward rate models which are consistent with short rate models is called **embedding**.
+and the Radon-Nikodym derivative defining the measure is
+$$
+d\mathbb Q^N / d\tilde{\mathbb P}  = \frac{N_T \, B_0 }{N_0\,B_T} 
+$$
+</v-click> 
 
 ---
 
 <br /><br /><br /><br /><br /><br />
 <p style="text-align: center;"><h1>
-Interest rate options: caps and floors </h1>
+Change-of-Numeraire Toolkit </h1>
 </p>
 
 ---
 
-# Market Models
+# The Change-of-Numeraire Toolkit: 3 facts
 
-* **Definition**: Caplets and Floorlets <br>
-    A **caplet** with strike $K$ pays for $t\leq S\leq T$
-    $$
-        (T-S)(F(S,T)-K)^+,
-    $$
-    a **floorlet**
-    $$
-        (T-S)(F-L(S,T))^+.
-    $$
+* **Fact one**: The price of any asset divided by a reference positive non dividend-paying asset (called numeraire) is a martingale (no drift) under the
+measure associated with that numeraire
+<v-click> 
 
-* The markets use Black's formula for pricing caplets
-* Black's model assumes that the forward rate under the forward measure $\tilde{P}^T$ (for pricing instruments on $L(S,T))$ is lognormally distributed.
+  $\implies$ if we write the SDEs of state variables under the new measure, we can price any asset by equalising the drift of $S_t/N_t$ to zero <br>
+  $\implies$ under the measure, the drifts of all assets is related to the drift of the numeraire..
+<v-click> 
 
+* **Example 1: bank account as numéraire**: any non-divident paying asset $S$ divided by the bank acount $B_t$ is a martingale under the risk-neutral measure, which is the measure associated with the numéraire $B_t$
+</v-click> 
+</v-click> 
 
 ---
 
-# Caplet Pricing in the Black Model
+# The Change-of-Numeraire Toolkit: 3 facts
 
-We derive the Black formula for a caplet using the forward measure.  
-Notation:
-- $F(t, S, T)$: forward rate at time $t$ between $S$ and $T$
-- $B(t, T)$: zero-coupon bond maturing at $T$
+**Example 2: the forward LIBOR rate** 
+Consider two zero coupon bonds with maturities $T_1$ and $T_2$, then by no arbitrage
+$$
+\begin{split}
+&(1+ (T_1 - t) \,L(t, T_1)) \times (1+ (T_2 - T_1)\,F_{2,t}) = 1 + (T_2 - t) \,L(t, T_2) \\
+\implies & P(t, T_2) (1+ (T_2 - T_1)\,F_{2,t}) = P(t, T_1)
+\end{split}
+$$
+
+Forward rate $F_{2,t}$ between expiry $T_1$ and maturity $T_2$:
+$$
+F_{2,t}=\frac{P(t,T_1)-P(t,T_2)}{(T_2-T_1)P(t,T_2)}
+$$
+<v-click> 
+
+* Instantaneous forward rate
+$$
+\begin{split}
+\lim_{S\to T^+}F(t;T,S)=-\lim_{S\to T^+}\frac{1}{P(t,S)}\frac{P(t,S)-P(t,T)}{S-T}=&-\frac{1}{P(t,T)}\frac{\partial P(t,T)}{\partial T}
+\\=&-\frac{\partial\ln P(t,T)}{\partial T},\end{split}
+$$
+</v-click> 
 
 ---
 
-## Caplet
+# The Change-of-Numeraire Toolkit: 3 facts
 
-A **caplet** pays at time $T$:
+**Example 2: the forward LIBOR rate** 
 
+Forward rate $F_{2,t}$ between expiry $T_1$ and maturity $T_2$:
 $$
-\text{Payoff} = \tau \cdot \max(F(S, T) - K, 0)
+F_{2,t}=\frac{P(t,T_1)-P(t,T_2)}{(T_2-T_1)P(t,T_2)}
 $$
 
-Our goal is to compute the caplet value at time $t \leq S$, which is:
+* This numéraire is a portfolio of two zero coupon bonds divided by the zero coupon bond $P(\cdot,T_2)$. 
+* If we consider the measure $Q^2$ associated with the numéraire $P(\cdot, T_2)$, then by **Fact One**, $F_2$ will be a martingale (no drift !) under that measure
 
+  
+---
+
+# The Change-of-Numeraire Toolkit: 3 facts
+
+**Example 3: the forward swap rate** $S^{\alpha,\beta}_t$ 
+
+* **Definition:** The **swap rate** $S_t^{\alpha,\beta}$ is the fixed rate such that the value of a **payer interest rate swap** starting at $T_\alpha$ and ending at $T_\beta$ is **zero** at time $t$  
+
+* That is, the present value of fixed payments equals the present value of floating payments
+<v-click> 
+
+* **Floating leg:** pays $\tau_i F(t;T_{i-1},T_i)$ at each $T_i \in \{\alpha+1, ..., \beta\}$   
+
+$$ \implies\text{present value }=
+N\,\sum_{i=\alpha+1}^\beta P(t,T_i)\tau_iF(t;T_{i-1},T_i)=-NP(t,T_\alpha)+NP(t,T_\beta).
 $$
-\text{Caplet}_t = \tau \cdot \mathbb{E}^{\mathbb{Q}} \left[ \frac{1}{B(t, T)} \cdot \max(F(S, T) - K, 0) \mid \mathcal{F}_t \right]
-$$
+
+<v-click> 
+
+* **Fixed leg:** pays $S_t^{\alpha,\beta} \cdot (T_i - T_{i-1})$ at each $T_i \in \{\alpha+1, ..., \beta\}$
+$$\implies\text{present value }=N\cdot S_t^{\alpha,\beta} \cdot \sum_{i=\alpha+1}^{\beta} (T_i - T_{i-1}) \cdot P(t, T_i)$$
+
+</v-click> 
+</v-click> 
 
 ---
 
-## Step 1: Change of Measure
+# The Change-of-Numeraire Toolkit: 3 facts
 
-To simplify, we switch to the **T-forward measure**  $\mathbb{Q}^T$ with numéraire $B(t, T)$. Then:
+**Example 3: the forward swap rate** $S^{\alpha,\beta}_t$ 
 
-$$
-\text{Caplet}_t = \tau \cdot B(t, T) \cdot \mathbb{E}^{\mathbb{Q}^T} \left[ \max(F(S, T) - K, 0) \mid \mathcal{F}_t \right]
-$$
-
-Under $\mathbb{Q}^T$, the forward rate $F(t, S, T)$ is a **martingale**, and we assume lognormal dynamics:
+* Setting PV of fixed leg = PV of floating leg:
 
 $$
-dF(t, S, T) = \sigma \cdot F(t, S, T) \cdot dW_t^{\mathbb{Q}^T}
+S_t^{\alpha,\beta} \cdot \sum_{i=\alpha+1}^{\beta} (T_i - T_{i-1}) \cdot P(t, T_i) = P(t, T_\alpha) - P(t, T_\beta)
 $$
-
----
-
-## Step 2: Distribution of $F(S, T)$
-
-From the SDE, it follows that:
-
-$$
-\log F(S, T) \sim \mathcal{N} \left( \log F(t, S, T) - \tfrac{1}{2} \sigma^2 (S - t),\ \sigma^2 (S - t) \right)
-$$
-
-So the distribution of $F(S, T)$ is **lognormal** under $\mathbb{Q}^T$, with:
-
-$$
-F(S, T) = F(t, S, T) \cdot \exp\left( -\tfrac{1}{2} \sigma^2 (S - t) + \sigma \sqrt{S - t} \cdot Z \right)
-$$
-
-where $Z\sim \mathcal{N}(0,1)$.
-
----
-
-## Step 3: Caplet as Call Option on Forward Rate
-
-Now, the caplet becomes a standard European call option on the forward rate:
-
-$$
-\text{Caplet}_t = \tau \cdot B(t, T) \cdot \mathbb{E}^{\mathbb{Q}^T} \left[ \max(F(S, T) - K, 0) \right]
-$$
-
-Apply the **Black formula**:
-
-$$
-\text{Caplet}_t = \tau \cdot B(t, T) \cdot \left[ F(t, S, T) \cdot \mathcal N(d_+) - K \cdot \mathcal N(d_-) \right]
-$$
-
----
-
-# Caps and Caplets
-
-
-* Assume a discrete time grid (tenor) $T_0,T_1,...$ and denote simply compounded forward rate
-    $$
-        F(t, T_i, T_{i+1})\eqqcolon F_i(t)
-    $$
-    and $\delta_i\coloneqq T_{i+1} - T_i$ (usually 3 months).
-* Definition of simply compounded forward rates gives
-    $$
-        \log\left[\frac{B(t,T_i)}{B(t,T_{i+1})}\right] = \log(1+\delta_i F_i(t)).
-    $$
-
-
----
-
-# Caps and Caplets
-
-
-* **Definition: Cap** <br>
-    A cap is a portfolio of caplets, and a caplet is a call option that caps the interest rate paid on a floating loan.
-
-* At each time step $T_i$ the floating rate $L(T_{i-1}, T_i)$ is compared to the cap rate $K$.
-    $$
-        CAP(t) = \sum_{i=1}^n \tilde{E}\left\{e^{-\int_t^{T_i} R_u du} \delta_{i-1}(L(T_{i-1},T_i)-K)^+\right\}
-    $$
 
 
 
 ---
 
-# Caps and ZCB Options 
+# The Change-of-Numeraire Toolkit: 3 facts
+
+**Example 3: the forward swap rate** $S^{\alpha,\beta}_t$ 
 
 
-* Caplet payoff at $T_i$ is equivalent to a payoff at $T_{i-1}$ of
-$$    \begin{split}
-        &\frac{\delta_{i-1}}{1+L(T_{i-1}, T_i)\delta_{i-1}}(L(T_{i-1},T_i)-K)^+\\
-        = &(1+K\delta_{i-1})\left(\frac{1}{1+K\delta_{i-1}}-\frac{1}{1+L(T_{i-1},T_i)\delta_{i-1}}\right)^+\\
-        = &\frac{1}{X}(X-B(T_{i-1}, T_i))^+.
-    \end{split}$$
-* Put option with strike $X$, notional $1/X$ and maturity $T_{i-1}$ on a zero-coupon bond with maturity $T_i$!
-* The cap price with maturity $T_n$ is thus:
-$$    \begin{split}
-        CAP(t) &=\sum_{i=1}^n Caplet(t,T_{i-1}, T_i, K)= \sum_{i=1}^n \frac{1}{X}ZBP(t,T_{i-1}, T_i,X).
-    \end{split}$$
+$$
+S^{\alpha,\beta}_t=\frac{P(t,T_\alpha)-P(t,T_\beta)}{\sum_{i=\alpha+1}^\beta(T_i-T_{i-1})P(t,T_i)}
+$$
+* If we consider the measure $Q^{\alpha,\beta}$ with numéraire the (positive) portfolio of zero-coupon bonds 
+$$
+\sum_{i=\alpha+1}^\beta(T_i-T_{i-1})P(t,T_i)
+$$
+then the swap rate above is the ratio of a tradable asset (*a portfolio long one $T_\alpha$ ZCB and short one $T_\beta$ ZCB*) divided by the numéraire.
+
+$\implies$ by Fact One, it is a martingale under $Q^{\alpha,\beta}$
+
+---
+
+# The Change-of-Numeraire Toolkit: 3 facts
+
+* **Fact Two**: The time-t risk neutral price
+$$
+Price_t=E_t^{\boxed{B}}\left[\boxed{B_t}\frac{Payoff(T)}{\boxed{B_T}}\right]
+$$
+is invariant by change of numéraire: if $S$ is any other numéraire, we have
+$$
+Price_t=E_t^{\boxed{S}}\left[\boxed{S_t}\frac{Payoff(T)}{\boxed{B_T}}\right]
+$$
+
+* **In other terms, if we substitute the three occurences inside the boxes of the original numéraire, with a new numéraire, the price does not change.**
+
+---
+
+# The Change-of-Numeraire Toolkit: 3 facts
+
+* **Fact Three**: a useful toolkit for the derivation of the asset-price dynamics under different numeraire.
+
+*  The drift in the dynamics of an asset price
+when moving from a first numeraire (Num1) to a second one (Num2)
+$$
+\mathrm{drift}_{\mathrm{asset}}^{\mathrm{Num}2}=\mathrm{drift}_{\mathrm{asset}}^{\mathrm{Num}1}-\mathrm{Vol}_{\mathrm{asset}}\mathrm{~Corr}\left(\frac{\mathrm{Vol}_{\mathrm{Num}1}}{\mathrm{Num}1}-\frac{\mathrm{Vol}_{\mathrm{Num}2}}{\mathrm{Num}2}\right)
+$$
+
+<v-click> 
+
+*  The brownian shock in the dynamics of an asset price when moving from a first numeraire (Num1) to a second one (Num2)
+
+$$
+\text{BrownianShocks}_{\mathrm{Corr}}^{\mathrm{Num}2}=\text{BrownianShocks}_{\mathrm{Corr}}^{\mathrm{Num}1}-\mathrm{Corr}\left(\frac{\mathrm{Vol}_{\mathrm{Num}2}}{\mathrm{Num}2}-\frac{\mathrm{Vol}_{\mathrm{Num}1}}{\mathrm{Num}1}\right)
+$$
+
+</v-click> 
+
+---
+
+# The Choice of a Convenient Numéraire
+
+The change-of-numeraire technique is typically employed as follows:
+
+* A payoff $h(X_T)$ is given, which depends on an underlying variable $X$ at time $T$: interest rate, exchagne rate, commodity price, etc.. 
+<v-click> 
+
+* Pricing such a payoff amounts to compute the risk-neutral expectation
+$$
+\pi_0 = \tilde{\mathbb E} \left[D(0, T)\,h(X_T)\right] = \tilde{\mathbb E} \left[\frac{B_0}{B_T}\,h(X_T)\right]
+$$
+
+<v-click> 
+
+* The risk-neutral is the money-market account
+$$
+B_t = D(0, T)^{-1} = \exp\left(\int_0^t r_s\,ds\right)
+$$
+
+<v-click> 
+
+* Using **Fact Two** for pricing under a new numéraire $S$, we obtain
+$$
+\pi_0 = \mathbb E^S \left[\frac{S_0}{S_T}h(X_T)\right]
+$$
+
+</v-click> 
+</v-click> 
+</v-click> 
 
 
+---
 
+# The Choice of a Convenient Numéraire
+
+$$
+\pi_0 = \mathbb E^S \left[\frac{S_0}{S_T}h(X_T)\right]
+$$
+
+Motivated by the above formula, we look for a numéraire $S$ with the following two properties:
+* **Property 1**: $X_t\,S_t$ is the price of a tradable asset  
+  $\implies$ $(X_t\,S_t) / S_t = X_t$ is then a martingale under $\mathbb P^S$<br>
+  $\implies$ One can assume simple lognormal dynamics for $X$ under $\mathbb P^S$:
+  $$
+  dX_t = \sigma_t\,X_t\,dW_t^S
+  $$
+  $\implies$ ease in computing expected values of functions of $X$
+
+<v-click> 
+
+* **Property 2**: The quantity $h(X_T) / S_T$ is conventiently simple<br>
+  $\implies$ the new numeraire renders the computation of the RHS of the pricing formula simpler
+</v-click> 
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+The forward measure </h1>
+</p>
+
+---
+
+# The forward measure
+
+$$
+\pi_0 = \mathbb E^S \left[\frac{S_0}{S_T}h(X_T)\right]
+$$
+
+* In many concrete situations, a useful numeraire is the zero-coupon bond
+whose maturity $T$ coincides with that of the derivative to price
+
+<v-click> 
+
+* In such a case, $S_T = P (T, T ) = 1$, so that pricing the derivative can be
+achieved by calculating an expectation of its payoff (divided by one)
+
+<v-click> 
+
+* The measure associated with the bond maturing at time $T$ is referred to as **T-forward risk-adjusted measure**, or more briefly as **T-forward measure**, and
+will be denoted by $\mathbb Q^T$ 
+
+<v-click> 
+
+* Under the T-forward measure, the price at time $t$ of a derivative with claim payoff $H_T$ is
+$$
+\pi_t = P(t, T) \mathbb E^T \left[H_T \mid \mathcal F_t\right]
+$$
+
+</v-click> 
+</v-click> 
+</v-click> 
+
+---
+
+# The forward measure
+
+* **Proposition<br> Any simply-compounded forward rate spanning a time
+interval ending in T is a martingale under the T-forward measure, i.e.**
+$$
+\mathbb E^T \left[F(t;S,T)\mid \mathcal F_u\right] = F(u; S, T)
+$$
+for $0\le u < t \le S < T$
+
+* In particular, the forward rate spanning the interval $[S, T]$ is the $\mathbb Q^T-$expectation of the future simply-compounded spot rate at time $S$ for the maturity $T$, i.e.,
+$$
+\mathbb E^T \left[L(S,T)\mid \mathcal F_t\right] = F(t; S, T)
+$$
+
+
+---
+
+# Proof
+
+* From the definition of a simply compounded forward rate 
+$$
+F(t;S,T)=\frac{1}{\tau(S,T)}\left[\frac{P(t,S)}{P(t,T)}-1\right]
+$$
+* Then the price
+$
+\quad F(t;S,T)P(t,T)=\left[P(t,S)-P(t,T)\right]/{\tau(S,T)}\quad 
+$
+is a tradable asset because it is a multiple of the difference of two bonds
+* Therefore, by definition of the $T$-forward
+$$
+\large\frac{F(t;S,T)P(t,T)}{P(t,T)}=F(t;S,T)
+$$
+is martingale under such a measure
+* For $t=S$, we have 
+$$F(S; S, T) = L(S, T) = \mathbb E^T \left[L(S,T)\mid \mathcal F_t\right]$$
+
+---
+
+# The forward measure
+
+* **Proposition<br> The expected value of any future instantaneous spot interest rate, under the corresponding forward measure, is equal to related instantaneous forward rate, i.e.**
+$$
+\mathbb E^T[r_T \mid \mathcal F_t] = F(t, T)
+$$
+
+<v-click> 
+
+* **Proof**: 
+We apply the following pricing formula for $H_T = r_T$
+$$
+\pi_t = P(t, T) \mathbb E^T \left[H_T \mid \mathcal F_t\right]
+$$
+$$
+\begin{split}
+\implies E^T\left[r_T|\mathcal{F}_t\right]=\frac{1}{P(t,T)}\pi_t&=\frac{1}{P(t,T)}\tilde{\mathbb E}\left[r_Te^{-\int_t^Tr_sds}|\mathcal{F}_t\right]\\&=-\frac{1}{P(t,T)}\tilde{\mathbb E}\left[\frac{\partial}{\partial T}e^{-\int_t^Tr_sds}|\mathcal{F}_t\right]\\&=-\frac{1}{P(t,T)}\frac{\partial P(t,T)}{\partial T}\\&=f(t,T).
+\end{split}
+$$
+
+</v-click> 
+
+---
+
+<br /><br /><br /><br /><br /><br />
+<p style="text-align: center;"><h1>
+Fundamental pricing formulas for interest rates derivatives </h1>
+</p>
+
+---
+
+#  Fundamental Pricing Formulas
+
+* The results of the previous sessions are developed in case of a finite number of basic market securities.
+<v-click> 
+
+*  A bond market, however, has a continuum of basic assets (the zero-coupon bonds), one for each possible maturity until a given time horizon. 
+
+<v-click> 
+
+* The no-arbitrage theory in such a situation is more complicated even though quite similar in spirit
+
+<v-click> 
+
+* We will assume the existence of a risk-neutral measure $\tilde{\mathbb P}$ under which the price at time $t$ of any attainable contingent claim with payoff $H_T$ is 
+$$
+\pi_t = \tilde{\mathbb P}\left[\exp\left(-\int_t^T r_s \,ds \right) H_T \mid \mathcal F_t\right]
+$$
+  * **Attainability assumption:** assuming the existence of a suitable self-
+financing strategy that replicates the claim
+
+</v-click> 
+</v-click> 
+</v-click> 
+
+---
+
+# European zero-coupon call option
+
+* The particular case of a European call option with maturity $T$, strike $X$
+and written on a unit-principal zero-coupon bond with maturity S > T leads
+to the pricing formula under the risk-neutral measure
+$$
+\mathbf{ZBC}(t,T,S,X)=\tilde E\left[e^{-\int_t^Tr_sds}(P(T,S)-X)^+|\mathcal{F}_t\right]
+$$
+
+<v-click> 
+
+* The change-of-numeraire technique can be applied exactly as before, since it is just based on changing the underlying probability measure:
+  * Under the T-forward measure
+  $$
+  \mathbf{ZBC}(t,T,S,X)=P(t,T)E^T\left[(P(T,S)-X)^+|\mathcal{F}_t\right]
+  $$
+  $$
+  \mathbf{ZBP}(t,T,S,X)=P(t,T)E^T\left[(-P(T,S)+X)^+|\mathcal{F}_t\right]
+  $$
+  * This is useful if $P(T, S)$ has easy dynamics under the T-forward measure.
+
+</v-click> 
+
+---
+
+#  Caps and Floors
+
+A cap is a contract that can be viewed as a payer IRS where each exchange
+payment is executed only if it has positive value. The cap discounted payoff
+is therefore given by
+$$
+\sum_{i=\alpha+1}^\beta D(t,T_i)N\tau_i(L(T_{i-1},T_i)-X)^+
+$$
+
+Analogously, a floor is equivalent to a receiver IRS where each exchange
+payment is executed only if it has positive value. The floor discounted payoff
+is therefore given by
+$$
+\sum_{i=\alpha+1}^\beta D(t,T_i)N\tau_i(X-L(T_{i-1},T_i))^+
+$$
+
+A cap contract can be decomposed additively. Indeed, its discounted payoff is a sum of terms
+$$
+D(t,T_i)N\tau_i(X-L(T_{i-1},T_i))^+
+$$
+Each such term defines a contract that is termed caplet. The floorlet contracts
+are defined in an analogous way
+
+---
+
+#  Caps and Floors
+
+*  A cap (floor) is equivalent to a portfolio of European zero-coupon put (call) options, also called caplets (floorlets)
+
+* Denote $D = \{d_1,d_2,\dots,d_n\}$ the set of cap/floor payment dates and by $\mathcal T =\{t_0,t_1,\dots,t_n\}$ the set of corresponding times:
+  * $t_i$ is the difference (in years) between $d_i$ and the settlement date $t=t_0$
+
+* Let $N$ be the nominal value of the Cap. The price of the $i-$th caplet is then given by
+  $$
+  \begin{split}
+  \mathbf{Cpl}(t,t_{i-1},t_i,N,X)=&\tilde E\left[e^{-\int_t^{t_i}r_sds}N\tau_i(L(t_{i-1},t_i)-X)^+|\mathcal{F}_t\right]\\=&N\ \tilde E\left[e^{-\int_t^{t_{i-1}}r_sds}P(t_{i-1},t_i)\tau_i(L(t_{i-1},t_i)-X)^+|\mathcal{F}_t\right]
+  \end{split}
+  $$
+  * We used iterated conditioning in the last equality
+
+---
+
+#  Caps and Floors
+
+* Assume we use the LIBOR rate $L(t_{i-1}, t_i)$
+$$
+P(t_{i-1}, t_i) = \frac{1}{1+\tau_i\,L(t_{i-1}, t_i)}
+$$
+
+* Then the price of the caplet becomes
+$$
+\begin{split}\mathbf{Cpl}(t,t_{i-1},t_i,N,X)&=N\ \tilde E\left[e^{-\int_t^{t_{i-1}}r_sds}P(t_{i-1},t_i)\left[\frac{1}{P(t_{i-1},t_i)}-1-X\tau_i\right]^+|\mathcal{F}_t\right]\\
+\Large&=N\,(1+X\tau_i)\,\tilde E\left[e^{-\int_t^{t_{i-1}}r_sds}\left(\frac{1}{1+X\tau_i}-P(t_{i-1},t_i)\right)^+\mid \mathcal{F}_t\right],
+\end{split}
+$$
+
+* We conclude that the caplet price can be written as a multiple of the price of a
+European put written on a zero-coupon bond with maturity $t_i$
+$$
+\mathbf{Cpl}(t,t_{i-1},t_i,N,X) = N\,(1+X\tau_i)\,\mathbf{ZBP}(t,t_{i-1},t_i,1/(1+X\tau_i))
+$$
+
+---
+
+#  Caps and Floors
+
+cap and floor prices are simply obtained by summing up the prices
+of the underlying caplets and floorlets
+$$
+\mathbf{Cap}(t,\mathcal{T},N,X)=\sum_{i=1}^nN_i \mathbf{ZBP}(t,t_{i-1},t_i,X_i)
+$$
+$$
+\mathbf{Flr}(t,\mathcal{T},N,X),=\sum_{i=1}^nN_i\mathbf{ZBC}(t,t_{i-1},t_i,X_i).
+$$
+where 
+$$
+N_i = N\,(1 + X\,\tau_i) \quad \text{and} \quad X_i = \frac{1}{1+X\,\tau_i}
+$$
+
+---
+
+#  Caps and Floors
+
+* We showed that under the T-forward measure, we have
+$$
+\mathbf{ZBP}(t,t_{i-1},t_i,X_i)=P(t,t_{i-1})E^T\left[(-P(t_{i-1},t_i)+X)^+|\mathcal{F}_t\right]
+$$
+<v-click> 
+
+* If we assume that the forward rate follows log-normal dynamics
+$$
+dP(t_{i-1},t_i) = \sigma\,P(t_{i-1},t_i)\,dW^T_t
+$$
+Then we can obtain a formula as with Black-Scholes, called Black's formula
+$$
+\mathbf{Cap}(0,\mathcal{T},N,X)=N\sum_{i=1}^n P(0,T_i)\tau_i \mathbf{Bl}(K,F(0,T_{i-1},T_i),\sigma_n \sqrt{T_{i-1}})
+$$
+where
+$$
+\begin{aligned}\mathrm{Bl}(K,F,v)&\large=F\Phi( d_1(K,F,v))-K\Phi( d_2(K,F,v)),\\d_1(K,F,v)&=\frac{\ln(F/K)+v^2/2}{v},\quad d_2(K,F,v)=\frac{\ln(F/K)-v^2/2}{v}\end{aligned}
+$$
+
+</v-click> 
+
+---
+
+#  Caps and Floors
+
+* The common volatility parameter $\sigma_n$ is retrieved from market quotes.
+
+![capVolatilities](./images/capVolatilities.png){style="transform: translate(20%, 0%); width: 570px"}
 
 ---
 
@@ -5611,11 +6010,119 @@ $$    \begin{split}
 
 ![CapsStylizedFacts](./images/CapsStylizedFacts.png){style="transform: translate(40%, 0%); width: 470px"}
 
-
-
 * Another implied volatility skew!
 * Hump in the term structure of implied cap volatilities is related to a hump in the volatilities of instantaneous forward rates.
 
+---
+
+# Swaptions
+
+* Swaptions, are options on an IRS.
+* There are two main types of swaptions, a payer version and a receiver version
+* A European payer swaption is an option giving the right (and no obligation) to enter a payer IRS at a given future time, the swaption maturity
+
+* Usually the swaption maturity coincides with the first reset date of the underlying IRS. 
+* The underlying-IRS length ($T_β − T_α$ in our notation) is called
+the tenor of the swaption. Sometimes the set of reset and payment dates is
+called the tenor structure
+
+---
+
+# Swaptions
+
+* We can write the discounted payoff of a payer swaption by considering the value of the underlying payer IRS at its first reset date $T_α$, which is also assumed to be the swaption maturity.  Such a value is given by 
+$$
+N\sum_{i=\alpha+1}^\beta P(T_\alpha,T_i)\tau_i(F(T_\alpha;T_{i-1},T_i)-K)
+$$
+
+<v-click> 
+
+* The swaption will be exercised only if this value is positive, so the payer-swaption payoff, discounted from maturity $T_\alpha$ to the current time, is 
+$$
+ND(t,T_\alpha)\left(\sum_{i=\alpha+1}^\beta P(T_\alpha,T_i)\tau_i(F(T_\alpha;T_{i-1},T_i)-K)\right)^+
+$$
+
+* This payoff cannot be decomposed in more elementary products
+</v-click> 
+
+---
+
+# Swaptions
+
+* Consider a payer swaption with strike rate $X$, maturity $T$, and nominal value $N$, which gives the holder the right to enter at time $T_\alpha = T$ an interest rate swap with payment times $\mathcal T = {T_\alpha,T_{\alpha+1},. . . , T_\beta}$, where they pay at the fixed rate $X$ and receives LIBOR.
+
+<v-click> 
+
+* We saw that the forward swap rate is
+$$
+S^{\alpha,\beta}_t=\frac{P(t,T_\alpha)-P(t,T_\beta)}{\sum_{i=\alpha+1}^\beta \tau_i P(t,T_i)}
+$$
+<v-click> 
+
+* A swaption is a contract that gives its holder the right to enter at a future time $T_α$ an IRS, whose first reset time coincides with $T_α$. The fixed rate $K$ is  the **swaption strike**. This right is exercised only when the swap rate $S^{\alpha,\beta}$ at the exercise time $T_α$ is larger than the IRS fixed rate K. 
+* If we assume unit notional $N=1$, then the (payer) swaption payoff is
+$$
+D(0,T_\alpha)(S^{\alpha,\beta}_{T_\alpha}-K)^+\sum_{i=\alpha+1}^\beta\tau_iP(T_\alpha,T_i)
+$$
+
+</v-click> 
+</v-click> 
+
+---
+
+# Swaptions
+
+* A swaption is at the money when $K = S^{\alpha,\beta}_0$, and  in the money when $K < S^{\alpha,\beta}_0$ (reflecting the fact that we would get money from the (payer) swaption contract).
+
+<v-click> 
+
+* A numéraire under which the forward swap rate $S^{\alpha,\beta}_t$ us a martingale is 
+$$
+C^{\alpha,\beta}_t=\sum_{i=\alpha+1}^\beta\tau_iP(t,T_i)
+$$
+
+* Indeed, the product 
+$$ C^{\alpha,\beta}_t S^{\alpha,\beta}_t = P(t,T_\alpha)-P(t,T_\beta)$$
+is a tradable asset, which expressed in units of $C^{^{\alpha,\beta}}$ is simply the forward swap rate.
+
+* This measure is usually called the **forward-swap measure** or **swap measure**
+
+</v-click> 
+
+---
+
+# Swaptions
+
+* Use the usual change of measure (Rule Two)
+$$
+\begin{aligned}
+\tilde E\left[D(0,T_\alpha)\left(S^{\alpha,\beta}_{T_\alpha}-K\right)^+C^{\alpha,\beta}_{T_\alpha}\right]=&E^{\boxed{B}}\left[\frac{\boxed{B(0)}}{\boxed{B(T_\alpha)}}\left(S^{\alpha,\beta}_{T_\alpha}-K\right)^+C^{\alpha,\beta}_{T_\alpha}\right]
+\\=&E^{\boxed{\alpha,\beta}}\left[\frac{\boxed{C^{\alpha,\beta}_0}}{\boxed{C^{\alpha,\beta}_{T_\alpha}}}(S^{\alpha,\beta}_{T_\alpha}-K)^+C^{\alpha,\beta}_{T_\alpha}\right\}\\=&C^{\alpha,\beta}_0E^{\alpha,\beta}\left[(S^{\alpha,\beta}_{T_\alpha}-K)^+\right],
+\end{aligned}
+$$
+* Assume lognormal dynamics under this new measure
+$$
+dS^{\alpha,\beta}_t = \sigma^{\alpha,\beta}S^{\alpha,\beta}_t dW_t^{\alpha,\beta}
+$$
+to find the Black's formula for Swaptions
+
+---
+
+# Swaptions
+
+$$
+\mathbf{PS}^\mathrm{Black}{(0,T,\tau,N,K,\sigma_{\alpha,\beta})}=N\mathrm{Bl}(K,S_{\alpha,\beta}(0),\sigma_{\alpha,\beta}\sqrt{T_\alpha},1)\sum_{i=\alpha+1}^\beta\tau_iP(0,T_i),
+$$
+where
+$$
+\begin{aligned}\mathrm{Bl}(K,F,v)&\large=F\Phi( d_1(K,F,v))-K\Phi( d_2(K,F,v)),\\d_1(K,F,v)&=\frac{\ln(F/K)+v^2/2}{v},\quad d_2(K,F,v)=\frac{\ln(F/K)-v^2/2}{v}\end{aligned}
+$$
+
+---
+
+# Swaptions
+
+![swaptionVol](./images/swaptionVol.png){style="transform: translate(20%, 0%); width: 570px"}
 
 ---
 
@@ -5623,8 +6130,8 @@ $$    \begin{split}
 
 * This is just a drop in the ocean of interest rate modeling!
 * Many more models and assets to price...
-* If you are interested, a good reference is:
-    Brigo, D. and Mercurio, F. (2006), Interest Rate models - Theory and Practice, 2nd ed., Springer Finance}.
+* If you are interested, a good reference is:<br>
+    *Brigo, D. and Mercurio, F. (2006), Interest Rate models - Theory and Practice, 2nd ed., Springer Finance*.
 * Very detailed, and the authors have huge practical experience.
     
 
