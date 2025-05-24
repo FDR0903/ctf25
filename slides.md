@@ -4932,7 +4932,7 @@ $$
 
 # Panel of Zero Yields
 
-![PanelofZeroYields](./images/PanelofZeroYieldss.png){style="transform: translate(40%, 0%); width: 470px"} 
+![PanelofZeroYields](./images/PanelofZeroYields.png){style="transform: translate(40%, 0%); width: 470px"} 
 
 
 ---
